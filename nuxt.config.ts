@@ -11,5 +11,10 @@ export default defineNuxtConfig({
     plugins: {
       '@tailwindcss/postcss': {}
     }
+  },
+  nitro: {
+    prerender: {
+      ignore: ['/GroupGameSchedule', '/CountryGameSchedule']
+    }
   }
 })

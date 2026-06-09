@@ -1,6 +1,12 @@
 <template>
   <div>
-    <div class="schedule-container">
+    <div v-if="!currentTeam" class="schedule-container">
+      <div class="schedule-card">
+        <div class="no-data">找不到球隊資料</div>
+      </div>
+    </div>
+
+    <div v-else class="schedule-container">
       <div class="schedule-card">
         <div class="header">
           <img :src="currentTeam.teamFlag" :alt="currentTeam.teamName" class="team-flag-large">
