@@ -3,8 +3,8 @@
     <div class="schedule-container">
       <div class="schedule-card">
         <div class="header">
-          <img :src="currentTeam.teamFlag" :alt="currentTeam.teamName" class="team-flag-large">
-          <h2>{{ currentTeam.teamName }}國家隊賽程</h2>
+          <img :src="currentTeam?.teamFlag || ''" :alt="currentTeam?.teamName || '未知球隊'" class="team-flag-large">
+          <h2>{{ currentTeam?.teamName || '未知球隊' }}國家隊賽程</h2>
         </div>
 
         <div v-if="countryGameSchedule.length === 0" class="no-data">目前沒有賽程資料</div>
