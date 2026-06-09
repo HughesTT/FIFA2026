@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     buildAssetsDir: 'assets',
   },
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   modules: ['@nuxt/ui', '@nuxt/eslint', '@pinia/nuxt'],
   postcss: {
     plugins: {
