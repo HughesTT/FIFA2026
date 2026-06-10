@@ -74,7 +74,7 @@ export const useTeamStore = defineStore('team', () => {
           {
             matchId: 'ZA-2',
             date: '2026-06-19',
-            time: '12:00',
+            time: '00:00',
             homeAway: false,
             opponent: '捷克',
             stage: '小組賽'
@@ -138,7 +138,7 @@ export const useTeamStore = defineStore('team', () => {
           {
             matchId: 'CZ-2',
             date: '2026-06-19',
-            time: '12:00',
+            time: '00:00',
             homeAway: true,
             opponent: '南非',
             stage: '小組賽'
@@ -944,7 +944,7 @@ export const useTeamStore = defineStore('team', () => {
           {
             matchId: 'ES-1',
             date: '2026-06-16',
-            time: '03:00',
+            time: '00:00',
             homeAway: true,
             opponent: '維德角',
             stage: '小組賽'
@@ -952,7 +952,7 @@ export const useTeamStore = defineStore('team', () => {
           {
             matchId: 'ES-2',
             date: '2026-06-22',
-            time: '12:00',
+            time: '00:00',
             homeAway: true,
             opponent: '沙烏地阿拉伯',
             stage: '小組賽'
@@ -976,7 +976,7 @@ export const useTeamStore = defineStore('team', () => {
           {
             matchId: 'CV-1',
             date: '2026-06-16',
-            time: '12:00',
+            time: '00:00',
             homeAway: false,
             opponent: '西班牙',
             stage: '小組賽'
@@ -1016,7 +1016,7 @@ export const useTeamStore = defineStore('team', () => {
           {
             matchId: 'SA-2',
             date: '2026-06-22',
-            time: '12:00',
+            time: '00:00',
             homeAway: false,
             opponent: '西班牙',
             stage: '小組賽'
