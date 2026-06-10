@@ -196,7 +196,7 @@ body {
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -204,7 +204,7 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
 
   .arrow {
     font-size: 20px;
@@ -213,7 +213,7 @@ body {
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.5);
 
     .arrow {
       transform: translateX(-4px);
@@ -295,7 +295,8 @@ body {
   gap: 15px;
 
   @media (max-width: 480px) {
-    gap: 8px;
+    flex-direction: column;
+    gap: 12px;
   }
 }
 
@@ -358,16 +359,13 @@ body {
   }
 
   @media (max-width: 480px) {
-    padding: 8px;
-    gap: 8px;
+    width: 100%;
+    justify-content: center !important;
+    flex-direction: row !important;
+    text-align: center !important;
 
     .team-name {
-      font-size: 13px;
-    }
-
-    .team-flag {
-      width: 32px;
-      height: 22px;
+      font-size: 14px;
     }
   }
 }
@@ -385,11 +383,6 @@ body {
   @media (max-width: 768px) {
     font-size: 16px;
     padding: 6px 12px;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 14px;
-    padding: 4px 8px;
   }
 }
 </style>
