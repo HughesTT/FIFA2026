@@ -126,6 +126,7 @@ const formatDate = (dateStr) => {
   border-radius: 16px;
   padding: 30px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
 
   @media (max-width: 768px) {
     padding: 20px;
@@ -133,11 +134,14 @@ const formatDate = (dateStr) => {
 }
 
 .back-home-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -145,8 +149,8 @@ const formatDate = (dateStr) => {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+  z-index: 10;
 
   .arrow {
     font-size: 20px;
@@ -155,7 +159,7 @@ const formatDate = (dateStr) => {
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.5);
 
     .arrow {
       transform: translateX(-4px);
@@ -167,8 +171,24 @@ const formatDate = (dateStr) => {
   }
 
   @media (max-width: 768px) {
+    top: 15px;
+    right: 15px;
     padding: 8px 16px;
     font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 6px 12px;
+    font-size: 13px;
+    gap: 6px;
+
+    .arrow {
+      font-size: 16px;
+    }
+
+    span:last-child {
+      display: none;
+    }
   }
 }
 
@@ -178,6 +198,7 @@ const formatDate = (dateStr) => {
   gap: 20px;
   margin-bottom: 30px;
   padding-bottom: 20px;
+  padding-top: 40px;
   border-bottom: 2px solid #e0e0e0;
 
   .team-flag-large {
@@ -197,10 +218,15 @@ const formatDate = (dateStr) => {
   @media (max-width: 768px) {
     flex-direction: column;
     text-align: center;
+    padding-top: 50px;
 
     h2 {
       font-size: 24px;
     }
+  }
+
+  @media (max-width: 480px) {
+    padding-top: 40px;
   }
 }
 

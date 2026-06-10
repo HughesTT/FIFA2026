@@ -1,13 +1,12 @@
 <template>
   <div class="game-container">
     <div class="game-card">
-      <div class="header-section">
-        <button class="back-home-btn" @click="router.push('/')">
-          <span class="arrow">←</span>
-          <span>返回首頁</span>
-        </button>
-        <div class="game-title">{{ group }} 組賽程</div>
-      </div>
+      <button class="back-home-btn" @click="router.push('/')">
+        <span class="arrow">←</span>
+        <span>返回首頁</span>
+      </button>
+
+      <div class="game-title">{{ group }} 組賽程</div>
       <div v-for="match in uniqueMatches" v-if="!countryCode" :key="match.matchId" class="match-item">
         <div class="match-header">
           <span class="match-date">{{ formatDate(match.matchDate) }}</span>
@@ -165,6 +164,7 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+  position: relative;
 
   /* 平板以下改成一列一個 */
   @media (max-width: 1024px) {
@@ -178,20 +178,10 @@ body {
   }
 }
 
-.header-section {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-bottom: 20px;
-
-  @media (max-width: 768px) {
-    gap: 15px;
-  }
-}
-
 .back-home-btn {
-  align-self: flex-start;
+  position: absolute;
+  top: 20px;
+  right: 20px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -205,6 +195,7 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+  z-index: 10;
 
   .arrow {
     font-size: 20px;
@@ -225,19 +216,39 @@ body {
   }
 
   @media (max-width: 768px) {
+    top: 15px;
+    right: 15px;
     padding: 8px 16px;
     font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 6px 12px;
+    font-size: 13px;
+    gap: 6px;
+
+    .arrow {
+      font-size: 16px;
+    }
+
+    span:last-child {
+      display: none;
+    }
   }
 }
 
 .game-title {
+  grid-column: 1 / -1;
   text-align: center;
   color: #2c3e50;
   font-size: 28px;
   font-weight: bold;
+  margin-bottom: 20px;
+  padding-right: 140px;
 
   @media (max-width: 768px) {
     font-size: 24px;
+    padding-right: 0;
   }
 }
 
@@ -295,8 +306,7 @@ body {
   gap: 15px;
 
   @media (max-width: 480px) {
-    flex-direction: column;
-    gap: 12px;
+    gap: 8px;
   }
 }
 
@@ -359,13 +369,16 @@ body {
   }
 
   @media (max-width: 480px) {
-    width: 100%;
-    justify-content: center !important;
-    flex-direction: row !important;
-    text-align: center !important;
+    padding: 8px;
+    gap: 8px;
 
     .team-name {
-      font-size: 14px;
+      font-size: 13px;
+    }
+
+    .team-flag {
+      width: 32px;
+      height: 22px;
     }
   }
 }
@@ -383,6 +396,11 @@ body {
   @media (max-width: 768px) {
     font-size: 16px;
     padding: 6px 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    padding: 4px 8px;
   }
 }
 </style>
