@@ -6,13 +6,13 @@
 </template>
 
 <script setup>
-const title = "2026 FIFA World Cup";
+const title = "FIFA World Cup 2026";
 </script>
 
 <style lang="scss">
 body {
   font-family: 'Noto Sans TC', sans-serif;
-  background: url('../public/img/8b3a7cbf-911c-4809-a084-368496c1d04c.webp') no-repeat top left;
+  background: url('../public/img/8b3a7cbf-911c-4809-a084-368496c1d04c.webp') no-repeat top right;
   background-size: cover;
   margin: 0;
   padding: 20px;

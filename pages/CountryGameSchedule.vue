@@ -8,6 +8,11 @@
 
     <div v-else class="schedule-container">
       <div class="schedule-card">
+        <button class="back-home-btn" @click="router.push('/')">
+          <span class="arrow">←</span>
+          <span>返回首頁</span>
+        </button>
+
         <div class="header">
           <img :src="currentTeam.teamFlag" :alt="currentTeam.teamName" class="team-flag-large">
           <h2>{{ currentTeam.teamName }}國家隊賽程</h2>
@@ -26,7 +31,8 @@
 
               <div class="match-teams">
                 <!-- 主場：名稱在左、國旗在右 -->
-                <div class="team home" :class="{ 'current': match.homeAway }">
+                <div class="team home" :class="{ 'current': match.homeAway }"
+                  @click="match.homeAway ? null : viewCountryGameSchedule(getOpponentCode(match.opponent))">
                   <img :src="match.homeAway ? currentTeam.teamFlag : getOpponentFlag(match.opponent)"
                     :alt="match.homeAway ? currentTeam.teamName : match.opponent" class="team-flag">
                   <span class="team-name">{{ match.homeAway ? currentTeam.teamName : match.opponent }}</span>
@@ -35,7 +41,8 @@
                 <span class="vs">VS</span>
 
                 <!-- 客場：國旗在左、名稱在右 -->
-                <div class="team away" :class="{ 'current': !match.homeAway }">
+                <div class="team away" :class="{ 'current': !match.homeAway }"
+                  @click="!match.homeAway ? null : viewCountryGameSchedule(getOpponentCode(match.opponent))">
                   <img :src="match.homeAway ? getOpponentFlag(match.opponent) : currentTeam.teamFlag"
                     :alt="match.homeAway ? match.opponent : currentTeam.teamName" class="team-flag">
                   <span class="team-name">{{ match.homeAway ? match.opponent : currentTeam.teamName }}</span>
@@ -53,16 +60,19 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useTeamStore } from '~/store/teamStore'
 
 const route = useRoute()
+const router = useRouter()
 const teamStore = useTeamStore()
-const teamCode = route.query.teamCode || '' // 從路由參數中取得 teamCode，如果沒有則使用空字串
+
+// 將 teamCode 改為 computed，使其響應路由變化產生資料更新
+const teamCode = computed(() => route.query.teamCode || '')
 
 // 取得目前球隊資訊
 const currentTeam = computed(() => {
-  return teamStore.teams.find(team => team.teamCode === teamCode)
+  return teamStore.teams.find(team => team.teamCode === teamCode.value)
 })
 
 // 取得目前球隊的賽程
@@ -74,6 +84,18 @@ const countryGameSchedule = computed(() => {
 const getOpponentFlag = (opponentName) => {
   const opponent = teamStore.teams.find(team => team.teamName === opponentName)
   return opponent?.teamFlag || ''
+}
+
+// 根據對戰國名稱取得對戰國代碼
+const getOpponentCode = (opponentName) => {
+  const opponent = teamStore.teams.find(team => team.teamName === opponentName)
+  return opponent?.teamCode || ''
+}
+
+// 點擊球隊時顯示比賽日程
+const viewCountryGameSchedule = (teamCode) => {
+  if (!teamCode) return // 如果沒有 teamCode 則不執行
+  router.push({ path: '/CountryGameSchedule', query: { teamCode } })
 }
 
 // 日期格式化
@@ -107,6 +129,46 @@ const formatDate = (dateStr) => {
 
   @media (max-width: 768px) {
     padding: 20px;
+  }
+}
+
+.back-home-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  margin-bottom: 20px;
+
+  .arrow {
+    font-size: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+
+    .arrow {
+      transform: translateX(-4px);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    padding: 8px 16px;
+    font-size: 14px;
   }
 }
 
@@ -228,8 +290,7 @@ const formatDate = (dateStr) => {
   margin: 10px 0;
 
   @media (max-width: 480px) {
-    flex-direction: column;
-    gap: 12px;
+    gap: 8px;
   }
 }
 
@@ -241,11 +302,23 @@ const formatDate = (dateStr) => {
   padding: 12px;
   border-radius: 8px;
   transition: all 0.2s ease;
-  min-width: 0; // 防止 flex 子元素溢出
+  min-width: 0;
+  /* 防止 flex 子元素溢出 */
 
   &.current {
     background: rgba(52, 152, 219, 0.1);
     border: 2px solid #3498db;
+  }
+
+  /* 非當前球隊可點擊 */
+  &:not(.current) {
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(231, 76, 60, 0.05);
+      border: 2px solid #e74c3c;
+      transform: scale(1.02);
+    }
   }
 
   .team-flag {
@@ -289,13 +362,16 @@ const formatDate = (dateStr) => {
   }
 
   @media (max-width: 480px) {
-    width: 100%;
-    justify-content: center !important;
-    flex-direction: row !important;
-    text-align: center !important;
+    padding: 8px;
+    gap: 8px;
 
     .team-name {
-      font-size: 14px;
+      font-size: 13px;
+    }
+
+    .team-flag {
+      width: 32px;
+      height: 22px;
     }
   }
 }
@@ -313,6 +389,11 @@ const formatDate = (dateStr) => {
   @media (max-width: 768px) {
     font-size: 16px;
     padding: 6px 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    padding: 4px 8px;
   }
 }
 

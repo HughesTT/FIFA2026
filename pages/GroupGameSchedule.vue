@@ -1,7 +1,13 @@
 <template>
   <div class="game-container">
     <div class="game-card">
-      <div class="game-title">{{ group }} 組賽程</div>
+      <div class="header-section">
+        <button class="back-home-btn" @click="router.push('/')">
+          <span class="arrow">←</span>
+          <span>返回首頁</span>
+        </button>
+        <div class="game-title">{{ group }} 組賽程</div>
+      </div>
       <div v-for="match in uniqueMatches" v-if="!countryCode" :key="match.matchId" class="match-item">
         <div class="match-header">
           <span class="match-date">{{ formatDate(match.matchDate) }}</span>
@@ -9,16 +15,18 @@
         </div>
 
         <div class="match-teams">
-          <div class="team home">
+          <div class="team home" @click="viewCountryGameSchedule(match.homeAway.code)">
             <img :src="match.homeAway.flag" :alt="match.homeAway.name" class="team-flag">
-            <span class="team-name">{{ match.homeAway.name }}</span>
+            <span class="team-name">{{ match.homeAway.name
+            }}</span>
           </div>
 
           <div class="vs">VS</div>
 
-          <div class="team away">
+          <div class="team away" @click="viewCountryGameSchedule(match.awayTeam.code)">
             <img :src="match.awayTeam.flag" :alt="match.awayTeam.name" class="team-flag">
-            <span class="team-name">{{ match.awayTeam.name }}</span>
+            <span class="team-name">{{ match.awayTeam.name
+            }}</span>
           </div>
         </div>
       </div>
@@ -53,6 +61,7 @@ import { useTeamStore } from '~/store/teamStore'
 
 const teamStore = useTeamStore()
 const route = useRoute()
+const router = useRouter()
 const group = route.query.group || '未知分組' // 如果沒有傳遞分組參數，則顯示 "未知分組"
 const countryCode = route.query.teamCode || '' // 如果沒有傳遞球隊代碼參數，則使用空字串
 const teamsInGroup = teamStore.teams.filter(team => team.teamGroup === group) // 根據分組從 teamStore 中取得對應的球隊資料
@@ -110,6 +119,11 @@ const countryGameSchedule = computed(() => {
   return team ? team.teamGameSchedule : []
 })
 
+const viewCountryGameSchedule = (teamCode) => {
+  console.log(`顯示 ${teamCode} 的比賽日程`)
+  router.push({ path: '/CountryGameSchedule', query: { teamCode } }) // 導向到球隊賽程葉面，並傳遞球隊代碼參數
+}
+
 // 日期格式化
 const formatDate = (dateStr) => {
   const date = new Date(dateStr) // 將日期字串轉換
@@ -164,13 +178,67 @@ body {
   }
 }
 
-.game-title {
+.header-section {
   grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    gap: 15px;
+  }
+}
+
+.back-home-btn {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+
+  .arrow {
+    font-size: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+
+    .arrow {
+      transform: translateX(-4px);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+.game-title {
   text-align: center;
   color: #2c3e50;
-  margin-bottom: 30px;
   font-size: 28px;
   font-weight: bold;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+  }
 }
 
 .match-item {
@@ -227,8 +295,7 @@ body {
   gap: 15px;
 
   @media (max-width: 480px) {
-    flex-direction: column;
-    gap: 12px;
+    gap: 8px;
   }
 }
 
@@ -238,7 +305,17 @@ body {
   align-items: center;
   gap: 12px;
   min-width: 0;
-  /* 防止 flex 子元素溢出 */
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+
+  &:hover {
+    background: rgba(52, 152, 219, 0.05);
+    border: 2px solid #3498db;
+    transform: scale(1.02);
+  }
 
   .team-flag {
     width: 48px;
@@ -281,13 +358,16 @@ body {
   }
 
   @media (max-width: 480px) {
-    width: 100%;
-    justify-content: center !important;
-    flex-direction: row !important;
-    text-align: center !important;
+    padding: 8px;
+    gap: 8px;
 
     .team-name {
-      font-size: 14px;
+      font-size: 13px;
+    }
+
+    .team-flag {
+      width: 32px;
+      height: 22px;
     }
   }
 }
@@ -305,6 +385,11 @@ body {
   @media (max-width: 768px) {
     font-size: 16px;
     padding: 6px 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    padding: 4px 8px;
   }
 }
 </style>

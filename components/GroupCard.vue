@@ -2,11 +2,16 @@
   <div class="group-container">
     <div class="group-card">
       <div v-for="group in teamGroups" :key="group" class="group-card-container">
-        <div class="group-title" @click="viewGameSchedule(group)">Group {{ group }}</div>
+        <div class="group-title">{{ group }}組</div>
         <div v-for="team in getTeamsByGroup(group)" :key="team.teamName" class="team-card"
           @click="viewCountryGameSchedule(team.teamCode)">
           <h3>{{ team.teamName }}</h3>
           <img :src="team.teamFlag" :alt="team.teamName">
+        </div>
+        <div class="view-schedule-btn" @click="viewGameSchedule(group)">
+          <span class="btn-icon">⚽</span>
+          <span class="btn-text">完整賽程</span>
+          <span class="btn-arrow">→</span>
         </div>
       </div>
     </div>
@@ -32,16 +37,16 @@ const getTeamsByGroup = (group) => {
   return teamStore.teams.filter(team => team.teamGroup === group)
 }
 
-// 點擊分組時顯示比賽日程
+// 點擊分組時顯示賽程
 const viewGameSchedule = (group) => {
-  console.log(`顯示 ${group} 組的比賽日程`)
-  router.push({ path: '/GroupGameSchedule', query: { group } }) // 導航到比賽日程頁面，並傳遞分組參數
+  console.log(`顯示 ${group} 組的賽程`)
+  router.push({ path: '/GroupGameSchedule', query: { group } }) // 導航到賽程頁面，並傳遞分組參數
 }
 
-// 點擊球隊時顯示比賽日程
+// 點擊球隊時顯示賽程
 const viewCountryGameSchedule = (teamCode) => {
-  console.log(`顯示 ${teamCode} 的比賽日程`)
-  router.push({ path: '/CountryGameSchedule', query: { teamCode } }) // 導航到球隊比賽日程頁面，並傳遞球隊代碼參數
+  console.log(`顯示 ${teamCode} 的賽程`)
+  router.push({ path: '/CountryGameSchedule', query: { teamCode } }) // 導向到球隊賽程頁面，並傳遞球隊代碼參數
 }
 </script>
 
@@ -81,7 +86,7 @@ const viewCountryGameSchedule = (teamCode) => {
   }
 
   @media (max-width: 480px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
 }
@@ -117,7 +122,7 @@ const viewCountryGameSchedule = (teamCode) => {
     }
 
     .group-title {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
       color: white;
     }
   }
@@ -138,13 +143,14 @@ const viewCountryGameSchedule = (teamCode) => {
 .group-title {
   font-size: 1.5rem;
   text-align: center;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
-  color: #2c3e50;
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  color: white;
   font-weight: 700;
   padding: 1.25rem 0;
   letter-spacing: 1px;
   transition: all 0.3s ease;
   position: relative;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
     font-size: 1.3rem;
@@ -248,6 +254,97 @@ const viewCountryGameSchedule = (teamCode) => {
   @media (max-width: 480px) {
     padding: 8px 12px;
     gap: 8px;
+  }
+}
+
+.view-schedule-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 20px;
+  margin: 12px 16px 16px 16px;
+  background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.5);
+
+    &::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn-arrow {
+      transform: translateX(4px);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  .btn-icon,
+  .btn-text,
+  .btn-arrow {
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-icon {
+    font-size: 1.2rem;
+  }
+
+  .btn-arrow {
+    transition: transform 0.3s ease;
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 12px 16px;
+    margin: 10px 14px 14px 14px;
+    font-size: 0.95rem;
+
+    .btn-icon {
+      font-size: 1.1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px 14px;
+    margin: 8px 12px 12px 12px;
+    font-size: 0.9rem;
+    gap: 6px;
+
+    .btn-icon {
+      font-size: 1rem;
+    }
+
+    .btn-arrow {
+      font-size: 1rem;
+    }
   }
 }
 
