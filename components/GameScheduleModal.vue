@@ -65,9 +65,9 @@ const upcomingMatches = computed(() => {
   const today = getTodayString() // 使用測試日期
 
   // 收集所有球隊的賽程，並過濾出即將開始的比賽（今天和未來1天內）
-  const matchesMap = new Map() // 使用 Map 去重
+  const matchesMap = new Map() // 建立 Map 去除重複比賽
   const oneDaysLater = new Date(getCurrentDate())
-  oneDaysLater.setDate(oneDaysLater.getDate() + 0)
+  oneDaysLater.setDate(oneDaysLater.getDate() + 1)
   const oneDaysLaterStr = oneDaysLater.toISOString().split('T')[0]
 
   teamsToShow.forEach(team => {
