@@ -262,7 +262,7 @@ const viewCountryGameSchedule = (teamCode) => {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 14px 20px;
+  padding: 5px 10px;
   margin: 12px 16px 16px 16px;
   background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
   color: white;
