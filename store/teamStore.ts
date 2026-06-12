@@ -34,7 +34,7 @@ export const useTeamStore = defineStore('team', () => {
           {
             matchId: 'MX-1',
             date: '2026-06-12',
-            time: '15:00',
+            time: '03:00',
             homeAway: true,
             opponent: '南非',
             stage: '小組賽'
@@ -66,7 +66,7 @@ export const useTeamStore = defineStore('team', () => {
           {
             matchId: 'ZA-1',
             date: '2026-06-12',
-            time: '15:00',
+            time: '03:00',
             homeAway: false,
             opponent: '墨西哥',
             stage: '小組賽'
