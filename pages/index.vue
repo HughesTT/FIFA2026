@@ -18,7 +18,7 @@ useSeoMeta({
 <style lang="scss">
 body {
   font-family: 'Noto Sans TC', sans-serif;
-  background: url('../public/img/8b3a7cbf-911c-4809-a084-368496c1d04c.webp') no-repeat top right;
+  background: url('../public/img/FIFA-unveils-Official-FIFA-World-Cup-2026-Album-squad.avif') no-repeat fixed top center;
   background-size: cover;
   margin: 0;
   padding: 20px;

@@ -245,8 +245,8 @@ const goback = () => {
 }
 
 .matches-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 
   @media (max-width: 768px) {
@@ -295,9 +295,13 @@ const goback = () => {
   align-items: center;
 
   .date {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #2c3e50;
+    background: #e9e0fa;
+    text-align: center;
+    padding: 2px 12px;
+    border-radius: 12px;
   }
 
   .time {
@@ -318,9 +322,10 @@ const goback = () => {
 .match-teams {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
   gap: 15px;
-  margin: 10px 0;
+  width: 100%;
 
   @media (max-width: 480px) {
     gap: 8px;
@@ -328,69 +333,60 @@ const goback = () => {
 }
 
 .team {
-  flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 12px;
+  min-width: 80px;
   padding: 12px;
   border-radius: 8px;
+  cursor: pointer;
   transition: all 0.2s ease;
-  min-width: 0;
-  /* 防止 flex 子元素溢出 */
+  border: 2px solid transparent;
 
-  &.current {
-    background: rgba(52, 152, 219, 0.1);
+  &:hover {
+    background: rgba(52, 152, 219, 0.05);
     border: 2px solid #3498db;
-  }
-
-  /* 非當前球隊可點擊 */
-  &:not(.current) {
-    cursor: pointer;
-
-    &:hover {
-      background: rgba(231, 76, 60, 0.05);
-      border: 2px solid #e74c3c;
-      transform: scale(1.02);
-    }
+    transform: scale(1.02);
   }
 
   .team-flag {
     width: 48px;
     height: 32px;
-    object-fit: cover;
+    display: block;
+    /* object-fit: cover; */
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0; // 防止圖片被壓縮
+    flex-shrink: 0;
+    /* 防止圖片被壓縮 */
   }
 
   .team-name {
     font-size: 18px;
     font-weight: 600;
     color: #2c3e50;
-    white-space: nowrap;
+    /* white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis; */
   }
 
-  // 主場：名稱在左、國旗在右
   &.home {
-    text-align: right;
-    flex-direction: row-reverse;
+    text-align: center;
   }
 
-  // 客場：國旗在左、名稱在右
   &.away {
-    justify-content: flex-start;
+    text-align: center;
   }
 
   @media (max-width: 768px) {
     .team-name {
-      font-size: 16px;
+      font-size: 18px;
     }
 
     .team-flag {
-      width: 40px;
-      height: 28px;
+      width: 48px;
+      height: 32px;
     }
   }
 
@@ -399,12 +395,12 @@ const goback = () => {
     gap: 8px;
 
     .team-name {
-      font-size: 13px;
+      font-size: 18px;
     }
 
     .team-flag {
-      width: 32px;
-      height: 22px;
+      width: 48px;
+      height: 32px;
     }
   }
 }

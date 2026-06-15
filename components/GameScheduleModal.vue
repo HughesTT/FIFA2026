@@ -39,9 +39,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { useTeamStore } from '~/store/teamStore'
 import { useRoute } from 'vue-router'
-import { getCurrentDate, getTodayString } from '~/utils/dateHelper'
 
 // 控制顯示/隱藏
 const isVisible = ref(true)
@@ -50,66 +48,12 @@ const closeModal = () => {
   isVisible.value = false
 }
 
-const teamStore = useTeamStore()
 const route = useRoute()
+// 將路由參數轉為響應式引用傳入
+const groupRef = computed(() => route.params.group || '')
 
-// 取得即將開始的比賽
-const upcomingMatches = computed(() => {
-  const group = route.query.group
-
-  // 如果沒有分組參數，顯示所有球隊的即將開始的比賽
-  const teamsToShow = group
-    ? teamStore.teams.filter(team => team.teamGroup === group)
-    : teamStore.teams
-
-  const today = getTodayString() // 使用測試日期
-
-  // 收集所有球隊的賽程，並過濾出即將開始的比賽（今天和未來1天內）
-  const matchesMap = new Map() // 建立 Map 去除重複比賽
-  const oneDaysLater = new Date(getCurrentDate())
-  oneDaysLater.setDate(oneDaysLater.getDate() + 1)
-  const oneDaysLaterStr = oneDaysLater.toISOString().split('T')[0]
-
-  teamsToShow.forEach(team => {
-    team.teamGameSchedule.forEach(match => {
-      if (match.date >= today && match.date <= oneDaysLaterStr) {
-        // 排序隊伍名稱確保一致性
-        const teams = [team.teamName, match.opponent].sort()
-        const matchKey = `${match.date}-${match.time}-${teams[0]}-vs-${teams[1]}`
-
-        if (!matchesMap.has(matchKey)) {
-          // 查找對手完整資訊
-          const team1 = teamStore.teams.find(t => t.teamName === teams[0])
-          const team2 = teamStore.teams.find(t => t.teamName === teams[1])
-
-          // 使用排序後的名稱確定穩定的主客場順序（第一個是主場，第二個是客場）
-          matchesMap.set(matchKey, {
-            matchId: matchKey,
-            date: match.date,
-            time: match.time,
-            stage: match.stage,
-            teamGroup: team.teamGroup,
-            // 主場球隊（排序後的第一個）
-            homeTeam: teams[0],
-            homeFlag: team1?.teamFlag || '',
-            // 客場球隊（排序後的第二個）
-            awayTeam: teams[1],
-            awayFlag: team2?.teamFlag || ''
-          })
-        }
-      }
-    })
-  })
-
-  // 轉換為陣列並排序
-  return Array.from(matchesMap.values())
-    .sort((a, b) => {
-      const dateCompare = a.date.localeCompare(b.date)
-      if (dateCompare !== 0) return dateCompare
-      return a.time.localeCompare(b.time)
-    })
-    .slice(0, 10) // 只顯示前10場比賽
-})
+const { useMatches } = await import('~/composable/useMatches')
+const upcomingMatches = useMatches(groupRef)
 
 // 日期格式化
 const formatDate = (dateStr) => {
@@ -120,7 +64,6 @@ const formatDate = (dateStr) => {
     weekday: 'short'
   })
 }
-
 </script>
 
 <style lang="scss" scoped>

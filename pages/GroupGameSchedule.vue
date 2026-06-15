@@ -1,6 +1,7 @@
 <template>
   <div class="game-container">
     <BackHome />
+    <Standings />
     <div class="game-card">
       <button class="back-home-btn" @click="goback">
         <span class="arrow">←</span>
@@ -152,7 +153,7 @@ body {
 }
 
 .game-container {
-  max-width: 1400px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 20px;
 
@@ -188,7 +189,7 @@ body {
   position: absolute;
   z-index: 10;
   top: 20px;
-  left: 20px;
+  right: 20px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -287,9 +288,13 @@ body {
   font-size: 14px;
 
   .match-date {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #2c3e50;
+    background: #e9e0fa;
+    text-align: center;
+    padding: 2px 12px;
+    border-radius: 12px;
   }
 
   .match-time {
@@ -309,8 +314,10 @@ body {
 .match-teams {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
   gap: 15px;
+  width: 100%;
 
   @media (max-width: 480px) {
     gap: 8px;
@@ -318,11 +325,12 @@ body {
 }
 
 .team {
-  flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 12px;
-  min-width: 0;
+  min-width: 80px;
   padding: 12px;
   border-radius: 8px;
   cursor: pointer;
@@ -338,7 +346,8 @@ body {
   .team-flag {
     width: 48px;
     height: 32px;
-    object-fit: cover;
+    display: block;
+    /* object-fit: cover; */
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     flex-shrink: 0;
@@ -349,29 +358,27 @@ body {
     font-size: 18px;
     font-weight: 600;
     color: #2c3e50;
-    white-space: nowrap;
+    /* white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis; */
   }
 
   &.home {
-    /* justify-content: flex-end; */
-    text-align: right;
-    flex-direction: row-reverse;
+    text-align: center;
   }
 
   &.away {
-    justify-content: flex-start;
+    text-align: center;
   }
 
   @media (max-width: 768px) {
     .team-name {
-      font-size: 16px;
+      font-size: 18px;
     }
 
     .team-flag {
-      width: 40px;
-      height: 28px;
+      width: 48px;
+      height: 32px;
     }
   }
 
@@ -380,12 +387,12 @@ body {
     gap: 8px;
 
     .team-name {
-      font-size: 13px;
+      font-size: 18px;
     }
 
     .team-flag {
-      width: 32px;
-      height: 22px;
+      width: 48px;
+      height: 32px;
     }
   }
 }
