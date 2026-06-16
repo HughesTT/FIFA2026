@@ -1,6 +1,7 @@
 <template>
   <div>
     <BackHome />
+    <Standings />
     <div v-if="!currentTeam" class="schedule-container">
       <div class="schedule-card">
         <div class="no-data">找不到球隊資料</div>
@@ -19,34 +20,40 @@
           <h2>{{ currentTeam.teamName }}國家隊賽程</h2>
         </div>
 
-        <div v-if="countryGameSchedule.length === 0" class="no-data">目前沒有賽程資料</div>
+        <div v-if="countryGameSchedule.length === 0 && teamCode" class="no-data">目前沒有賽程資料</div>
 
         <div v-else class="matches-list">
-          <div v-for="(match, index) in countryGameSchedule" :key="match.matchId" class="match-item">
+          <div v-for="(match, index) in uniqueMatches" :key="match.matchId" class="match-item">
             <div class="match-number">第 {{ index + 1 }} 場</div>
             <div class="match-info">
               <div class="match-datetime">
-                <span class="date">{{ formatDate(match.date) }}</span>
-                <span class="time">{{ match.time }}</span>
+                <span class="date">{{ formatDate(match.matchDate) }}</span>
+                <span class="time">{{ match.matchTime }}</span>
               </div>
 
               <div class="match-teams">
-                <!-- 主場：名稱在左、國旗在右 -->
-                <div class="team home" :class="{ 'current': match.homeAway }"
-                  @click="match.homeAway ? null : viewCountryGameSchedule(getOpponentCode(match.opponent))">
-                  <img :src="match.homeAway ? currentTeam.teamFlag : getOpponentFlag(match.opponent)"
-                    :alt="match.homeAway ? currentTeam.teamName : match.opponent" class="team-flag">
-                  <span class="team-name">{{ match.homeAway ? currentTeam.teamName : match.opponent }}</span>
+                <div class="team home" @click="viewCountryGameSchedule(match.homeAway.code)">
+                  <img :src="match.homeAway.flag" :alt="match.homeAway.name" class="team-flag">
+                  <span class="team-name">{{ match.homeAway.name }}</span>
                 </div>
 
-                <span class="vs">VS</span>
+                <div class="score-or-vs">
+                  <div v-if="match.homeScore !== null && match.awayScore !== null" class="match-score">
+                    <span class="score-num" :class="{ 'winner': match.homeScore > match.awayScore }">
+                      {{ match.homeScore }}
+                    </span>
+                    <span class="score-divider">-</span>
+                    <span class="score-num" :class="{ 'winner': match.awayScore > match.homeScore }">
+                      {{ match.awayScore }}
+                    </span>
+                  </div>
 
-                <!-- 客場：國旗在左、名稱在右 -->
-                <div class="team away" :class="{ 'current': !match.homeAway }"
-                  @click="!match.homeAway ? null : viewCountryGameSchedule(getOpponentCode(match.opponent))">
-                  <img :src="match.homeAway ? getOpponentFlag(match.opponent) : currentTeam.teamFlag"
-                    :alt="match.homeAway ? match.opponent : currentTeam.teamName" class="team-flag">
-                  <span class="team-name">{{ match.homeAway ? match.opponent : currentTeam.teamName }}</span>
+                  <div v-else class="vs">VS</div>
+                </div>
+
+                <div class="team away" @click="viewCountryGameSchedule(match.awayTeam.code)">
+                  <img :src="match.awayTeam.flag" :alt="match.awayTeam.name" class="team-flag">
+                  <span class="team-name">{{ match.awayTeam.name }}</span>
                 </div>
               </div>
 
@@ -63,10 +70,52 @@
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useTeamStore } from '~/store/teamStore'
+import { useGroupStandings } from '~/composable/useGroupStandings'
 
 const route = useRoute()
 const router = useRouter()
 const teamStore = useTeamStore()
+
+const group = computed(() => route.query.group || '') // 取得目前的組別參數，若沒有則為空字串
+const { enhancedMatches } = useGroupStandings(group) // 呼叫戰績表，傳入目前的組別
+
+const uniqueMatches = computed(() => {
+  // 1. 先用原本的邏輯從更完整的資料來源對齊、map 出包含比數與代碼的陣列
+  const allGroupMatches = enhancedMatches.value.map(match => {
+    const homeTeamInfo = teamStore.teams.find(t => t.teamName === match.homeTeam)
+    const awayTeamInfo = teamStore.teams.find(t => t.teamName === match.awayTeam)
+
+    return {
+      matchId: match.matchId,
+      matchDate: match.date,
+      matchTime: match.time,
+      homeScore: match.homeScore,
+      awayScore: match.awayScore,
+      homeAway: {
+        name: match.homeTeam,
+        flag: match.homeFlag,
+        code: homeTeamInfo?.teamCode || ''
+      },
+      awayTeam: {
+        name: match.awayTeam,
+        flag: match.awayFlag,
+        code: awayTeamInfo?.teamCode || ''
+      }
+    }
+  })
+
+  // 2. 🌟 關鍵過濾：只保留「主隊代碼」或「客隊代碼」等於當前網址 teamCode 的比賽
+  return allGroupMatches.filter(match =>
+    match.homeAway.code === route.query.teamCode ||
+    match.awayTeam.code === route.query.teamCode
+  )
+})
+// 取得目前球隊的賽程
+const countryGameSchedule = computed(() => {
+  const teamCode = route.query.teamCode
+  const team = teamStore.teams.find(t => t.teamCode === teamCode)
+  return team ? team.teamGameSchedule : []
+})
 
 // 將 teamCode 改為 computed，使其響應路由變化產生資料更新
 const teamCode = computed(() => route.query.teamCode || '')
@@ -75,11 +124,14 @@ const teamCode = computed(() => route.query.teamCode || '')
 const currentTeam = computed(() => {
   return teamStore.teams.find(team => team.teamCode === teamCode.value)
 })
-
+// 🌟 加入這行保險：如果網址沒傳 group，就用查到的球隊組別強行補上去給戰績表看
+if (currentTeam.value && !route.query.group) {
+  route.query.group = currentTeam.value.teamGroup
+}
 // 取得目前球隊的賽程
-const countryGameSchedule = computed(() => {
-  return currentTeam.value?.teamGameSchedule || [] // 如果 currentTeam 為 undefined，則回傳空陣列
-})
+// const countryGameSchedule = computed(() => {
+//   return currentTeam.value?.teamGameSchedule || [] // 如果 currentTeam 為 undefined，則回傳空陣列
+// })
 
 // 根據對戰國名稱取得對戰國國旗
 const getOpponentFlag = (opponentName) => {
@@ -95,8 +147,15 @@ const getOpponentCode = (opponentName) => {
 
 // 點擊球隊時顯示比賽日程
 const viewCountryGameSchedule = (teamCode) => {
-  if (!teamCode) return // 如果沒有 teamCode 則不執行
-  router.push({ path: '/CountryGameSchedule', query: { teamCode } })
+  console.log(`顯示 ${teamCode} 的比賽日程`)
+  // 🌟 修改這裡：在 query 中多帶入 group 參數
+  router.push({
+    path: '/CountryGameSchedule',
+    query: {
+      teamCode,
+      group: group.value
+    }
+  })
 }
 
 // 日期格式化
@@ -246,7 +305,7 @@ const goback = () => {
 
 .matches-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
 
   @media (max-width: 768px) {
@@ -329,6 +388,48 @@ const goback = () => {
 
   @media (max-width: 480px) {
     gap: 8px;
+  }
+}
+
+.score-or-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+
+  .match-score {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2c3e50;
+    background: #f8f9fa;
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+
+    .score-divider {
+      color: #95a5a6;
+      font-size: 16px;
+    }
+
+    .score-num {
+      // 預設輸球或平手顏色稍微暗一點
+      color: #7f8c8d;
+
+      // 🌟 勝隊字體顏色變更為顯眼的深色/藍色
+      &.winner {
+        color: #2c3e50;
+        font-weight: 800;
+      }
+    }
+  }
+
+  .vs {
+    font-size: 18px;
+    font-weight: bold;
+    color: #95a5a6;
   }
 }
 

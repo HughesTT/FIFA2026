@@ -1,3 +1,4 @@
+// 所有球隊資訊，包含國家名稱、國旗、國家代碼、賽程資訊等，並按組別分類存儲在這裡。這些資訊將用於顯示球隊列表、賽程表等功能。
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 

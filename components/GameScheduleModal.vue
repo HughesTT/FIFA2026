@@ -39,21 +39,32 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useGroupStandings } from '~/composable/useGroupStandings'
+import { getTodayString, getCurrentDate } from '~/utils/dateHelper'
 
-// 控制顯示/隱藏
+// 控制 Modal 顯示/隱藏
 const isVisible = ref(true)
-
 const closeModal = () => {
   isVisible.value = false
 }
+const { enhancedMatches } = useGroupStandings(ref('')) // 呼叫戰績表，空字串 ref 代表不過濾分組
 
-const route = useRoute()
-// 將路由參數轉為響應式引用傳入
-const groupRef = computed(() => route.params.group || '')
+// 篩選出今天或明天的比賽，且只顯示未開始的比賽
+const upcomingMatches = computed(() => {
+  const todayStr = getTodayString() // 獲取今天的日期 'YYYY-MM-DD'
+  // 計算隔天日期
+  const tomorrow = new Date(getCurrentDate())
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  const tomorrowStr = tomorrow.toISOString().split('T')[0] // 取得隔天日期 'YYYY-MM-DD'
+  // 篩選今天或明天日期的比賽，若 time 已過，則隱藏
+  return enhancedMatches.value.filter(match => {
+    if (match.date === todayStr || match.date === tomorrowStr) {
+      const matchDateTime = new Date(`${match.date}T${match.time}:00`)
+      return matchDateTime > new Date() // 只顯示未開始的比賽
+    }
+  })
 
-const { useMatches } = await import('~/composable/useMatches')
-const upcomingMatches = useMatches(groupRef)
+})
 
 // 日期格式化
 const formatDate = (dateStr) => {

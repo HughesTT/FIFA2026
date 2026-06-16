@@ -18,16 +18,26 @@
         <div class="match-teams">
           <div class="team home" @click="viewCountryGameSchedule(match.homeAway.code)">
             <img :src="match.homeAway.flag" :alt="match.homeAway.name" class="team-flag">
-            <span class="team-name">{{ match.homeAway.name
-            }}</span>
+            <span class="team-name">{{ match.homeAway.name }}</span>
           </div>
 
-          <div class="vs">VS</div>
+          <div class="score-or-vs">
+            <div v-if="match.homeScore !== null && match.awayScore !== null" class="match-score">
+              <span class="score-num" :class="{ 'winner': match.homeScore > match.awayScore }">
+                {{ match.homeScore }}
+              </span>
+              <span class="score-divider">-</span>
+              <span class="score-num" :class="{ 'winner': match.awayScore > match.homeScore }">
+                {{ match.awayScore }}
+              </span>
+            </div>
+
+            <div v-else class="vs">VS</div>
+          </div>
 
           <div class="team away" @click="viewCountryGameSchedule(match.awayTeam.code)">
             <img :src="match.awayTeam.flag" :alt="match.awayTeam.name" class="team-flag">
-            <span class="team-name">{{ match.awayTeam.name
-            }}</span>
+            <span class="team-name">{{ match.awayTeam.name }}</span>
           </div>
         </div>
       </div>
@@ -41,6 +51,9 @@
           <div v-if="match.homeAway" class="team home">
             <img :src="match.homeAway.flag" :alt="match.homeAway.name" class="team-flag">
             <span class="team-name">{{ match.homeAway.name }}</span>
+            <span class="team-score">
+              {{ enhancedMatches.homeScore }}
+            </span>
           </div>
 
           <div class="vs">VS</div>
@@ -48,6 +61,9 @@
           <div v-if="!match.homeAway" class="team away">
             <img :src="match.awayTeam.flag" :alt="match.awayTeam.name" class="team-flag">
             <span class="team-name">{{ match.awayTeam.name }}</span>
+            <span class="team-score">
+              {{ enhancedMatches.awayScore }}
+            </span>
           </div>
         </div>
       </div>
@@ -57,60 +73,45 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { useTeamStore } from '~/store/teamStore'
+import { useRoute, useRouter } from 'vue-router'
+import { useTeamStore } from '~/store/teamStore' // 根據分組從 teamStore 中取得對應的球隊資料
+import { useGroupStandings } from '~/composable/useGroupStandings' // 引入 useGroupStandings composable，獲取比賽資料
 
 const teamStore = useTeamStore()
 const route = useRoute()
 const router = useRouter()
-const group = route.query.group || '未知分組' // 如果沒有傳遞分組參數，則顯示 "未知分組"
-const countryCode = route.query.teamCode || '' // 如果沒有傳遞球隊代碼參數，則使用空字串
-const teamsInGroup = teamStore.teams.filter(team => team.teamGroup === group) // 根據分組從 teamStore 中取得對應的球隊資料
+const group = computed(() => route.query.group || '組')
 
-// 將所有比賽資料存儲在一個 Map 中，相同日期與相同對戰隊伍的比賽只保留一筆
+// 🌟 保留原本第 74 行的宣告，不再重複宣告 const countryCode
+const countryCode = route.query.teamCode || ''
+
+// 呼叫戰 useGroupStandings，傳入目前的組別
+const { enhancedMatches } = useGroupStandings(group)
+
+// 將 enhancedMatches，重新轉換成原本 Template 所期待的巢狀結構
 const uniqueMatches = computed(() => {
-  const matches = new Map() // 定義 matches 為 Map 物件，用於存儲唯一的比賽資料
-  teamsInGroup.forEach(team => {
-    team.teamGameSchedule.forEach(schedule => {
-      // 使用日期和對戰隊伍作為唯一依據
-      const teams = [team.teamName, schedule.opponent].sort()
-      const matchKey = `${group}-${schedule.date}-${schedule.time}-${teams[0]}-vs-${teams[1]}` // 定義 matchKey 為唯一的比賽識別鍵，包含分組、日期、時間和對戰隊伍資訊
+  return enhancedMatches.value.map(match => {
+    // 查詢主客隊的完整資訊（用來補齊點擊所需的國家代碼 code）
+    const homeTeamInfo = teamStore.teams.find(t => t.teamName === match.homeTeam)
+    const awayTeamInfo = teamStore.teams.find(t => t.teamName === match.awayTeam)
 
-      if (!matches.has(matchKey)) { // 如果 matches 當中沒有比賽資料，則新增一筆
-        const opponent = teamStore.teams.find(t => t.teamName === schedule.opponent) // 從 teamStore 中尋找對戰隊伍的資料
-
-        matches.set(matchKey, { // 定義比賽資料物件，包含日期、時間、對戰隊伍、主客場資訊等
-          matchDate: schedule.date, // 比賽日期
-          matchTime: schedule.time, // 比賽時間
-          opponent: schedule.opponent, // 對戰隊伍名稱
-          homeAway: schedule.homeAway ? { // 主客場資訊，homeAway 為 true 表示主場，false 表示客場
-            name: team.teamName, // 主場名稱
-            flag: team.teamFlag, // 主場國旗
-            code: team.teamCode // 主場代碼
-          } : {
-            name: opponent?.teamName || schedule.opponent, // 客場名稱，如果 opponent 物件存在則使用其 teamName，否則使用 schedule.opponent
-            flag: opponent?.teamFlag || '', // 客場國旗，如果 opponent 物件存在則使用其 teamFlag，否則使用空字串
-            code: opponent?.teamCode || '' // 客場代碼，如果 opponent 物件存在則使用其 teamCode，否則使用空字串
-          },
-          awayTeam: schedule.homeAway ? { // 客場資訊，homeAway 為 true 表示主場，false 表示客場
-            name: opponent?.teamName || schedule.opponent, // 客場名稱，如果 opponent 物件存在則使用其 teamName，否則使用 schedule.opponent
-            flag: opponent?.teamFlag || '', // 客場國旗，如果 opponent 物件存在則使用其 teamFlag，否則使用空字串
-            code: opponent?.teamCode || '' // 客場代碼，如果 opponent 物件存在則使用其 teamCode，否則使用空字串
-          } : {
-            name: team.teamName, // 主場名稱
-            flag: team.teamFlag, // 主場國旗
-            code: team.teamCode // 主場代碼
-          }
-        })
+    return {
+      matchId: match.matchId,
+      matchDate: match.date, // 對齊樣板的 matchDate
+      matchTime: match.time, // 對齊樣板的 matchTime
+      homeScore: match.homeScore, // 注入主隊分數
+      awayScore: match.awayScore, // 注入客隊分數
+      homeAway: {
+        name: match.homeTeam,
+        flag: match.homeFlag,
+        code: homeTeamInfo?.teamCode || ''
+      },
+      awayTeam: {
+        name: match.awayTeam,
+        flag: match.awayFlag,
+        code: awayTeamInfo?.teamCode || ''
       }
-    })
-  })
-
-  // 將 matches 轉換為陣列並根據日期和時間排序後回傳
-  return Array.from(matches.values()).sort((a, b) => {
-    const dateTimeA = new Date(`${a.matchDate}T${a.matchTime}`)
-    const dateTimeB = new Date(`${b.matchDate}T${b.matchTime}`)
-    return dateTimeA - dateTimeB
+    }
   })
 })
 
@@ -122,24 +123,24 @@ const countryGameSchedule = computed(() => {
 
 const viewCountryGameSchedule = (teamCode) => {
   console.log(`顯示 ${teamCode} 的比賽日程`)
-  router.push({ path: '/CountryGameSchedule', query: { teamCode } }) // 導向到球隊賽程葉面，並傳遞球隊代碼參數
+  router.push({ path: '/CountryGameSchedule', query: { teamCode } })
 }
 
 // 日期格式化
 const formatDate = (dateStr) => {
-  const date = new Date(dateStr) // 將日期字串轉換
+  if (!dateStr) return ''
+  const date = new Date(dateStr)
   return date.toLocaleDateString('zh-TW', {
-    month: '2-digit', // 顯示兩位數的月份
-    day: 'numeric', // 顯示數字的日期
-    weekday: 'short' // 顯示簡短的星期幾名稱
+    month: '2-digit',
+    day: 'numeric',
+    weekday: 'short'
   })
 }
 
 // 返回上一頁
 const goback = () => {
-  router.go(-1) // 返回上一頁
+  router.go(-1)
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -321,6 +322,48 @@ body {
 
   @media (max-width: 480px) {
     gap: 8px;
+  }
+}
+
+.score-or-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+
+  .match-score {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2c3e50;
+    background: #f8f9fa;
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+
+    .score-divider {
+      color: #95a5a6;
+      font-size: 16px;
+    }
+
+    .score-num {
+      // 預設輸球或平手顏色稍微暗一點
+      color: #7f8c8d;
+
+      // 🌟 勝隊字體顏色變更為顯眼的深色/藍色
+      &.winner {
+        color: #2c3e50;
+        font-weight: 800;
+      }
+    }
+  }
+
+  .vs {
+    font-size: 18px;
+    font-weight: bold;
+    color: #95a5a6;
   }
 }
 
