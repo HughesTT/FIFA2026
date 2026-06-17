@@ -5,7 +5,7 @@ export interface MatchScore {
 }
 
 export const matchResults: Record<string, MatchScore> = {
-  '2026-06-12-03:00-南非-vs-墨西哥': { homeScore: 2, awayScore: 0 },
+  '2026-06-12-03:00-南非-vs-墨西哥': { homeScore: 0, awayScore: 2 },
   '2026-06-12-10:00-南韓-vs-捷克': { homeScore: 2, awayScore: 1 },
   '2026-06-13-03:00-加拿大-vs-波赫': { homeScore: 1, awayScore: 1 },
   '2026-06-13-09:00-巴拉圭-vs-美國': { homeScore: 1, awayScore: 4 },
