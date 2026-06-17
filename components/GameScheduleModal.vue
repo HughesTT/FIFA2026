@@ -21,12 +21,12 @@
           </div>
           <div class="match-teams">
             <div class="team">
-              <img :src="match.homeFlag" :alt="match.homeTeam" class="team-flag">
+              <img :src="getTeamFlag(match.homeTeam)" :alt="match.homeTeam" class="team-flag">
               <span class="team-name">{{ match.homeTeam }}</span>
             </div>
             <span class="vs">VS</span>
             <div class="team">
-              <img :src="match.awayFlag" :alt="match.awayTeam" class="team-flag">
+              <img :src="getTeamFlag(match.awayTeam)" :alt="match.awayTeam" class="team-flag">
               <span class="team-name">{{ match.awayTeam }}</span>
             </div>
           </div>
@@ -39,6 +39,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import { useTeamStore } from '~/store/teamStore'
 import { useGroupStandings } from '~/composable/useGroupStandings'
 import { getTodayString, getCurrentDate } from '~/utils/dateHelper'
 
@@ -48,6 +49,11 @@ const closeModal = () => {
   isVisible.value = false
 }
 const { enhancedMatches } = useGroupStandings(ref('')) // 呼叫戰績表，空字串 ref 代表不過濾分組
+const teamStore = useTeamStore()
+const getTeamFlag = (teamName) => {
+  const team = teamStore.teams.find(t => t.teamName === teamName)
+  return team ? team.teamFlag : '' // 若找不到隊伍，回傳空字串，避免圖片錯誤
+}
 
 // 篩選出今天或明天的比賽，且只顯示未開始的比賽
 const upcomingMatches = computed(() => {

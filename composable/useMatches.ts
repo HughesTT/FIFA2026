@@ -52,13 +52,8 @@ export const useMatches = (groupRef: Ref<string>) => {
             time: match.time,
             stage: match.stage,
             teamGroup: team.teamGroup,
-            // 主場配主場、客場配客場
             homeTeam: homeTeamName,
-            homeFlag: homeTeamInfo?.teamFlag || '',
-            homeCode: homeTeamInfo?.teamCode || '',
             awayTeam: awayTeamName,
-            awayFlag: awayTeamInfo?.teamFlag || '',
-            awayCode: awayTeamInfo?.teamCode || ''
           })
         }
       }
