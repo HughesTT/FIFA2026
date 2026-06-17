@@ -14,6 +14,8 @@
               <th>勝</th>
               <th>平</th>
               <th>負</th>
+              <th>進球</th>
+              <th>失球</th>
               <th>淨勝球</th>
               <th>積分</th>
             </tr>
@@ -27,6 +29,8 @@
               <td>{{ team.won }}</td>
               <td>{{ team.drawn }}</td>
               <td>{{ team.lost }}</td>
+              <td>{{ team.goalsFor }}</td>
+              <td>{{ team.goalsAgainst }}</td>
               <td>{{ team.goalDifference }}</td>
               <td>{{ team.points }}</td>
             </tr>
@@ -99,6 +103,15 @@ const filteredStandings = computed(() => {
   td {
     padding: 12px 8px;
     text-align: center;
+    border-bottom: 1px solid #ccc;
+  }
+
+  th {
+    color: #555;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
   }
 
   .team-info {

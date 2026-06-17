@@ -158,9 +158,9 @@ function createEmptyStanding(name: string, flag: string, group: string): TeamSta
     won: 0,
     drawn: 0,
     lost: 0,
-    goalsFor: 0,
-    goalsAgainst: 0,
-    goalDifference: 0,
+    goalsFor: 0, // 進球數
+    goalsAgainst: 0, // 失球數
+    goalDifference: 0, // 淨勝球數
     points: 0
   }
 }
