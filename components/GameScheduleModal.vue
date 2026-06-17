@@ -10,27 +10,32 @@
         </svg>
       </button>
     </div>
-    <div v-if="upcomingMatches.length === 0" class="no-matches">沒有即將進行的比賽</div>
-    <div v-else class="matches-list">
-      <div v-for="match in upcomingMatches" :key="match.matchId" class="match-item">
-        <div class="match-badge">{{ match.teamGroup }}組</div>
-        <div class="match-info">
-          <div class="match-datetime">
-            <span class="date">{{ formatDate(match.date) }}</span>
-            <span class="time">{{ match.time }}</span>
-          </div>
-          <div class="match-teams">
-            <div class="team">
-              <img :src="getTeamFlag(match.homeTeam)" :alt="match.homeTeam" class="team-flag">
-              <span class="team-name">{{ match.homeTeam }}</span>
+    <div v-if="isVisible" class="modal-container">
+      <div v-if="upcomingMatches.length === 0" class="no-matches">沒有即將進行的比賽</div>
+      <div v-else class="matches-list">
+        <div v-for="match in upcomingMatches" :key="match.matchId" class="match-item">
+          <div class="match-badge">{{ match.teamGroup }}組</div>
+
+          <div class="match-info">
+            <div class="match-datetime">
+              <span class="date">{{ formatDate(match.date) }}</span>
+              <span class="time">{{ match.time }}</span>
             </div>
-            <span class="vs">VS</span>
-            <div class="team">
-              <img :src="getTeamFlag(match.awayTeam)" :alt="match.awayTeam" class="team-flag">
-              <span class="team-name">{{ match.awayTeam }}</span>
+
+            <div class="match-teams">
+              <div class="team">
+                <img :src="match.homeFlag" :alt="match.homeTeam" class="team-flag">
+                <span class="team-name">{{ match.homeTeam }}</span>
+              </div>
+
+              <div class="vs">VS</div>
+
+              <div class="team">
+                <img :src="match.awayFlag" :alt="match.awayTeam" class="team-flag">
+                <span class="team-name">{{ match.awayTeam }}</span>
+              </div>
             </div>
           </div>
-          <div class="match-stage">{{ match.stage }}</div>
         </div>
       </div>
     </div>
@@ -41,35 +46,37 @@
 import { computed, ref } from 'vue'
 import { useTeamStore } from '~/store/teamStore'
 import { useGroupStandings } from '~/composable/useGroupStandings'
-import { getTodayString, getCurrentDate } from '~/utils/dateHelper'
 
 // 控制 Modal 顯示/隱藏
 const isVisible = ref(true)
 const closeModal = () => {
   isVisible.value = false
 }
-const { enhancedMatches } = useGroupStandings(ref('')) // 呼叫戰績表，空字串 ref 代表不過濾分組
+const groupRef = ref('')
+const { enhancedMatches } = useGroupStandings(groupRef) // 呼叫戰績表，空字串 ref 代表不過濾分組
 const teamStore = useTeamStore()
-const getTeamFlag = (teamName) => {
-  const team = teamStore.teams.find(t => t.teamName === teamName)
-  return team ? team.teamFlag : '' // 若找不到隊伍，回傳空字串，避免圖片錯誤
-}
 
 // 篩選出今天或明天的比賽，且只顯示未開始的比賽
 const upcomingMatches = computed(() => {
-  const todayStr = getTodayString() // 獲取今天的日期 'YYYY-MM-DD'
-  // 計算隔天日期
-  const tomorrow = new Date(getCurrentDate())
-  tomorrow.setDate(tomorrow.getDate() + 1)
-  const tomorrowStr = tomorrow.toISOString().split('T')[0] // 取得隔天日期 'YYYY-MM-DD'
-  // 篩選今天或明天日期的比賽，若 time 已過，則隱藏
-  return enhancedMatches.value.filter(match => {
-    if (match.date === todayStr || match.date === tomorrowStr) {
-      const matchDateTime = new Date(`${match.date}T${match.time}:00`)
-      return matchDateTime > new Date() // 只顯示未開始的比賽
-    }
-  })
-
+  const now = new Date() // 獲取當前時間
+  const tomorrowEnd = new Date()
+  tomorrowEnd.setDate(tomorrowEnd.getDate() + 1) // 設定為明天的結束時間
+  tomorrowEnd.setHours(23, 59, 59, 999) // 設定為明天的結束時間
+  // 篩選今天或明天日期的比賽，若時間已過，則隱藏
+  return enhancedMatches.value
+    .filter(match => {
+      const matchDateTime = new Date(`${match.date}T00:00:00`) // 將比賽日期轉換為 Date 物件
+      return matchDateTime >= now && matchDateTime <= tomorrowEnd
+    })
+    .map(match => {
+      const homeTeamInfo = teamStore.teams.find(t => t.teamName === match.homeTeam)
+      const awayTeamInfo = teamStore.teams.find(t => t.teamName === match.awayTeam)
+      return {
+        ...match,
+        homeFlag: homeTeamInfo ? homeTeamInfo.teamFlag : '',
+        awayFlag: awayTeamInfo ? awayTeamInfo.teamFlag : ''
+      }
+    })
 })
 
 // 日期格式化
