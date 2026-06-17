@@ -53,7 +53,11 @@ export const useMatches = (groupRef: Ref<string>) => {
             stage: match.stage,
             teamGroup: team.teamGroup,
             homeTeam: homeTeamName,
+            homeFlag: homeTeamInfo?.teamFlag || '',
+            homeCode: homeTeamInfo?.teamCode || '',
             awayTeam: awayTeamName,
+            awayFlag: awayTeamInfo?.teamFlag || '',
+            awayCode: awayTeamInfo?.teamCode || ''
           })
         }
       }
