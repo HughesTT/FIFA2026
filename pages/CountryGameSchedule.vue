@@ -133,18 +133,6 @@ if (currentTeam.value && !route.query.group) {
 //   return currentTeam.value?.teamGameSchedule || [] // 如果 currentTeam 為 undefined，則回傳空陣列
 // })
 
-// 根據對戰國名稱取得對戰國國旗
-const getOpponentFlag = (opponentName) => {
-  const opponent = teamStore.teams.find(team => team.teamName === opponentName)
-  return opponent?.teamFlag || ''
-}
-
-// 根據對戰國名稱取得對戰國代碼
-const getOpponentCode = (opponentName) => {
-  const opponent = teamStore.teams.find(team => team.teamName === opponentName)
-  return opponent?.teamCode || ''
-}
-
 // 點擊球隊時顯示比賽日程
 const viewCountryGameSchedule = (teamCode) => {
   console.log(`顯示 ${teamCode} 的比賽日程`)

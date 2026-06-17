@@ -145,7 +145,7 @@ const goback = () => {
 
 <style lang="scss" scoped>
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
   background: url('../public/img/8b3a7cbf-911c-4809-a084-368496c1d04c.webp') no-repeat center;
   background-size: cover;
   background-attachment: fixed;
@@ -250,16 +250,16 @@ body {
 
 .game-title {
   grid-column: 1 / -1;
-  text-align: center;
+  text-align: left;
   color: #2c3e50;
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 20px;
-  padding-right: 140px;
+  padding-left: 1.5rem;
 
   @media (max-width: 768px) {
     font-size: 24px;
-    padding-right: 0;
+    padding-left: 0;
   }
 }
 

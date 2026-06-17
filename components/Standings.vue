@@ -2,7 +2,7 @@
   <div class="standings-container">
     <div class="standings-card">
       <div class="standings-header">
-        <h2>🏆 {{ group }} 組</h2>
+        <h2>{{ group }} 組</h2>
       </div>
 
       <div class="table-responsive">
@@ -83,6 +83,7 @@ const filteredStandings = computed(() => {
   width: 100%;
   overflow-x: auto; // 當表格寬度大於卡片時，自動開啟「橫向捲軸」
   -webkit-overflow-scrolling: touch; // 讓手機板滑動更順暢
+  font-family: 'Noto Sans TC', sans-serif !important;
 
   @media (max-width: 576px) {
     font-size: 14px;
