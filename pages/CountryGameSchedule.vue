@@ -176,13 +176,25 @@ const goback = () => {
 }
 
 .schedule-container-inner {
-  max-width: 800px;
+  max-width: 850px;
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
 }
 
+.schedule-container {
+  max-width: 850px;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 0 10px;
+  }
+}
+
+
 .schedule-card {
+  max-width: 850px;
+  background: rgba(255, 255, 255, 0.9);
   background: white;
   border-radius: 16px;
   padding: 30px;
@@ -190,7 +202,9 @@ const goback = () => {
   position: relative;
 
   @media (max-width: 768px) {
-    padding: 20px;
+    width: 100%;
+    margin-left: -30px;
+    /* 讓卡片在手機板能夠撐滿整個寬度 */
   }
 }
 
@@ -311,10 +325,9 @@ const goback = () => {
 
 .match-item {
   background: #f8f9fa;
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 20px;
-  position: relative;
-  transition: all 0.3s ease;
+  transition: transform 0.2s, box-shadow 0.2s;
 
   &:hover {
     transform: translateY(-4px);
@@ -327,9 +340,10 @@ const goback = () => {
 }
 
 .match-number {
-  position: absolute;
-  top: 15px;
-  right: 20px;
+  width: 50px;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 5px;
   background: #3498db;
   color: white;
   padding: 4px 12px;

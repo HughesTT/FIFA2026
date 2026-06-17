@@ -158,9 +158,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  /* 改為 top 對齊比較好 */
   padding: 20px;
-  /* 🎯 讓戰績表在這邊也能獲得左右 20px 的安全間距 */
   min-height: 100vh;
   width: 100%;
   box-sizing: border-box;
@@ -259,7 +257,6 @@ body {
 
   @media (max-width: 768px) {
     font-size: 24px;
-    padding-left: 0;
   }
 }
 
