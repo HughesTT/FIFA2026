@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="game-container">
     <BackHome />
     <Standings />
-    <div v-if="!currentTeam" class="schedule-container">
+    <div v-if="!currentTeam" class="schedule-container-inner">
       <div class="schedule-card">
         <div class="no-data">找不到球隊資料</div>
       </div>
@@ -176,14 +176,22 @@ const goback = () => {
 </script>
 
 <style lang="scss" scoped>
-.schedule-container {
-  max-width: 900px;
-  margin: 0 auto;
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   padding: 20px;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+}
 
-  @media (max-width: 768px) {
-    padding: 10px;
-  }
+.schedule-container-inner {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .schedule-card {
@@ -415,10 +423,8 @@ const goback = () => {
     }
 
     .score-num {
-      // 預設輸球或平手顏色稍微暗一點
       color: #7f8c8d;
 
-      // 🌟 勝隊字體顏色變更為顯眼的深色/藍色
       &.winner {
         color: #2c3e50;
         font-weight: 800;

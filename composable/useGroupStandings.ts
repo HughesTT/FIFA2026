@@ -35,18 +35,38 @@ export interface TeamStanding {
 }
 
 export const useGroupStandings = (groupRef: Ref<string>) => {
-  // 1. 正確在 Composable 內部呼叫 useMatches，取得該分組的動態賽程
+  // 在 Composable 內部呼叫 useMatches，取得該分組的賽程
   const matchesArray = useMatches(groupRef)
 
-  // 2. 結合比分，產出包含比數的新資料陣列
+  // 結合比分，生成包含比數的新資料陣列
   const enhancedMatches = computed<EnhancedMatch[]>(() => {
     return matchesArray.value.map(match => {
-      // 根據動態生成的 matchId (例如 GS-A-01) 去比分庫搜尋
-      const score = matchResults[match.matchId] || { homeScore: null, awayScore: null }
+      const resultKey = `${match.matchId}` // matchId 已經是按照日期、時間、隊伍排序的唯一 Key
+
+      // 根據動態生成的 resultKey 去比分庫搜尋
+      const result = matchResults[resultKey]
+
+      // 使用比賽真正的主客場來還原正確的分數配對
+      let homeScore: number | null = null
+      let awayScore: number | null = null
+      
+      if (result && result.homeScore !== null && result.awayScore !== null) {
+        // 將比賽隊伍名稱按中文筆畫/英文字母排序，組成與 matchResults 相同 Key
+        const sortedTeam = [match.homeTeam, match.awayTeam].sort()
+        // 判斷 matchResults 排序第一的隊伍，是否為主場隊伍
+        if (sortedTeam[0] === match.homeTeam) {
+          homeScore = result.homeScore
+          awayScore = result.awayScore
+        } else { // 如果相反，將比數對調
+          homeScore = result.awayScore
+          awayScore = result.homeScore
+        }
+      }
+
       return {
         ...match,
-        homeScore: score.homeScore,
-        awayScore: score.awayScore
+        homeScore,
+        awayScore
       }
     })
   })

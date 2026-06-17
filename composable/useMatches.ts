@@ -16,58 +16,52 @@ export const useMatches = (groupRef: Ref<string>) => {
   const matchesMap = new Map() // 建立 Map 去除重複比賽
   const oneDaysLater = new Date(getCurrentDate()) // 使用測試日期
   oneDaysLater.setDate(oneDaysLater.getDate() + 60) // 調整為1天以顯示更多比賽
-  const oneDaysLaterStr = oneDaysLater.toISOString().split('T')[0] // 轉換為 YYYY-MM-DD 格式
-  const sequenceByGroup = { 'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8 } // 用於生成比賽ID的分組序列
 
   // 遍歷所有球隊的賽程，收集即將開始的比賽
   teamsToShow.forEach(team => {
     team.teamGameSchedule.forEach(match => {
       // Key 依然使用字母排序，確保不論從墨西哥還是南非出發，產生的 Key 都唯一，用來過濾重複
-    const sortedTeamsForKey = [team.teamName, match.opponent].sort()
-    const matchKey = `${match.date}-${match.time}-${sortedTeamsForKey[0]}-vs-${sortedTeamsForKey[1]}`
+      const sortedTeamsForKey = [team.teamName, match.opponent].sort()
+      const matchKey = `${match.date}-${match.time}-${sortedTeamsForKey[0]}-vs-${sortedTeamsForKey[1]}`  
+      
+      if (!matchesMap.has(matchKey)) {
+        // 根據目前遍歷到的球隊 homeAway 設定，抓出「誰是主場、誰是客場」
+        let homeTeamName = ''
+        let awayTeamName = ''
 
-    if (!matchesMap.has(matchKey)) {
-      const group = team.teamGroup
-      if (!sequenceByGroup[group]) sequenceByGroup[group] = 1
-      const seq = String(sequenceByGroup[group]).padStart(2, '0')
-      const finalMatchId = `${group}-${seq}`
-      sequenceByGroup[group]++
+        if (match.homeAway === true) {
+          // 如果當前球隊 homeAway 是 true，代表當前球隊自己是主場，對手是客場
+          homeTeamName = team.teamName
+          awayTeamName = match.opponent
+        } else {
+          // 如果當前球隊 homeAway 是 false，代表當前球隊自己是客場，對手才是主場
+          homeTeamName = match.opponent
+          awayTeamName = team.teamName
+        }
 
-      // 根據目前遍歷到的球隊 homeAway 設定，抓出「誰是主場、誰是客場」
-      let homeTeamName = ''
-      let awayTeamName = ''
+        if (!matchesMap.has(matchKey)) {
+          // 根據找出的主客場名字，分別去 store 撈出對應的球隊完整資訊（為了取得國旗）
+          const homeTeamInfo = teamStore.teams.find(t => t.teamName === homeTeamName)
+          const awayTeamInfo = teamStore.teams.find(t => t.teamName === awayTeamName)
 
-      if (match.homeAway === true) {
-        // 如果當前球隊 homeAway 是 true，代表當前球隊自己是主場，對手是客場
-        homeTeamName = team.teamName
-        awayTeamName = match.opponent
-      } else {
-        // 如果當前球隊 homeAway 是 false，代表當前球隊自己是客場，對手才是主場
-        homeTeamName = match.opponent
-        awayTeamName = team.teamName
+          // 資料精確寫入 Map，確保名字與國旗不會配對錯誤
+          matchesMap.set(matchKey, {
+            matchId: matchKey,
+            group: team.teamGroup,
+            date: match.date,
+            time: match.time,
+            stage: match.stage,
+            teamGroup: team.teamGroup,
+            // 主場配主場、客場配客場
+            homeTeam: homeTeamName,
+            homeFlag: homeTeamInfo?.teamFlag || '',
+            homeCode: homeTeamInfo?.teamCode || '',
+            awayTeam: awayTeamName,
+            awayFlag: awayTeamInfo?.teamFlag || '',
+            awayCode: awayTeamInfo?.teamCode || ''
+          })
+        }
       }
-
-      // 根據找出的主客場名字，分別去 store 撈出對應的球隊完整資訊（為了取得國旗）
-      const homeTeamInfo = teamStore.teams.find(t => t.teamName === homeTeamName)
-      const awayTeamInfo = teamStore.teams.find(t => t.teamName === awayTeamName)
-
-      // 資料精確寫入 Map，確保名字與國旗不會配對錯誤
-      matchesMap.set(matchKey, {
-        matchId: finalMatchId,
-        group: team.teamGroup,
-        date: match.date,
-        time: match.time,
-        stage: match.stage,
-        teamGroup: team.teamGroup,
-        // 主場配主場、客場配客場
-        homeTeam: homeTeamName,
-        homeFlag: homeTeamInfo?.teamFlag || '',
-        homeCode: homeTeamInfo?.teamCode || '',
-        awayTeam: awayTeamName,
-        awayFlag: awayTeamInfo?.teamFlag || '',
-        awayCode: awayTeamInfo?.teamCode || ''
-      })
-    }
     })
   })
 

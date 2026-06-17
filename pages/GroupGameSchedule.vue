@@ -154,14 +154,16 @@ body {
 }
 
 .game-container {
-  max-width: 900px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  /* 改為 top 對齊比較好 */
   padding: 20px;
-
-  /* 平板以下 */
-  @media (max-width: 768px) {
-    padding: 10px;
-  }
+  /* 🎯 讓戰績表在這邊也能獲得左右 20px 的安全間距 */
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .game-card {

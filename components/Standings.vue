@@ -4,32 +4,35 @@
       <div class="standings-header">
         <h2>🏆 {{ group }} 組</h2>
       </div>
-      <table class="standings-table">
-        <thead>
-          <tr>
-            <th>球隊</th>
-            <th>場次</th>
-            <th>勝</th>
-            <th>平</th>
-            <th>負</th>
-            <th>淨勝球</th>
-            <th>積分</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="team in filteredStandings" :key="team.teamName">
-            <td class="team-info">
-              <img :src="team.teamFlag" :alt="team.teamName" class="team-flag"> {{ team.teamName }}
-            </td>
-            <td>{{ team.played }}</td>
-            <td>{{ team.won }}</td>
-            <td>{{ team.drawn }}</td>
-            <td>{{ team.lost }}</td>
-            <td>{{ team.goalDifference }}</td>
-            <td>{{ team.points }}</td>
-          </tr>
-        </tbody>
-      </table>
+
+      <div class="table-responsive">
+        <table class="standings-table">
+          <thead>
+            <tr>
+              <th>球隊</th>
+              <th>場次</th>
+              <th>勝</th>
+              <th>平</th>
+              <th>負</th>
+              <th>淨勝球</th>
+              <th>積分</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="team in filteredStandings" :key="team.teamName">
+              <td class="team-info">
+                <img :src="team.teamFlag" :alt="team.teamName" class="team-flag"> {{ team.teamName }}
+              </td>
+              <td>{{ team.played }}</td>
+              <td>{{ team.won }}</td>
+              <td>{{ team.drawn }}</td>
+              <td>{{ team.lost }}</td>
+              <td>{{ team.goalDifference }}</td>
+              <td>{{ team.points }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -62,6 +65,8 @@ const filteredStandings = computed(() => {
   max-width: 800px;
   margin: 0 auto;
   margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .standings-card {
@@ -69,53 +74,47 @@ const filteredStandings = computed(() => {
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
 
-  .standings-header {
+.table-responsive {
+  width: 100%;
+  overflow-x: auto; // 當表格寬度大於卡片時，自動開啟「橫向捲軸」
+  -webkit-overflow-scrolling: touch; // 讓手機板滑動更順暢
+
+  @media (max-width: 576px) {
+    font-size: 14px;
+  }
+}
+
+.standings-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 500px;
+
+  th,
+  td {
+    padding: 12px 8px;
     text-align: center;
-    margin-bottom: 20px;
-
-    h2 {
-      margin: 0;
-      color: #333;
-    }
   }
 
-  .no-standings {
-    text-align: center;
-    color: #666;
-    font-size: 18px;
-    padding: 40px;
+  .team-info {
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 15px;
   }
 
-  .standings-table {
-    width: 100%;
-    border-collapse: collapse;
-
-    th,
-    td {
-      padding: 12px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-    }
-
-    th {
-      background-color: #f4f4f4;
-      color: #333;
-    }
-
-
-    .team-info {
-      display: flex;
-      align-items: center;
-
-      .team-flag {
-        width: 30px;
-        height: auto;
-        margin-right: 10px;
-        border-radius: 3px;
-        border: 1px solid #ccc;
-      }
-    }
+  .team-flag {
+    width: 36px !important;
+    height: 24px !important;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
   }
 
   @media (max-width: 768px) {
