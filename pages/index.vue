@@ -13,7 +13,6 @@
 </template>
 
 <script setup>
-const title = "FIFA World Cup 2026";
 const titleA = "FIFA";
 const titleB = "World Cup 2026";
 // SEO
@@ -36,7 +35,7 @@ body {
   background: url('../public/img/FIFA-unveils-Official-FIFA-World-Cup-2026-Album-squad.jpg') no-repeat fixed top center;
   background-size: cover;
   margin: 0;
-  padding: 50px;
+  padding: 50px 10px;
 
   .title-container {
     margin-bottom: 30px;

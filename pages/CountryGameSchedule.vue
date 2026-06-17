@@ -191,19 +191,17 @@ const goback = () => {
   }
 }
 
-
 .schedule-card {
   max-width: 850px;
   background: rgba(255, 255, 255, 0.9);
-  background: white;
   border-radius: 16px;
-  padding: 30px;
+  padding: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: relative;
 
   @media (max-width: 768px) {
     width: 100%;
-    margin-left: -30px;
+    margin-left: -15px;
     /* 讓卡片在手機板能夠撐滿整個寬度 */
   }
 }
