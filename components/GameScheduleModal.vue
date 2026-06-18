@@ -13,7 +13,8 @@
     <div class="modal-content">
       <div v-if="upcomingMatches.length === 0" class="no-matches">沒有即將進行的比賽</div>
       <div v-else class="matches-list">
-        <MatchCard v-for="match in upcomingMatches" :key="match.matchId" :match="match" />
+        <MatchCard v-for="match in upcomingMatches" :key="match.matchId" :match="match"
+          @team-click="viewCountryGameSchedule" />
       </div>
     </div>
   </div>
@@ -21,6 +22,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router' // 引入 useRouter
 import { useTeamStore } from '~/store/teamStore'
 import { useGroupStandings } from '~/composable/useGroupStandings'
 
@@ -29,6 +31,7 @@ const isVisible = ref(true)
 const closeModal = () => {
   isVisible.value = false
 }
+const router = useRouter() // 初始化 useRouter
 const groupRef = ref('')
 const { enhancedMatches } = useGroupStandings(groupRef) // 呼叫戰績表，空字串 ref 代表不過濾分組
 const teamStore = useTeamStore()
@@ -57,6 +60,12 @@ const upcomingMatches = computed(() => {
       }
     })
 })
+
+// 點擊球隊時顯示比賽日程，並關閉彈窗
+const viewCountryGameSchedule = (teamCode) => {
+  closeModal() // 關閉彈窗
+  router.push({ path: '/CountryGameSchedule', query: { teamCode } })
+}
 </script>
 <style lang="scss">
 .modal-container {

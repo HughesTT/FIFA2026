@@ -70,7 +70,7 @@ const formattedDate = computed(() => {
 })
 
 const onTeamClick = (code) => {
-  if (code) emit('team-click', code)
+  emit('team-click', code) // 移除條件判斷，確保事件總是發出
 }
 
 const handleCardClick = () => {
