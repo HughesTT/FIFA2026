@@ -91,7 +91,6 @@ const goback = () => {
 .game-card {
   max-width: 850px;
   width: 100%;
-  margin: 0 auto;
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 16px;
   padding: 30px;

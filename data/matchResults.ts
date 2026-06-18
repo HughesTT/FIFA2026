@@ -28,7 +28,7 @@ export const matchResults: Record<string, MatchScore> = {
   '2026-06-18-01:00-剛果民主共和國-vs-葡萄牙': { homeScore: 1, awayScore: 1 },
   '2026-06-18-04:00-克羅埃西亞-vs-英格蘭': { homeScore: 2, awayScore: 4 },
   '2026-06-18-07:00-巴拿馬-vs-迦納': { homeScore: 0, awayScore: 1 },
-  '2026-06-18-10:00-哥倫比亞-vs-烏茲別克': { homeScore: null, awayScore: null },
+  '2026-06-18-10:00-哥倫比亞-vs-烏茲別克': { homeScore: 3, awayScore: 1 },
   '2026-06-19-00:00-南非-vs-捷克': { homeScore: null, awayScore: null },
   '2026-06-19-03:00-波赫-vs-瑞士': { homeScore: null, awayScore: null },
   '2026-06-19-06:00-加拿大-vs-卡達': { homeScore: null, awayScore: null },
