@@ -65,6 +65,3 @@ pnpm preview
 *   `composable/`: 存放可複用的邏輯函數，例如 `useGroupStandings.js`。
 *   `store/`: 存放 Pinia 狀態管理模組，例如 `teamStore.js`。
 *   `public/`: 存放靜態資源，例如圖片 (`img/`)、字體 (`font/`)。
-
-## 貢獻
-歡迎任何形式的貢獻！如果您有任何建議或發現 Bug，請隨時提出 Issue 或提交 Pull Request。
