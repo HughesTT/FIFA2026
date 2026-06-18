@@ -10,33 +10,10 @@
         </svg>
       </button>
     </div>
-    <div v-if="isVisible" class="modal-container">
+    <div class="modal-content">
       <div v-if="upcomingMatches.length === 0" class="no-matches">沒有即將進行的比賽</div>
       <div v-else class="matches-list">
-        <div v-for="match in upcomingMatches" :key="match.matchId" class="match-item">
-          <div class="match-badge">{{ match.teamGroup }}組</div>
-
-          <div class="match-info">
-            <div class="match-datetime">
-              <span class="date">{{ formatDate(match.date) }}</span>
-              <span class="time">{{ match.time }}</span>
-            </div>
-
-            <div class="match-teams">
-              <div class="team">
-                <img :src="match.homeFlag" :alt="match.homeTeam" class="team-flag">
-                <span class="team-name">{{ match.homeTeam }}</span>
-              </div>
-
-              <div class="vs">VS</div>
-
-              <div class="team">
-                <img :src="match.awayFlag" :alt="match.awayTeam" class="team-flag">
-                <span class="team-name">{{ match.awayTeam }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <MatchCard v-for="match in upcomingMatches" :key="match.matchId" :match="match" />
       </div>
     </div>
   </div>
@@ -74,23 +51,14 @@ const upcomingMatches = computed(() => {
       return {
         ...match,
         homeFlag: homeTeamInfo ? homeTeamInfo.teamFlag : '',
-        awayFlag: awayTeamInfo ? awayTeamInfo.teamFlag : ''
+        homeCode: homeTeamInfo ? homeTeamInfo.teamCode : '',
+        awayFlag: awayTeamInfo ? awayTeamInfo.teamFlag : '',
+        awayCode: awayTeamInfo ? awayTeamInfo.teamCode : ''
       }
     })
 })
-
-// 日期格式化
-const formatDate = (dateStr) => {
-  const date = new Date(dateStr)
-  return date.toLocaleDateString('zh-TW', {
-    month: '2-digit',
-    day: 'numeric',
-    weekday: 'short'
-  })
-}
 </script>
-
-<style lang="scss" scoped>
+<style lang="scss">
 .modal-container {
   max-width: 1400px;
   margin: 40px auto 20px;

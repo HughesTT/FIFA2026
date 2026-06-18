@@ -23,43 +23,8 @@
         <div v-if="countryGameSchedule.length === 0 && teamCode" class="no-data">目前沒有賽程資料</div>
 
         <div v-else class="matches-list">
-          <div v-for="(match, index) in uniqueMatches" :key="match.matchId" class="match-item">
-            <div class="match-number">第 {{ index + 1 }} 場</div>
-            <div class="match-info">
-              <div class="match-datetime">
-                <span class="date">{{ formatDate(match.matchDate) }}</span>
-                <span class="time">{{ match.matchTime }}</span>
-              </div>
-
-              <div class="match-teams">
-                <div class="team home" @click="viewCountryGameSchedule(match.homeAway.code)">
-                  <img :src="match.homeAway.flag" :alt="match.homeAway.name" class="team-flag">
-                  <span class="team-name">{{ match.homeAway.name }}</span>
-                </div>
-
-                <div class="score-or-vs">
-                  <div v-if="match.homeScore !== null && match.awayScore !== null" class="match-score">
-                    <span class="score-num" :class="{ 'winner': match.homeScore > match.awayScore }">
-                      {{ match.homeScore }}
-                    </span>
-                    <span class="score-divider">-</span>
-                    <span class="score-num" :class="{ 'winner': match.awayScore > match.homeScore }">
-                      {{ match.awayScore }}
-                    </span>
-                  </div>
-
-                  <div v-else class="vs">VS</div>
-                </div>
-
-                <div class="team away" @click="viewCountryGameSchedule(match.awayTeam.code)">
-                  <img :src="match.awayTeam.flag" :alt="match.awayTeam.name" class="team-flag">
-                  <span class="team-name">{{ match.awayTeam.name }}</span>
-                </div>
-              </div>
-
-              <div class="match-stage">{{ match.stage }}</div>
-            </div>
-          </div>
+          <MatchCard v-for="match in uniqueMatches" :key="match.matchId" :match="match"
+            @team-click="viewCountryGameSchedule" />
         </div>
       </div>
     </div>
@@ -87,27 +52,25 @@ const uniqueMatches = computed(() => {
 
     return {
       matchId: match.matchId,
-      matchDate: match.date,
-      matchTime: match.time,
+      date: match.date,
+      time: match.time,
+      homeTeam: match.homeTeam,
+      homeFlag: match.homeFlag,
+      homeCode: homeTeamInfo?.teamCode || '',
+      awayTeam: match.awayTeam,
+      awayFlag: match.awayFlag,
+      awayCode: awayTeamInfo?.teamCode || '',
       homeScore: match.homeScore,
       awayScore: match.awayScore,
-      homeAway: {
-        name: match.homeTeam,
-        flag: match.homeFlag,
-        code: homeTeamInfo?.teamCode || ''
-      },
-      awayTeam: {
-        name: match.awayTeam,
-        flag: match.awayFlag,
-        code: awayTeamInfo?.teamCode || ''
-      }
+      teamGroup: match.teamGroup,
+      stage: match.stage
     }
   })
 
   // 2. 🌟 關鍵過濾：只保留「主隊代碼」或「客隊代碼」等於當前網址 teamCode 的比賽
   return allGroupMatches.filter(match =>
-    match.homeAway.code === route.query.teamCode ||
-    match.awayTeam.code === route.query.teamCode
+    match.homeCode === route.query.teamCode ||
+    match.awayCode === route.query.teamCode
   )
 })
 // 取得目前球隊的賽程
@@ -146,16 +109,6 @@ const viewCountryGameSchedule = (teamCode) => {
   })
 }
 
-// 日期格式化
-const formatDate = (dateStr) => {
-  const date = new Date(dateStr) // 將日期字串轉換
-  return date.toLocaleDateString('zh-TW', {
-    month: '2-digit', // 顯示兩位數的月份
-    day: 'numeric', // 顯示數字的日期
-    weekday: 'short' // 顯示簡短的星期幾名稱
-  })
-}
-
 // 返回上一頁
 const goback = () => {
   router.go(-1) // 返回上一頁
@@ -163,7 +116,7 @@ const goback = () => {
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .game-container {
   display: flex;
   flex-direction: column;
@@ -184,6 +137,9 @@ const goback = () => {
 
 .schedule-container {
   max-width: 850px;
+  padding: 0 20px;
+  width: 100%;
+  margin: 0 auto;
   box-sizing: border-box;
 
   @media (max-width: 768px) {
@@ -195,7 +151,7 @@ const goback = () => {
   max-width: 850px;
   background: rgba(255, 255, 255, 0.9);
   border-radius: 16px;
-  padding: 15px;
+  padding: 30px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: relative;
 
@@ -313,230 +269,11 @@ const goback = () => {
 
 .matches-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
 
   @media (max-width: 768px) {
     gap: 15px;
   }
-}
-
-.match-item {
-  background: #f8f9fa;
-  border-radius: 8px;
-  padding: 20px;
-  transition: transform 0.2s, box-shadow 0.2s;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-  }
-
-  @media (max-width: 768px) {
-    padding: 15px;
-  }
-}
-
-.match-number {
-  width: 50px;
-  text-align: center;
-  margin: 0 auto;
-  margin-bottom: 5px;
-  background: #3498db;
-  color: white;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.match-info {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.match-datetime {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-
-  .date {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #2c3e50;
-    background: #e9e0fa;
-    text-align: center;
-    padding: 2px 12px;
-    border-radius: 12px;
-  }
-
-  .time {
-    background: #ffe5e5;
-    color: #e74c3c;
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 14px;
-  }
-
-  @media (max-width: 480px) {
-    flex-direction: column;
-    gap: 8px;
-  }
-}
-
-.match-teams {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 15px;
-  width: 100%;
-
-  @media (max-width: 480px) {
-    gap: 8px;
-  }
-}
-
-.score-or-vs {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 80px;
-
-  .match-score {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 22px;
-    font-weight: 700;
-    color: #2c3e50;
-    background: #f8f9fa;
-    padding: 4px 12px;
-    border-radius: 6px;
-    border: 1px solid #e9ecef;
-
-    .score-divider {
-      color: #95a5a6;
-      font-size: 16px;
-    }
-
-    .score-num {
-      color: #7f8c8d;
-
-      &.winner {
-        color: #2c3e50;
-        font-weight: 800;
-      }
-    }
-  }
-
-  .vs {
-    font-size: 18px;
-    font-weight: bold;
-    color: #95a5a6;
-  }
-}
-
-.team {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  min-width: 80px;
-  padding: 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: 2px solid transparent;
-
-  &:hover {
-    background: rgba(52, 152, 219, 0.05);
-    border: 2px solid #3498db;
-    transform: scale(1.02);
-  }
-
-  .team-flag {
-    width: 48px;
-    height: 32px;
-    display: block;
-    /* object-fit: cover; */
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0;
-    /* 防止圖片被壓縮 */
-  }
-
-  .team-name {
-    font-size: 18px;
-    font-weight: 600;
-    color: #2c3e50;
-    /* white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; */
-  }
-
-  &.home {
-    text-align: center;
-  }
-
-  &.away {
-    text-align: center;
-  }
-
-  @media (max-width: 768px) {
-    .team-name {
-      font-size: 18px;
-    }
-
-    .team-flag {
-      width: 48px;
-      height: 32px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    padding: 8px;
-    gap: 8px;
-
-    .team-name {
-      font-size: 18px;
-    }
-
-    .team-flag {
-      width: 48px;
-      height: 32px;
-    }
-  }
-}
-
-.vs {
-  font-weight: bold;
-  color: #e74c3c;
-  font-size: 20px;
-  padding: 8px 16px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  flex-shrink: 0;
-
-  @media (max-width: 768px) {
-    font-size: 16px;
-    padding: 6px 12px;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 14px;
-    padding: 4px 8px;
-  }
-}
-
-.match-stage {
-  text-align: center;
-  color: #7f8c8d;
-  font-size: 14px;
-  font-weight: 500;
 }
 </style>

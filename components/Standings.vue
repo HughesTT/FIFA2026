@@ -64,7 +64,7 @@ const filteredStandings = computed(() => {
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .standings-container {
   max-width: 850px;
   margin: 0 auto;

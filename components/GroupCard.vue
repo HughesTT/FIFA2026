@@ -50,7 +50,7 @@ const viewCountryGameSchedule = (teamCode) => {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .group-container {
   max-width: 1000px;
   margin: 0 auto;
