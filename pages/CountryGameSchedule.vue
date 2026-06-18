@@ -2,30 +2,26 @@
   <div class="game-container">
     <BackHome />
     <Standings />
-    <div v-if="!currentTeam" class="schedule-container-inner">
-      <div class="schedule-card">
-        <div class="no-data">找不到球隊資料</div>
-      </div>
+    <div v-if="!currentTeam" class="game-card">
+      <div class="no-data">找不到球隊資料</div>
     </div>
 
-    <div v-else class="schedule-container">
-      <div class="schedule-card">
-        <button class="back-home-btn" @click="goback">
-          <span class="arrow">←</span>
-          <span> 回上頁</span>
-        </button>
+    <div v-else class="game-card">
+      <button class="back-home-btn" @click="goback">
+        <span class="arrow">←</span>
+        <span> 回上頁</span>
+      </button>
 
-        <div class="header">
-          <img :src="currentTeam.teamFlag" :alt="currentTeam.teamName" class="team-flag-large">
-          <h2>{{ currentTeam.teamName }}國家隊賽程</h2>
-        </div>
+      <div class="header">
+        <img :src="currentTeam.teamFlag" :alt="currentTeam.teamName" class="team-flag-large">
+        <h2>{{ currentTeam.teamName }}國家隊賽程</h2>
+      </div>
 
-        <div v-if="countryGameSchedule.length === 0 && teamCode" class="no-data">目前沒有賽程資料</div>
+      <div v-if="uniqueMatches.length === 0" class="no-data">目前沒有賽程資料</div>
 
-        <div v-else class="matches-list">
-          <MatchCard v-for="match in uniqueMatches" :key="match.matchId" :match="match"
-            @team-click="viewCountryGameSchedule" />
-        </div>
+      <div v-else class="matches-list">
+        <MatchCard v-for="match in uniqueMatches" :key="match.matchId" :match="match"
+          @team-click="viewCountryGameSchedule" />
       </div>
     </div>
   </div>
@@ -128,37 +124,19 @@ const goback = () => {
   box-sizing: border-box;
 }
 
-.schedule-container-inner {
+.game-card {
   max-width: 850px;
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
-}
-
-.schedule-container {
-  max-width: 850px;
-  padding: 0 20px;
-  width: 100%;
-  margin: 0 auto;
-  box-sizing: border-box;
-
-  @media (max-width: 768px) {
-    padding: 0 10px;
-  }
-}
-
-.schedule-card {
-  max-width: 850px;
-  background: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.95);
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
 
   @media (max-width: 768px) {
-    width: 100%;
-    margin-left: -15px;
-    /* 讓卡片在手機板能夠撐滿整個寬度 */
+    padding: 20px;
   }
 }
 
@@ -271,6 +249,20 @@ const goback = () => {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 12px;
+  }
 
   @media (max-width: 768px) {
     gap: 15px;
