@@ -3,10 +3,7 @@
     <BackHome />
     <Standings />
     <div class="game-card">
-      <button class="back-home-btn" @click="goback">
-        <span class="arrow">←</span>
-        <span> 回上頁</span>
-      </button>
+      <GoBack />
 
       <div class="game-title">{{ group }} 組賽程</div>
 
@@ -68,11 +65,6 @@ const countryGameSchedule = computed(() => {
 const viewCountryGameSchedule = (teamCode) => {
   console.log(`顯示 ${teamCode} 的比賽日程`)
   router.push({ path: '/CountryGameSchedule', query: { teamCode } })
-}
-
-// 返回上一頁
-const goback = () => {
-  router.go(-1)
 }
 </script>
 

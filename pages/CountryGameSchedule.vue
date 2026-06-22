@@ -7,10 +7,7 @@
     </div>
 
     <div v-else class="game-card">
-      <button class="back-home-btn" @click="goback">
-        <span class="arrow">←</span>
-        <span> 回上頁</span>
-      </button>
+      <GoBack />
 
       <div class="header">
         <img :src="currentTeam.teamFlag" :alt="currentTeam.teamName" class="team-flag-large">
@@ -63,7 +60,6 @@ const uniqueMatches = computed(() => {
     }
   })
 
-  // 2. 🌟 關鍵過濾：只保留「主隊代碼」或「客隊代碼」等於當前網址 teamCode 的比賽
   return allGroupMatches.filter(match =>
     match.homeCode === route.query.teamCode ||
     match.awayCode === route.query.teamCode
@@ -87,15 +83,10 @@ const currentTeam = computed(() => {
 if (currentTeam.value && !route.query.group) {
   route.query.group = currentTeam.value.teamGroup
 }
-// 取得目前球隊的賽程
-// const countryGameSchedule = computed(() => {
-//   return currentTeam.value?.teamGameSchedule || [] // 如果 currentTeam 為 undefined，則回傳空陣列
-// })
 
 // 點擊球隊時顯示比賽日程
 const viewCountryGameSchedule = (teamCode) => {
   console.log(`顯示 ${teamCode} 的比賽日程`)
-  // 🌟 修改這裡：在 query 中多帶入 group 參數
   router.push({
     path: '/CountryGameSchedule',
     query: {
@@ -103,11 +94,6 @@ const viewCountryGameSchedule = (teamCode) => {
       group: group.value
     }
   })
-}
-
-// 返回上一頁
-const goback = () => {
-  router.go(-1) // 返回上一頁
 }
 
 </script>
