@@ -1,0 +1,544 @@
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+import { useTeamStore } from '~/store/teamStore'
+import type { knockoutMatch } from '~/types/knockoutResults'
+
+export const useknockoutStore = defineStore('knockoutStore', () => {
+    const teamStore = useTeamStore()
+    
+    // 將對戰資料與 teamStore 進行動態資訊綁定
+    const matchesWithInfo = computed(() => {
+        return matches.value.map(match => ({
+            ...match,
+            // 透過 code 去 teamStore 尋找對應的球隊資訊
+            homeTeam: {
+                ...match.homeTeam,
+                ...(teamStore.teams.find(t => t.teamCode === match.homeTeam.teamCode) || {})
+            },
+            awayTeam: {
+                ...match.awayTeam,
+                ...(teamStore.teams.find(t => t.teamCode === match.awayTeam.teamCode) || {})
+            }
+        }))
+    })
+
+    const matches = ref<knockoutMatch[]>([
+        // 32強對戰組合
+        {
+            matchId: 'R32-1',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-06-29',
+            time: '03:00',
+            homeTeam: { teamName: '2A', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: '2B', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-2',
+            nextMatchSlot: 'home',
+            side: 'left'
+        },
+        {
+            matchId: 'R32-2',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-06-30',
+            time: '01:00',
+            homeTeam: { teamName: '1C', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: '2F', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-3',
+            nextMatchSlot: 'away',
+            side: 'left'
+        },
+        {
+            matchId: 'R32-3',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-06-30',
+            time: '04:30',
+            homeTeam: { teamName: '1E', teamCode: 'DE', teamFlag: ''},
+            awayTeam: { teamName: '3ABCDF', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-2',
+            nextMatchSlot: 'home',
+            side: 'left'
+        },
+        {
+            matchId: 'R32-4',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-06-30',
+            time: '09:00',
+            homeTeam: { teamName: '1F', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: '2C', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-2',
+            nextMatchSlot: 'away',
+            side: 'left'
+        },
+        {
+            matchId: 'R32-5',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-07-01',
+            time: '01:00',
+            homeTeam: { teamName: '2E', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: '2I', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-4',
+            nextMatchSlot: 'away',
+            side: 'left'
+        },
+        {
+            matchId: 'R32-6',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-07-01',
+            time: '05:00',
+            homeTeam: { teamName: '1I', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: '3CDFGH', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-4',
+            nextMatchSlot: 'away',
+            side: 'left'
+        },
+        {
+            matchId: 'R32-7',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-07-01',
+            time: '09:00',
+            homeTeam: { teamName: '1A', teamCode: 'MX', teamFlag: ''},
+            awayTeam: { teamName: '3CEFHI', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-4',
+            nextMatchSlot: 'home',
+            side: 'left'
+        },
+        {
+            matchId: 'R32-8',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-07-02',
+            time: '00:00',
+            homeTeam: { teamName: '1L', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: '3EHIJK', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-4',
+            nextMatchSlot: 'away',
+            side: 'left'
+        },
+        {
+            matchId: 'R32-9',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-07-02',
+            time: '04:00',
+            homeTeam: { teamName: '1G', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: '3AEHIJ', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-1',
+            nextMatchSlot: 'away',
+            side: 'right'
+        },
+        {
+            matchId: 'R32-10',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-07-02',
+            time: '08:00',
+            homeTeam: { teamName: '1D', teamCode: 'US', teamFlag: ''},
+            awayTeam: { teamName: '3BEFIJ', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-2',
+            nextMatchSlot: 'home',
+            side: 'right'
+        },
+        {
+            matchId: 'R32-11',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-07-03',
+            time: '03:00',
+            homeTeam: { teamName: '1H', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: '2J', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-3',
+            nextMatchSlot: 'away',
+            side: 'right'
+        },
+        {
+            matchId: 'R32-12',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-07-03',
+            time: '07:00',
+            homeTeam: { teamName: '2K', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: '2L', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-4',
+            nextMatchSlot: 'home',
+            side: 'right'
+        },
+        {
+            matchId: 'R32-13',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-07-03',
+            time: '11:00',
+            homeTeam: { teamName: '1B', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: '3EFGIJ', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-5',
+            nextMatchSlot: 'home',
+            side: 'right'
+        },
+        {
+            matchId: 'R32-14',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-07-04',
+            time: '02:00',
+            homeTeam: { teamName: '2D', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: '2G', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-6',
+            nextMatchSlot: 'away',
+            side: 'right'
+        },
+        {
+            matchId: 'R32-15',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-07-04',
+            time: '06:00',
+            homeTeam: { teamName: '1J', teamCode: 'AR', teamFlag: ''},
+            awayTeam: { teamName: '2H', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-7',
+            nextMatchSlot: 'home',
+            side: 'right'
+        },    
+        {
+            matchId: 'R32-16',
+            stage: 'R32',
+            stageLabel: '32強',
+            date: '2026-07-04',
+            time: '09:30',
+            homeTeam: { teamName: '1K', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: '3DEIJL', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'R16-8',
+            nextMatchSlot: 'away',
+            side: 'right'
+        },
+        // 16強對戰組合
+        {
+            matchId: 'R16-1',
+            stage: 'R16',
+            stageLabel: '16強',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'W73', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W75', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'QF-1',
+            nextMatchSlot: 'home',
+            side: 'left'
+        },
+        {
+            matchId: 'R16-2',
+            stage: 'R16',
+            stageLabel: '16強',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'W74', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W77', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'QF-1',
+            nextMatchSlot: 'away',
+            side: 'left'
+        },
+        {
+            matchId: 'R16-3',
+            stage: 'R16',
+            stageLabel: '16強',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'W78', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W79', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'QF-1',
+            nextMatchSlot: 'home',
+            side: 'left'
+        },
+        {
+            matchId: 'R16-4',
+            stage: 'R16',
+            stageLabel: '16強',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'W80', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W81', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'QF-1',
+            nextMatchSlot: 'away',
+            side: 'left'
+        },
+        {
+            matchId: 'R16-5',
+            stage: 'R16',
+            stageLabel: '16強',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'W82', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W83', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'QF-1',
+            nextMatchSlot: 'home',
+            side: 'right'
+        },
+        {
+            matchId: 'R16-6',
+            stage: 'R16',
+            stageLabel: '16強',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'W84', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W85', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'QF-1',
+            nextMatchSlot: 'away',
+            side: 'right'
+        },
+        {
+            matchId: 'R16-7',
+            stage: 'R16',
+            stageLabel: '16強',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'W86', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W87', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'QF-1',
+            nextMatchSlot: 'home',
+            side: 'right'
+        },
+        {
+            matchId: 'R16-8',
+            stage: 'R16',
+            stageLabel: '16強',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'W88', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W89', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'QF-1',
+            nextMatchSlot: 'away',
+            side: 'right'
+        },
+        // 8強對戰組合
+        {
+            matchId: 'QF-1',
+            stage: 'QF',
+            stageLabel: '8強',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'W90', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W91', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'SF-1',
+            nextMatchSlot: 'home',
+            side: 'left'
+        },
+        {
+            matchId: 'QF-2',
+            stage: 'QF',
+            stageLabel: '8強',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'W92', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W93', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'SF-1',
+            nextMatchSlot: 'away',
+            side: 'left'
+        },
+        {
+            matchId: 'QF-3',
+            stage: 'QF',
+            stageLabel: '8強',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'W94', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W95', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'SF-2',
+            nextMatchSlot: 'home',
+            side: 'right'
+        },
+        {
+            matchId: 'QF-4',
+            stage: 'QF',
+            stageLabel: '8強',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'W96', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W97', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'SF-2',
+            nextMatchSlot: 'away',
+            side: 'right'
+        },
+        // 4強對戰組合
+        {
+            matchId: 'SF-1',
+            stage: 'SF',
+            stageLabel: '4強',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'W98', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W99', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'Final',
+            nextMatchSlot: 'home',
+            side: 'left'
+        },
+        {
+            matchId: 'SF-2',
+            stage: 'SF',
+            stageLabel: '4強',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'W100', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W101', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: 'Final',
+            nextMatchSlot: 'away',
+            side: 'left'
+        },
+        // 季軍戰
+        {
+            matchId: '3rd_playoff',
+            stage: '3rd_playoff',
+            stageLabel: '季軍戰',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'L102', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'L103', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: null,
+            nextMatchSlot: null,
+            side: 'left'
+        },
+        // 決賽
+        {
+            matchId: 'Final',
+            stage: 'Final',
+            stageLabel: '決賽',
+            date: '',
+            time: '',
+            homeTeam: { teamName: 'W104', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W105', teamCode: '', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            nextMatchId: null,
+            nextMatchSlot: null,
+            side: 'left'
+        }
+    ])
+
+    // 整理成 UI 渲染的結構
+    const matchesByStage = computed(() => {
+        const stages: Record<string, knockoutMatch[]> = { // 定義每個階段的比賽陣列
+            R32: [],
+            R16: [],
+            QF: [],
+            SF: [],
+            Final: []
+        }
+        matchesWithInfo.value.forEach(m => { // 使用 forEach 檢查所有比賽，將依據條件放入對應階段的陣列
+            if (stages[m.stage]) stages[m.stage].push(m) // stages[m.stage] 動態分配
+        })
+        return stages
+    })
+
+    // 更新比賽結果並自動傳遞晉級隊伍
+    const updateMatchResult = (
+        matchId: string,
+        homeScore: number,
+        awayScore: number,
+        homePenalty?: number,
+        awayPenalty?: number,
+    ) => {
+        const match = matches.value.find(m => m.matchId === matchId) // match 為符合 matchId 的比賽
+        if (!match) return
+
+        match.homeScore = homeScore
+        match.awayScore = awayScore
+        match.homePenaltyScore = homePenalty ?? null
+        match.awayPenaltyScore = awayPenalty ?? null
+
+        // 判定勝隊
+        let winner: typeof match.homeTeam | null = null
+        if (homeScore > awayScore) {
+            winner = match.homeTeam
+        } else if (awayScore > homeScore) {
+            winner = match.awayTeam
+        } else if (homePenalty !== undefined && awayPenalty !== undefined) {
+            winner = homePenalty > awayPenalty ? match.homeTeam : match.awayTeam
+        }
+        if (winner && match.winnerCode !== winner.teamCode) {
+            match.winnerCode = winner.teamCode
+
+            // 自動晉級
+            if (match.nextMatchId && match.nextMatchSlot) {
+                const nextMatch = matches.value.find(m => m.matchId === match.nextMatchId)
+                if (nextMatch) {
+                    if (match.nextMatchSlot === 'home') {
+                        nextMatch.homeTeam = { ...winner }
+                    } else {
+                        nextMatch.awayTeam = { ...winner }
+                    }
+                }
+            }
+        }
+    }
+    return {
+        matchesByStage,
+        updateMatchResult,
+        matchesWithInfo,
+        matches,
+    }
+})

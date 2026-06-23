@@ -8,7 +8,7 @@
 
     <div v-else class="game-card">
       <GoBack />
-
+      
       <div class="header">
         <img :src="currentTeam.teamFlag" :alt="currentTeam.teamName" class="team-flag-large">
         <h2>{{ currentTeam.teamName }}國家隊賽程</h2>
@@ -65,19 +65,10 @@ const uniqueMatches = computed(() => {
     match.awayCode === route.query.teamCode
   )
 })
-// 取得目前球隊的賽程
-const countryGameSchedule = computed(() => {
-  const teamCode = route.query.teamCode
-  const team = teamStore.teams.find(t => t.teamCode === teamCode)
-  return team ? team.teamGameSchedule : []
-})
-
-// 將 teamCode 改為 computed，使其響應路由變化產生資料更新
-const teamCode = computed(() => route.query.teamCode || '')
 
 // 取得目前球隊資訊
 const currentTeam = computed(() => {
-  return teamStore.teams.find(team => team.teamCode === teamCode.value)
+  return teamStore.teams.find(team => team.teamCode === route.query.teamCode)
 })
 // 🌟 加入這行保險：如果網址沒傳 group，就用查到的球隊組別強行補上去給戰績表看
 if (currentTeam.value && !route.query.group) {
