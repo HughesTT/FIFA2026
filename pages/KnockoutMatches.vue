@@ -13,13 +13,7 @@
                 <div class="column-matches">
                     <div v-for="match in matchesByStage.R32" :key="match.matchId" class="match-node">
                         <div class="match-content">
-                            <div class="match-time">
-                                <svg class="time-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                {{ formatDate(match.date) }} {{ match.time }}
-                            </div>
+                            <div class="match-time">{{ formatDate(match.date) }} {{ match.time }}</div>
                             <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamCode)"
                                 @mouseleave="clearHoverTeam"
                                 :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamCode && match.homeTeam?.teamCode }">
@@ -53,194 +47,165 @@
                 <div class="column-matches">
                     <div v-for="match in matchesByStage.R16" :key="match.matchId" class="match-node">
                         <div class="match-content">
-                            <div class="match-time">
-                                <svg class="time-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                {{ formatDate(match.date) }} {{ match.time }}
-                            </div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamCode && match.homeTeam?.teamCode }">
-                                <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
-                                    :alt="match.homeTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.homeTeam">待定</span>
-                                    <span v-else>{{ match.homeTeam.teamName }}</span>
+                            <div class="match-time" {{ formatDate(match.date) }} {{ match.time }}</div>
+                                <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamCode)"
+                                    @mouseleave="clearHoverTeam"
+                                    :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamCode && match.homeTeam?.teamCode }">
+                                    <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
+                                        :alt="match.homeTeam.teamName" class="flag-icon" />
+                                    <div v-else class="flag-placeholder" />
+                                    <div class="team-code">
+                                        <span v-if="!match.homeTeam">待定</span>
+                                        <span v-else>{{ match.homeTeam.teamName }}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="vs-badge">VS</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamCode && match.awayTeam?.teamCode }">
-                                <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
-                                    :alt="match.awayTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.awayTeam">待定</span>
-                                    <span v-else>{{ match.awayTeam.teamName }}</span>
+                                <div class="vs-badge">VS</div>
+                                <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamCode)"
+                                    @mouseleave="clearHoverTeam"
+                                    :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamCode && match.awayTeam?.teamCode }">
+                                    <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
+                                        :alt="match.awayTeam.teamName" class="flag-icon" />
+                                    <div v-else class="flag-placeholder" />
+                                    <div class="team-code">
+                                        <span v-if="!match.awayTeam">待定</span>
+                                        <span v-else>{{ match.awayTeam.teamName }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- 8強 -->
-            <div class="bracket-column">
-                <div class="stage-label">8 強賽</div>
-                <div class="column-matches">
-                    <div v-for="match in matchesByStage.QF" :key="match.matchId" class="match-node">
-                        <div class="match-content">
-                            <div class="match-time">
-                                <svg class="time-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                {{ formatDate(match.date) }} {{ match.time }}
-                            </div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamCode && match.homeTeam?.teamCode }">
-                                <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
-                                    :alt="match.homeTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.homeTeam">待定</span>
-                                    <span v-else>{{ match.homeTeam.teamName }}</span>
+                <!-- 8強 -->
+                <div class="bracket-column">
+                    <div class="stage-label">8 強賽</div>
+                    <div class="column-matches">
+                        <div v-for="match in matchesByStage.QF" :key="match.matchId" class="match-node">
+                            <div class="match-content">
+                                <div class="match-time">{{ formatDate(match.date) }} {{ match.time }}</div>
+                                <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamCode)"
+                                    @mouseleave="clearHoverTeam"
+                                    :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamCode && match.homeTeam?.teamCode }">
+                                    <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
+                                        :alt="match.homeTeam.teamName" class="flag-icon" />
+                                    <div v-else class="flag-placeholder" />
+                                    <div class="team-code">
+                                        <span v-if="!match.homeTeam">待定</span>
+                                        <span v-else>{{ match.homeTeam.teamName }}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="vs-badge">VS</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamCode && match.awayTeam?.teamCode }">
-                                <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
-                                    :alt="match.awayTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.awayTeam">待定</span>
-                                    <span v-else>{{ match.awayTeam.teamName }}</span>
+                                <div class="vs-badge">VS</div>
+                                <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamCode)"
+                                    @mouseleave="clearHoverTeam"
+                                    :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamCode && match.awayTeam?.teamCode }">
+                                    <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
+                                        :alt="match.awayTeam.teamName" class="flag-icon" />
+                                    <div v-else class="flag-placeholder" />
+                                    <div class="team-code">
+                                        <span v-if="!match.awayTeam">待定</span>
+                                        <span v-else>{{ match.awayTeam.teamName }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- 4強 -->
-            <div class="bracket-column">
-                <div class="stage-label">4 強賽</div>
-                <div class="column-matches">
-                    <div v-for="match in matchesByStage.SF" :key="match.matchId" class="match-node">
-                        <div class="match-content">
-                            <div class="match-time">
-                                <svg class="time-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                {{ formatDate(match.date) }} {{ match.time }}
-                            </div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamCode && match.homeTeam?.teamCode }">
-                                <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
-                                    :alt="match.homeTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.homeTeam">待定</span>
-                                    <span v-else>{{ match.homeTeam.teamName }}</span>
+                <!-- 4強 -->
+                <div class="bracket-column">
+                    <div class="stage-label">4 強賽</div>
+                    <div class="column-matches">
+                        <div v-for="match in matchesByStage.SF" :key="match.matchId" class="match-node">
+                            <div class="match-content">
+                                <div class="match-time">{{ formatDate(match.date) }} {{ match.time }}</div>
+                                <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamCode)"
+                                    @mouseleave="clearHoverTeam"
+                                    :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamCode && match.homeTeam?.teamCode }">
+                                    <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
+                                        :alt="match.homeTeam.teamName" class="flag-icon" />
+                                    <div v-else class="flag-placeholder" />
+                                    <div class="team-code">
+                                        <span v-if="!match.homeTeam">待定</span>
+                                        <span v-else>{{ match.homeTeam.teamName }}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="vs-badge">VS</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamCode && match.awayTeam?.teamCode }">
-                                <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
-                                    :alt="match.awayTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.awayTeam">待定</span>
-                                    <span v-else>{{ match.awayTeam.teamName }}</span>
+                                <div class="vs-badge">VS</div>
+                                <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamCode)"
+                                    @mouseleave="clearHoverTeam"
+                                    :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamCode && match.awayTeam?.teamCode }">
+                                    <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
+                                        :alt="match.awayTeam.teamName" class="flag-icon" />
+                                    <div v-else class="flag-placeholder" />
+                                    <div class="team-code">
+                                        <span v-if="!match.awayTeam">待定</span>
+                                        <span v-else>{{ match.awayTeam.teamName }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- 季軍戰 -->
-            <div class="bracket-column">
-                <div class="stage-label">季軍戰</div>
-                <div class="column-matches">
-                    <div v-for="match in matchesByStage.ThirdPlace" :key="match.matchId" class="match-node">
-                        <div class="match-content">
-                            <div class="match-time">
-                                <svg class="time-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                {{ formatDate(match.date) }} {{ match.time }}
-                            </div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamCode && match.homeTeam?.teamCode }">
-                                <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
-                                    :alt="match.homeTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.homeTeam">待定</span>
-                                    <span v-else>{{ match.homeTeam.teamName }}</span>
+                <!-- 季軍戰 -->
+                <div class="bracket-column">
+                    <div class="stage-label">季軍戰</div>
+                    <div class="column-matches">
+                        <div v-for="match in matchesByStage.ThirdPlace" :key="match.matchId" class="match-node">
+                            <div class="match-content">
+                                <div class="match-time">{{ formatDate(match.date) }} {{ match.time }}</div>
+                                <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamCode)"
+                                    @mouseleave="clearHoverTeam"
+                                    :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamCode && match.homeTeam?.teamCode }">
+                                    <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
+                                        :alt="match.homeTeam.teamName" class="flag-icon" />
+                                    <div v-else class="flag-placeholder" />
+                                    <div class="team-code">
+                                        <span v-if="!match.homeTeam">待定</span>
+                                        <span v-else>{{ match.homeTeam.teamName }}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="vs-badge">VS</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamCode && match.awayTeam?.teamCode }">
-                                <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
-                                    :alt="match.awayTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.awayTeam">待定</span>
-                                    <span v-else>{{ match.awayTeam.teamName }}</span>
+                                <div class="vs-badge">VS</div>
+                                <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamCode)"
+                                    @mouseleave="clearHoverTeam"
+                                    :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamCode && match.awayTeam?.teamCode }">
+                                    <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
+                                        :alt="match.awayTeam.teamName" class="flag-icon" />
+                                    <div v-else class="flag-placeholder" />
+                                    <div class="team-code">
+                                        <span v-if="!match.awayTeam">待定</span>
+                                        <span v-else>{{ match.awayTeam.teamName }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- 決賽 -->
-            <div class="bracket-column">
-                <div class="stage-label final-label">決 賽</div>
-                <div class="column-matches">
-                    <div v-for="match in matchesByStage.Final" :key="match.matchId" class="match-node final-match">
-                        <div class="match-content">
-                            <div class="match-time">
-                                <svg class="time-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                {{ formatDate(match.date) }} {{ match.time }}
-                            </div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamId)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamId && match.homeTeam?.teamId }">
-                                <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
-                                    :alt="match.homeTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.homeTeam">待定</span>
-                                    <span v-else>{{ match.homeTeam.teamName }}</span>
+                <!-- 決賽 -->
+                <div class="bracket-column">
+                    <div class="stage-label final-label">決 賽</div>
+                    <div class="column-matches">
+                        <div v-for="match in matchesByStage.Final" :key="match.matchId" class="match-node final-match">
+                            <div class="match-content">
+                                <div class="match-time">{{ formatDate(match.date) }} {{ match.time }}</div>
+                                <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamId)"
+                                    @mouseleave="clearHoverTeam"
+                                    :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamId && match.homeTeam?.teamId }">
+                                    <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
+                                        :alt="match.homeTeam.teamName" class="flag-icon" />
+                                    <div v-else class="flag-placeholder" />
+                                    <div class="team-code">
+                                        <span v-if="!match.homeTeam">待定</span>
+                                        <span v-else>{{ match.homeTeam.teamName }}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="vs-badge crown">👑</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamId)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamId && match.awayTeam?.teamId }">
-                                <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
-                                    :alt="match.awayTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.awayTeam">待定</span>
-                                    <span v-else>{{ match.awayTeam.teamName }}</span>
+                                <div class="vs-badge crown">👑</div>
+                                <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamId)"
+                                    @mouseleave="clearHoverTeam"
+                                    :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamId && match.awayTeam?.teamId }">
+                                    <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
+                                        :alt="match.awayTeam.teamName" class="flag-icon" />
+                                    <div v-else class="flag-placeholder" />
+                                    <div class="team-code">
+                                        <span v-if="!match.awayTeam">待定</span>
+                                        <span v-else>{{ match.awayTeam.teamName }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -248,7 +213,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </template>
 
 <script setup lang="ts">
