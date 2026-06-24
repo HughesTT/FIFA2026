@@ -3,7 +3,6 @@
         <BackHome />
         <div class="knockout-header">
             <h1>淘汰賽</h1>
-            <p class="subtitle">2026 FIFA 世界盃賽程</p>
         </div>
 
         <div class="bracket-wrapper" ref="bracketRef" @mousedown="startDrag" @mouseleave="stopDrag" @mouseup="stopDrag"

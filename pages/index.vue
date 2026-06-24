@@ -4,10 +4,11 @@
       <h1>{{ titleA }}</h1>
       <h1>{{ titleB }}</h1>
     </div>
-    <div class="topimg" @click="goToKnockout">
+    <div class="topimg">
       <img src="/img/FIFA2026.png" class="fifacup">
     </div>
     <GameScheduleModal />
+    <button class="gotoKO" @click="goToKnockout">淘汰賽對戰表</button>
     <GroupCard />
   </div>
 </template>
@@ -34,5 +35,21 @@ onMounted(() => {
 <style lang="scss">
 .title-container h1 {
   font-family: 'FIFA2026-NormalBlack', sans-serif;
+}
+
+.gotoKO {
+  font-size: 1rem;
+  position: fixed;
+  top: 20px;
+  right: 10px;
+  width: 130px;
+  height: 40px;
+  font-family: 'FIFA2026-NormalBold', sans-serif;
+  background-color: #e31d1a;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 100;
 }
 </style>
