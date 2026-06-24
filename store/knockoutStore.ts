@@ -27,6 +27,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-1',
             stage: 'R32',
+            fifaMatchId: '73',
             stageLabel: '32強',
             date: '2026-06-29',
             time: '03:00',
@@ -41,6 +42,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-2',
             stage: 'R32',
+            fifaMatchId: '76',
             stageLabel: '32強',
             date: '2026-06-30',
             time: '01:00',
@@ -55,6 +57,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-3',
             stage: 'R32',
+            fifaMatchId: '74',
             stageLabel: '32強',
             date: '2026-06-30',
             time: '04:30',
@@ -69,6 +72,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-4',
             stage: 'R32',
+            fifaMatchId: '75',
             stageLabel: '32強',
             date: '2026-06-30',
             time: '09:00',
@@ -83,6 +87,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-5',
             stage: 'R32',
+            fifaMatchId: '78',
             stageLabel: '32強',
             date: '2026-07-01',
             time: '01:00',
@@ -97,6 +102,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-6',
             stage: 'R32',
+            fifaMatchId: '77',
             stageLabel: '32強',
             date: '2026-07-01',
             time: '05:00',
@@ -111,6 +117,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-7',
             stage: 'R32',
+            fifaMatchId: '79',
             stageLabel: '32強',
             date: '2026-07-01',
             time: '09:00',
@@ -125,6 +132,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-8',
             stage: 'R32',
+            fifaMatchId: '80',
             stageLabel: '32強',
             date: '2026-07-02',
             time: '00:00',
@@ -139,6 +147,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-9',
             stage: 'R32',
+            fifaMatchId: '82',
             stageLabel: '32強',
             date: '2026-07-02',
             time: '04:00',
@@ -153,6 +162,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-10',
             stage: 'R32',
+            fifaMatchId: '81',
             stageLabel: '32強',
             date: '2026-07-02',
             time: '08:00',
@@ -167,6 +177,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-11',
             stage: 'R32',
+            fifaMatchId: '84',
             stageLabel: '32強',
             date: '2026-07-03',
             time: '03:00',
@@ -181,6 +192,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-12',
             stage: 'R32',
+            fifaMatchId: '83',
             stageLabel: '32強',
             date: '2026-07-03',
             time: '07:00',
@@ -195,6 +207,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-13',
             stage: 'R32',
+            fifaMatchId: '85',
             stageLabel: '32強',
             date: '2026-07-03',
             time: '11:00',
@@ -209,6 +222,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-14',
             stage: 'R32',
+            fifaMatchId: '88',
             stageLabel: '32強',
             date: '2026-07-04',
             time: '02:00',
@@ -223,6 +237,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-15',
             stage: 'R32',
+            fifaMatchId: '86',
             stageLabel: '32強',
             date: '2026-07-04',
             time: '06:00',
@@ -237,6 +252,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R32-16',
             stage: 'R32',
+            fifaMatchId: '87',
             stageLabel: '32強',
             date: '2026-07-04',
             time: '09:30',
@@ -252,9 +268,10 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R16-1',
             stage: 'R16',
+            fifaMatchId: '90',
             stageLabel: '16強',
-            date: '',
-            time: '',
+            date: '2026-07-05',
+            time: '01:00',
             homeTeam: { teamName: 'W73', teamCode: '', teamFlag: ''},
             awayTeam: { teamName: 'W75', teamCode: '', teamFlag: ''},
             homeScore: null,
@@ -266,9 +283,10 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R16-2',
             stage: 'R16',
+            fifaMatchId: '89',
             stageLabel: '16強',
-            date: '',
-            time: '',
+            date: '2026-07-05',
+            time: '05:00',
             homeTeam: { teamName: 'W74', teamCode: '', teamFlag: ''},
             awayTeam: { teamName: 'W77', teamCode: '', teamFlag: ''},
             homeScore: null,
@@ -280,11 +298,12 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R16-3',
             stage: 'R16',
+            fifaMatchId: '93',
             stageLabel: '16強',
-            date: '',
-            time: '',
-            homeTeam: { teamName: 'W78', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W79', teamCode: '', teamFlag: ''},
+            date: '2026-07-06',
+            time: '04:00',
+            homeTeam: { teamName: 'W76', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W78', teamCode: '', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             nextMatchId: 'QF-1',
@@ -294,11 +313,12 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R16-4',
             stage: 'R16',
+            fifaMatchId: '92',
             stageLabel: '16強',
-            date: '',
-            time: '',
-            homeTeam: { teamName: 'W80', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W81', teamCode: '', teamFlag: ''},
+            date: '2026-07-06',
+            time: '08:00',
+            homeTeam: { teamName: 'W79', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W80', teamCode: '', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             nextMatchId: 'QF-1',
@@ -308,11 +328,12 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R16-5',
             stage: 'R16',
+            fifaMatchId: '93',
             stageLabel: '16強',
-            date: '',
-            time: '',
-            homeTeam: { teamName: 'W82', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W83', teamCode: '', teamFlag: ''},
+            date: '2026-07-07',
+            time: '03:00',
+            homeTeam: { teamName: 'W83', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W84', teamCode: '', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             nextMatchId: 'QF-1',
@@ -322,11 +343,12 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R16-6',
             stage: 'R16',
+            fifaMatchId: '94',
             stageLabel: '16強',
-            date: '',
-            time: '',
-            homeTeam: { teamName: 'W84', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W85', teamCode: '', teamFlag: ''},
+            date: '2026-07-07',
+            time: '08:00',
+            homeTeam: { teamName: 'W81', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W82', teamCode: '', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             nextMatchId: 'QF-1',
@@ -336,11 +358,12 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R16-7',
             stage: 'R16',
+            fifaMatchId: '95',
             stageLabel: '16強',
-            date: '',
-            time: '',
+            date: '2026-07-08',
+            time: '00:00',
             homeTeam: { teamName: 'W86', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W87', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W88', teamCode: '', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             nextMatchId: 'QF-1',
@@ -350,11 +373,12 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'R16-8',
             stage: 'R16',
+            fifaMatchId: '96',
             stageLabel: '16強',
-            date: '',
-            time: '',
-            homeTeam: { teamName: 'W88', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W89', teamCode: '', teamFlag: ''},
+            date: '2026-07-08',
+            time: '04:00',
+            homeTeam: { teamName: 'W85', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W87', teamCode: '', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             nextMatchId: 'QF-1',
@@ -365,11 +389,12 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'QF-1',
             stage: 'QF',
+            fifaMatchId: '97',
             stageLabel: '8強',
-            date: '',
-            time: '',
-            homeTeam: { teamName: 'W90', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W91', teamCode: '', teamFlag: ''},
+            date: '2026-07-10',
+            time: '04:00',
+            homeTeam: { teamName: 'W89', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W90', teamCode: '', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             nextMatchId: 'SF-1',
@@ -379,11 +404,12 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'QF-2',
             stage: 'QF',
+            fifaMatchId: '98',
             stageLabel: '8強',
-            date: '',
-            time: '',
-            homeTeam: { teamName: 'W92', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W93', teamCode: '', teamFlag: ''},
+            date: '2026-07-11',
+            time: '03:00',
+            homeTeam: { teamName: 'W93', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W94', teamCode: '', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             nextMatchId: 'SF-1',
@@ -393,11 +419,12 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'QF-3',
             stage: 'QF',
+            fifaMatchId: '99',
             stageLabel: '8強',
-            date: '',
-            time: '',
-            homeTeam: { teamName: 'W94', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W95', teamCode: '', teamFlag: ''},
+            date: '2026-07-12',
+            time: '05:00',
+            homeTeam: { teamName: 'W91', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W92', teamCode: '', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             nextMatchId: 'SF-2',
@@ -407,11 +434,12 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'QF-4',
             stage: 'QF',
+            fifaMatchId: '100',
             stageLabel: '8強',
-            date: '',
-            time: '',
-            homeTeam: { teamName: 'W96', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W97', teamCode: '', teamFlag: ''},
+            date: '2026-07-12',
+            time: '09:00',
+            homeTeam: { teamName: 'W95', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W96', teamCode: '', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             nextMatchId: 'SF-2',
@@ -422,11 +450,12 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'SF-1',
             stage: 'SF',
+            fifaMatchId: '101',
             stageLabel: '4強',
-            date: '',
-            time: '',
-            homeTeam: { teamName: 'W98', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W99', teamCode: '', teamFlag: ''},
+            date: '2026-07-15',
+            time: '03:00',
+            homeTeam: { teamName: 'W97', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W98', teamCode: '', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             nextMatchId: 'Final',
@@ -436,11 +465,12 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         {
             matchId: 'SF-2',
             stage: 'SF',
+            fifaMatchId: '102',
             stageLabel: '4強',
-            date: '',
-            time: '',
-            homeTeam: { teamName: 'W100', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W101', teamCode: '', teamFlag: ''},
+            date: '2026-07-16',
+            time: '03:00',
+            homeTeam: { teamName: 'W99', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W100', teamCode: '', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             nextMatchId: 'Final',
@@ -449,32 +479,32 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         },
         // 季軍戰
         {
-            matchId: '3rd_playoff',
-            stage: '3rd_playoff',
+            matchId: 'ThirdPlace',
+            stage: 'ThirdPlace',
+            fifaMatchId: '103',
             stageLabel: '季軍戰',
-            date: '',
-            time: '',
-            homeTeam: { teamName: 'L102', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'L103', teamCode: '', teamFlag: ''},
+            date: '2026-07-19',
+            time: '05:00',
+            homeTeam: { teamName: 'L101', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'L102', teamCode: '', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             nextMatchId: null,
-            nextMatchSlot: null,
             side: 'left'
         },
         // 決賽
         {
             matchId: 'Final',
+            fifaMatchId: '104',
             stage: 'Final',
             stageLabel: '決賽',
-            date: '',
-            time: '',
-            homeTeam: { teamName: 'W104', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W105', teamCode: '', teamFlag: ''},
+            date: '2026-07-20',
+            time: '03:00',
+            homeTeam: { teamName: 'W101', teamCode: '', teamFlag: ''},
+            awayTeam: { teamName: 'W102', teamCode: '', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             nextMatchId: null,
-            nextMatchSlot: null,
             side: 'left'
         }
     ])
@@ -486,6 +516,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             R16: [],
             QF: [],
             SF: [],
+            ThirdPlace: [],
             Final: []
         }
         matchesWithInfo.value.forEach(m => { // 使用 forEach 檢查所有比賽，將依據條件放入對應階段的陣列
@@ -535,10 +566,22 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             }
         }
     }
+
+    // 日期格式化
+    const formatDate = (dateStr) => {
+        const date = new Date(dateStr) // 將日期字串轉換
+        return date.toLocaleDateString('zh-TW', {
+        month: '2-digit', // 顯示兩位數的月份
+        day: 'numeric', // 顯示數字的日期
+        weekday: 'short' // 顯示簡短的星期幾名稱
+        })
+    }
+    
     return {
         matchesByStage,
         updateMatchResult,
         matchesWithInfo,
         matches,
+        formatDate
     }
 })

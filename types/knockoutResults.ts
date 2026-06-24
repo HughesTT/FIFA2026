@@ -7,7 +7,8 @@ export interface knockoutTeam {
 export interface knockoutMatch {
     matchId: string // 比賽編號(例: 'R16-1')
     stageLabel: string
-    stage: 'R32' | 'R16' | 'QF' | 'SF' | 'Final' | '3rd_playoff' // 賽程階段
+    fifaMatchId: string
+    stage: 'R32' | 'R16' | 'QF' | 'SF' | 'Final' | 'ThirdPlace' // 賽程階段
     date: string // 比賽日期(YYYY-MM-DD)
     time: string // 比賽時間(HH:MM)
     homeTeam: knockoutTeam // 主場資訊
