@@ -8,7 +8,8 @@
     <div class="match-teams">
       <!-- 主隊 -->
       <div class="team home" @click.stop="onTeamClick(match.homeCode)">
-        <img :src="match.homeFlag" :alt="match.homeTeam" class="team-flag">
+        <img v-if="match.homeFlag" :src="match.homeFlag" :alt="match.homeTeam" class="team-flag">
+        <div v-else class="flag-placeholder"></div>
         <span class="team-name">{{ match.homeTeam }}</span>
       </div>
 
@@ -28,7 +29,8 @@
 
       <!-- 客隊 -->
       <div class="team away" @click.stop="onTeamClick(match.awayCode)">
-        <img :src="match.awayFlag" :alt="match.awayTeam" class="team-flag">
+        <img v-if="match.awayFlag" :src="match.awayFlag" :alt="match.awayTeam" class="team-flag">
+        <div v-else class="flag-placeholder"></div>
         <span class="team-name">{{ match.awayTeam }}</span>
       </div>
     </div>
@@ -154,6 +156,26 @@ const handleCardClick = () => {
   }
 }
 
+.flag-placeholder {
+  width: 48px;
+  /* 必須與 .team-flag 尺寸一致 */
+  height: 32px;
+  background-color: #e2e8f0;
+  /* 淡灰色，代表待定 */
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 為了讓視覺更統一，可以在佔位符中間加個小圖標或文字 */
+.flag-placeholder::after {
+  content: '?';
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .match-score {
   font-family: 'FIFA2026-NormalBlack', sans-serif;
   font-size: 22px;
@@ -190,5 +212,96 @@ const handleCardClick = () => {
   font-size: 13px;
   font-weight: 500;
   margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .match-item {
+    padding: 14px 10px;
+  }
+
+  .match-header {
+    gap: 8px;
+    margin-bottom: 10px;
+
+    .match-date,
+    .match-time {
+      font-size: 11px;
+      padding: 2px 8px;
+      white-space: nowrap;
+    }
+  }
+
+  .match-teams {
+    gap: 6px;
+
+    .team {
+      gap: 6px;
+      padding: 6px;
+
+      .team-flag {
+        width: 34px;
+        height: 24px;
+      }
+
+      .team-name {
+        font-size: 12px;
+        line-height: 1.2;
+        text-align: center;
+        word-break: break-word;
+      }
+    }
+  }
+
+  .match-score {
+    font-size: 18px;
+  }
+
+  .vs {
+    font-size: 14px;
+  }
+
+  .match-badge {
+    top: 8px;
+    right: 8px;
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .match-stage {
+    font-size: 11px;
+    margin-top: 8px;
+  }
+
+  .flag-placeholder {
+    width: 34px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .match-item {
+    padding: 12px 8px;
+  }
+
+  .match-teams {
+    .team {
+      .team-flag {
+        width: 30px;
+        height: 22px;
+      }
+
+      .team-name {
+        font-size: 11px;
+      }
+    }
+  }
+
+  .match-score {
+    font-size: 16px;
+  }
+
+  .vs {
+    font-size: 13px;
+  }
 }
 </style>

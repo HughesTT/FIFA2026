@@ -47,12 +47,36 @@ body {
   }
 
   @media(max-width: 768px) {
+    background-attachment: scroll;
+    padding: 64px 8px 18px;
+
     .title-container h1 {
       font-size: 46px;
     }
 
     .fifacup {
       width: 300px;
+    }
+  }
+
+  @media(max-width: 480px) {
+    padding: 60px 6px 14px;
+
+    .title-container {
+      margin-bottom: 20px;
+
+      h1 {
+        font-size: 36px;
+        line-height: 1.05;
+      }
+    }
+
+    .topimg {
+      margin-bottom: 24px;
+
+      .fifacup {
+        width: min(88vw, 260px);
+      }
     }
   }
 }

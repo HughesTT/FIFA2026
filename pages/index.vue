@@ -32,7 +32,7 @@ onMounted(() => {
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .title-container h1 {
   font-family: 'FIFA2026-NormalBlack', sans-serif;
 }

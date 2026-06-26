@@ -1,7 +1,7 @@
 <template>
   <div v-if="isVisible" class="modal-container">
     <div class="modal-header">
-      <h3>🔥 即將進行的比賽</h3>
+      <h3>即將進行的比賽</h3>
       <button class="close-btn" title="關閉" @click="closeModal">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -67,7 +67,7 @@ const viewCountryGameSchedule = (teamCode) => {
   router.push({ path: '/CountryGameSchedule', query: { teamCode } })
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .modal-container {
   max-width: 1400px;
   margin: 40px auto 20px;
@@ -185,7 +185,7 @@ const viewCountryGameSchedule = (teamCode) => {
 
 .matches-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
 
   @media (max-width: 1024px) {

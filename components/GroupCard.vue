@@ -92,14 +92,15 @@ const viewCountryGameSchedule = (teamCode) => {
 }
 
 .group-card-container {
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-  border: none;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96) 0%, rgba(247, 251, 255, 0.94) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
   border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.24);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  backdrop-filter: blur(2px);
 
   &::before {
     content: '';
@@ -108,22 +109,24 @@ const viewCountryGameSchedule = (teamCode) => {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12, #e74c3c);
+    background: linear-gradient(90deg, #93c5fd, #86efac, #fde68a, #fecaca);
     opacity: 0;
     transition: opacity 0.3s ease;
   }
 
   &:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    transform: translateY(-6px) scale(1.015);
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.28);
 
     &::before {
       opacity: 1;
     }
 
     .group-title {
-      background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
-      color: white;
+      background: linear-gradient(135deg, #dbeafe 0%, #e0f2fe 100%);
+      color: #1e3a8a;
+      text-shadow: none;
+      letter-spacing: 1.5px;
     }
   }
 
@@ -143,14 +146,15 @@ const viewCountryGameSchedule = (teamCode) => {
 .group-title {
   font-size: 1.5rem;
   text-align: center;
-  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-  color: white;
+  background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
+  color: #1e3a8a;
   font-weight: 700;
   padding: 1.25rem 0;
   letter-spacing: 1px;
   transition: all 0.3s ease;
   position: relative;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: none;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.18);
 
   @media (max-width: 768px) {
     font-size: 1.3rem;
@@ -169,7 +173,7 @@ const viewCountryGameSchedule = (teamCode) => {
   align-items: center;
   padding: 12px 16px;
   gap: 12px;
-  border-bottom: 1px solid #e8ecef;
+  border-bottom: 1px solid #e2e8f0;
   transition: all 0.2s ease;
   position: relative;
 
@@ -184,13 +188,13 @@ const viewCountryGameSchedule = (teamCode) => {
     top: 0;
     bottom: 0;
     width: 3px;
-    background: linear-gradient(180deg, #3498db, #2ecc71);
+    background: linear-gradient(180deg, #93c5fd, #86efac);
     opacity: 0;
     transition: opacity 0.2s ease;
   }
 
   &:hover {
-    background-color: rgba(52, 152, 219, 0.05);
+    background-color: rgba(59, 130, 246, 0.08);
     padding-left: 20px;
 
     &::before {
@@ -198,7 +202,7 @@ const viewCountryGameSchedule = (teamCode) => {
     }
 
     h3 {
-      color: #3498db;
+      color: #2563eb;
       font-weight: 600;
     }
 
@@ -210,7 +214,7 @@ const viewCountryGameSchedule = (teamCode) => {
   h3 {
     font-size: 1rem;
     font-weight: 500;
-    color: #34495e;
+    color: #334155;
     margin: 0;
     transition: all 0.2s ease;
     white-space: nowrap;
@@ -264,14 +268,15 @@ const viewCountryGameSchedule = (teamCode) => {
   gap: 8px;
   padding: 5px 10px;
   margin: 12px 16px 16px 16px;
-  background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-  color: white;
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  color: #9a3412;
   font-size: 1rem;
   font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 4px 12px rgba(251, 146, 60, 0.22);
+  border: 1px solid rgba(251, 146, 60, 0.35);
   position: relative;
   overflow: hidden;
 
@@ -283,14 +288,14 @@ const viewCountryGameSchedule = (teamCode) => {
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.45);
     transform: translate(-50%, -50%);
     transition: width 0.6s, height 0.6s;
   }
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.5);
+    box-shadow: 0 8px 16px rgba(251, 146, 60, 0.3);
 
     &::before {
       width: 300px;

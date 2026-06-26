@@ -24,4 +24,23 @@
   box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
   z-index: 15;
 }
+
+@media (max-width: 768px) {
+  .backhome {
+    top: 12px;
+    right: 8px;
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .backhome {
+    top: 10px;
+    right: 6px;
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+}
 </style>

@@ -5,210 +5,19 @@
             <h1>淘汰賽</h1>
         </div>
 
-        <div class="bracket-wrapper" ref="bracketRef" @mousedown="startDrag" @mouseleave="stopDrag" @mouseup="stopDrag"
-            @mousemove="doDrag" :class="{ 'is-hovering': hoveredTeamId !== null }">
-            <!-- 32強 -->
-            <div class="bracket-column">
-                <div class="stage-label">32 強賽</div>
+        <div ref="bracketRef" class="bracket-wrapper" :class="{ 'is-hovering': hoveredTeamId !== null }"
+            @mousedown="startDrag" @mouseleave="stopDrag" @mouseup="stopDrag" @mousemove="doDrag">
+            <!-- 使用動態陣列，減少重複程式碼 -->
+            <div v-for="stage in ['R32', 'R16', 'QF', 'SF', 'Final']" :key="stage"
+                :class="['bracket-column', stage.toLowerCase()]">
+                <div class="stage-label" :class="{ 'final-label': stage === 'Final' }">{{ stageText(stage) }}</div>
                 <div class="column-matches">
-                    <div v-for="match in matchesByStage.R32" :key="match.matchId" class="match-node">
-                        <div class="match-content">
-                            <div class="match-time">
-                                {{ formatDate(match.date) }} {{ match.time }}
-                            </div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamCode && match.homeTeam?.teamCode }">
-                                <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
-                                    :alt="match.homeTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.homeTeam">待定</span>
-                                    <span v-else>{{ match.homeTeam.teamName }}</span>
-                                </div>
-                            </div>
-                            <div class="vs-badge">VS</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamCode && match.awayTeam?.teamCode }">
-                                <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
-                                    :alt="match.awayTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.awayTeam">待定</span>
-                                    <span v-else>{{ match.awayTeam.teamName }}</span>
-                                </div>
-                            </div>
+                    <div v-for="i in Math.ceil(matchesByStage[stage].length / 2)" :key="i" class="match-pair">
+                        <div v-if="matchesByStage[stage][(i - 1) * 2]" class="match-node">
+                            <MatchCard :match="formatMatchForCard(matchesByStage[stage][(i - 1) * 2])" />
                         </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 16強 -->
-            <div class="bracket-column">
-                <div class="stage-label">16 強賽</div>
-                <div class="column-matches">
-                    <div v-for="match in matchesByStage.R16" :key="match.matchId" class="match-node">
-                        <div class="match-content">
-                            <div class="match-time">{{ formatDate(match.date) }} {{ match.time }}</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamCode && match.homeTeam?.teamCode }">
-                                <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
-                                    :alt="match.homeTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.homeTeam">待定</span>
-                                    <span v-else>{{ match.homeTeam.teamName }}</span>
-                                </div>
-                            </div>
-                            <div class="vs-badge">VS</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamCode && match.awayTeam?.teamCode }">
-                                <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
-                                    :alt="match.awayTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.awayTeam">待定</span>
-                                    <span v-else>{{ match.awayTeam.teamName }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 8強 -->
-            <div class="bracket-column">
-                <div class="stage-label">8 強賽</div>
-                <div class="column-matches">
-                    <div v-for="match in matchesByStage.QF" :key="match.matchId" class="match-node">
-                        <div class="match-content">
-                            <div class="match-time">{{ formatDate(match.date) }} {{ match.time }}</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamCode && match.homeTeam?.teamCode }">
-                                <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
-                                    :alt="match.homeTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.homeTeam">待定</span>
-                                    <span v-else>{{ match.homeTeam.teamName }}</span>
-                                </div>
-                            </div>
-                            <div class="vs-badge">VS</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamCode && match.awayTeam?.teamCode }">
-                                <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
-                                    :alt="match.awayTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.awayTeam">待定</span>
-                                    <span v-else>{{ match.awayTeam.teamName }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 4強 -->
-            <div class="bracket-column">
-                <div class="stage-label">4 強賽</div>
-                <div class="column-matches">
-                    <div v-for="match in matchesByStage.SF" :key="match.matchId" class="match-node">
-                        <div class="match-content">
-                            <div class="match-time">{{ formatDate(match.date) }} {{ match.time }}</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamCode && match.homeTeam?.teamCode }">
-                                <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
-                                    :alt="match.homeTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.homeTeam">待定</span>
-                                    <span v-else>{{ match.homeTeam.teamName }}</span>
-                                </div>
-                            </div>
-                            <div class="vs-badge">VS</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamCode && match.awayTeam?.teamCode }">
-                                <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
-                                    :alt="match.awayTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.awayTeam">待定</span>
-                                    <span v-else>{{ match.awayTeam.teamName }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 季軍戰 -->
-            <div class="bracket-column">
-                <div class="stage-label">季軍戰</div>
-                <div class="column-matches">
-                    <div v-for="match in matchesByStage.ThirdPlace" :key="match.matchId" class="match-node">
-                        <div class="match-content">
-                            <div class="match-time">{{ formatDate(match.date) }} {{ match.time }}</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamCode && match.homeTeam?.teamCode }">
-                                <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
-                                    :alt="match.homeTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.homeTeam">待定</span>
-                                    <span v-else>{{ match.homeTeam.teamName }}</span>
-                                </div>
-                            </div>
-                            <div class="vs-badge">VS</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamCode)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamCode && match.awayTeam?.teamCode }">
-                                <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
-                                    :alt="match.awayTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.awayTeam">待定</span>
-                                    <span v-else>{{ match.awayTeam.teamName }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 決賽 -->
-            <div class="bracket-column">
-                <div class="stage-label final-label">決 賽</div>
-                <div class="column-matches">
-                    <div v-for="match in matchesByStage.Final" :key="match.matchId" class="match-node final-match">
-                        <div class="match-content">
-                            <div class="match-time">{{ formatDate(match.date) }} {{ match.time }}</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.homeTeam?.teamId)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.homeTeam?.teamId && match.homeTeam?.teamId }">
-                                <img v-if="match.homeTeam?.teamFlag" :src="match.homeTeam.teamFlag"
-                                    :alt="match.homeTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.homeTeam">待定</span>
-                                    <span v-else>{{ match.homeTeam.teamName }}</span>
-                                </div>
-                            </div>
-                            <div class="vs-badge crown">👑</div>
-                            <div class="team-row" @mouseenter="setHoverTeam(match.awayTeam?.teamId)"
-                                @mouseleave="clearHoverTeam"
-                                :class="{ 'is-highlighted': hoveredTeamId === match.awayTeam?.teamId && match.awayTeam?.teamId }">
-                                <img v-if="match.awayTeam?.teamFlag" :src="match.awayTeam.teamFlag"
-                                    :alt="match.awayTeam.teamName" class="flag-icon" />
-                                <div v-else class="flag-placeholder" />
-                                <div class="team-code">
-                                    <span v-if="!match.awayTeam">待定</span>
-                                    <span v-else>{{ match.awayTeam.teamName }}</span>
-                                </div>
-                            </div>
+                        <div v-if="matchesByStage[stage][(i - 1) * 2 + 1]" class="match-node">
+                            <MatchCard :match="formatMatchForCard(matchesByStage[stage][(i - 1) * 2 + 1])" />
                         </div>
                     </div>
                 </div>
@@ -224,15 +33,20 @@ import { useknockoutStore } from "~/store/knockoutStore";
 
 const knockoutStore = useknockoutStore();
 const { matchesByStage } = storeToRefs(knockoutStore);
-const { formatDate } = knockoutStore;
+const stageText = (stage: string) => {
+    if (stage === 'R32') {
+        return '32強賽'
+    } else if (stage === 'R16') {
+        return '16強賽'
+    } else if (stage === 'QF') {
+        return '8強賽'
+    } else if (stage === 'SF') {
+        return '4強賽'
+    } else if (stage === 'Final') {
+        return '總決賽'
+    }
+}
 const hoveredTeamId = ref<string | null>(null);
-
-const setHoverTeam = (teamId?: string) => {
-    if (teamId) hoveredTeamId.value = teamId
-}
-const clearHoverTeam = () => {
-    hoveredTeamId.value = null
-}
 const bracketRef = ref<HTMLElement | null>(null)
 const isDragging = ref(false)
 const startX = ref(0)
@@ -254,18 +68,28 @@ const doDrag = (e: MouseEvent) => {
     bracketRef.value.scrollLeft = scrollLeft.value - walk
 }
 
+// 格式化資料，以便傳入 MatchCard 元件
+const formatMatchForCard = (match) => {
+    if (!match) return {
+        homeTeam: '待定',
+        awayTeam: '待定',
+        homeFlag: '',
+        awayFlag: '',
+    }; // 處理空資料
+    return {
+        matchTime: match.time,
+        matchDate: match.date,
+        homeTeam: match.homeTeam?.teamCode ? match.homeTeam?.teamName : '待定',
+        homeCode: match.homeTeam?.teamCode || '',
+        homeFlag: match.homeTeam?.teamFlag || '',
+        awayTeam: match.awayTeam?.teamCode ? match.awayTeam?.teamName : '待定',
+        awayCode: match.awayTeam?.teamCode || '',
+        awayFlag: match.awayTeam?.teamFlag || ''
+    };
+}
 // 開發用：監控數據變化
 watchEffect(() => {
     console.log("淘汰賽數據已更新");
-    console.log("R32 階段的比賽：", matchesByStage.value.R32?.length || 0);
-    console.log("R16 階段的比賽：", matchesByStage.value.R16?.length || 0);
-    console.log("QF 階段的比賽：", matchesByStage.value.QF?.length || 0);
-    console.log("SF 階段的比賽：", matchesByStage.value.SF?.length || 0);
-    console.log(
-        "ThirdPlace 階段的比賽：",
-        matchesByStage.value.ThirdPlace?.length || 0,
-    );
-    console.log("Final 階段的比賽：", matchesByStage.value.Final?.length || 0);
 });
 </script>
 
@@ -283,18 +107,19 @@ watchEffect(() => {
     --shadow-md: 0 4px 12px rgba(74, 24, 131, 0.15);
     --shadow-lg: 0 12px 24px rgba(74, 24, 131, 0.1);
     --shadow-hover: 0 16px 32px rgba(74, 24, 131, 0.2);
+    --connector-color: #94a3b8;
 }
 
 .knockout-container {
-    max-width: 1400px;
+    max-width: 100vw;
     min-height: 100vh;
     margin: 0 auto;
-    /* background: linear-gradient(135deg, #f5f7fa 0%, #e8f1f5 100%); 
-    background: rgba(255, 255, 255, 0.4);*/
     padding: 2rem 1rem;
+    overflow-x: hidden;
 
     @media (max-width: 768px) {
-        padding: 1rem 0.5rem;
+        min-height: auto;
+        padding: 1rem 0.5rem 0.5rem;
     }
 }
 
@@ -314,48 +139,34 @@ watchEffect(() => {
             font-size: 1.8rem;
         }
     }
-
-    .subtitle {
-        font-size: 1rem;
-        color: #fff;
-        margin: 0;
-        font-weight: 500;
-        letter-spacing: 0.5px;
-
-        @media (max-width: 768px) {
-            font-size: 0.9rem;
-        }
-    }
 }
 
 .bracket-wrapper {
+    background: rgba(0, 0, 0, 0.45);
     display: flex;
     align-items: stretch;
-    /* 讓所有直行(Column)都與最高的那行（32強）等高 */
-    gap: 2.5rem;
-    /* 增加行間距，容納樹狀圖的連接線 */
+    gap: 3rem; // 欄位間距
     overflow-x: auto;
     overflow-y: hidden;
-    padding: 2rem 1rem;
+    padding: 2rem;
     max-width: 1400px;
     margin: 0 auto;
     scroll-behavior: smooth;
     cursor: grab;
+    border-radius: 14px;
 
     &::-webkit-scrollbar {
-        height: 8px;
+        height: 10px;
     }
 
     &::-webkit-scrollbar-thumb {
         background: var(--accent-color);
-        border-radius: 4px;
+        border-radius: 5px;
     }
 
     &.is-dragging {
         cursor: grabbing;
-        /* 拖曳時改變游標 */
         user-select: none;
-        /* 防止拖曳時反白到文字 */
     }
 }
 
@@ -364,309 +175,229 @@ watchEffect(() => {
     filter: grayscale(100%);
 }
 
+.bracket-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 220px;
+    position: relative;
+    padding-top: 3rem; // 留給 stage-label 空間
+}
+
+.stage-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.6rem;
+    background: var(--primary-color);
+    border-radius: 6px;
+    box-shadow: var(--shadow-sm);
+    z-index: 10;
+}
+
+.stage-label.final-label {
+    background: linear-gradient(135deg, #d4af37, #b8860b);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    letter-spacing: 2px;
+}
+
 /* 2. 負責樹狀對齊的魔法容器 */
 .column-matches {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    /* 讓賽事在垂直方向均勻分佈，自然形成樹狀對齊 */
-    flex: 1;
-    /* 填滿 column 的剩餘高度 */
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.stage-label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: white;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 0.5rem;
-    background: rgba(74, 24, 131, 0.9);
-    border-radius: 4px;
-    margin-bottom: 0.5rem;
-    transition: all 0.3s ease;
-
-    @media (max-width: 768px) {
-        font-size: 0.75rem;
-        padding: 0.4rem;
-    }
-}
-
-.stage-label.final-label {
-    background: rgba(203, 148, 20, 0.9);
-    color: #fff;
-    font-weight: 700;
-    letter-spacing: 2px;
-}
-
-/* 3. 調整賽事節點樣式與連接線 */
-.match-node {
-    background: white;
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: var(--shadow-md);
-    border-left: 5px solid var(--primary-color);
+    height: 100%;
+    /* 固定最小高度，確保不會被擠壓導致重疊 */
     position: relative;
-    transition: all 0.3s ease;
+}
 
-    /* 樹狀圖的水平連接線 */
-    &::after {
-        content: "";
+.match-pair {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex: 1;
+    /* 平分垂直空間 */
+
+    /* 垂直連接線 */
+    &::before {
+        content: '';
         position: absolute;
-        top: 50%;
-        right: -2.5rem;
-        /* 對應 wrapper 的 gap */
-        width: 2.5rem;
-        height: 2px;
-        background: var(--border-color);
-        /* 傳統的實線 */
+        top: 25%;
+        bottom: 25%;
+        right: -2.2rem;
+        /* 連接線畫在與下一列的中間 */
+        width: 2px;
+        background: #94a3b8;
         z-index: 0;
     }
 
-    &:hover {
-        box-shadow: var(--shadow-hover);
-        transform: translateY(-2px);
-    }
-}
-
-/* 移除最後一欄（決賽/季軍戰）的右側連接線 */
-.bracket-column:last-child .match-node::after,
-.bracket-column:nth-last-child(2) .match-node::after {
-    display: none;
-}
-
-.match-node.final-match {
-    border-left-color: var(--accent-color);
-    box-shadow: 0 12px 28px rgba(61, 151, 0, 0.2);
-
+    /* 從垂直線中央連向下一階段的水平線 */
     &::after {
-        display: none;
-    }
-
-    &:hover {
-        box-shadow: 0 16px 40px rgba(61, 151, 0, 0.3);
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: -3.6rem;
+        /* 終點，剛好碰到下一列 */
+        width: 1.5rem;
+        /* 起點在 -1.5rem 處 */
+        height: 2px;
+        background: #94a3b8;
+        z-index: 0;
     }
 }
 
-// 移除最後一欄的連接線
-.bracket-column:last-child .match-node::after {
-    display: none;
+/* 針對最後一階 (決賽)，隱藏所有向右的連接線 */
+.bracket-column.final .match-pair::before,
+.bracket-column.final .match-pair::after,
+.bracket-column.final .match-node::after {
+    display: none !important;
 }
 
-.match-time {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid var(--border-color);
+/* 當 match-pair 只有一個節點時 (如決賽)，調整連接線位置或隱藏 */
+.bracket-column.final .match-pair {
+    justify-content: center;
+}
+
+.match-node {
+    margin: 5px 0;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+
+    /* 單一比賽節點的水平短連線，連接到垂直線 */
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: -2.2rem;
+        width: 2.2rem;
+        height: 2px;
+        background: #94a3b8;
+        z-index: 0;
+    }
+
+    // 確保組件有背景並蓋住後面的線
+    background: var(--bg-light);
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+}
+
+.match-node .match-item {
+    /* width: 100% !important; */
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    .time-icon {
-        width: 14px;
-        height: 14px;
-        color: var(--accent-color);
-        flex-shrink: 0;
-    }
+    flex-direction: column;
+    padding: 10px;
 }
 
-.vs-badge {
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    text-align: center;
-    padding: 0.4rem;
-    margin: 0.5rem 0;
-    background: rgba(74, 24, 131, 0.1);
-    border-radius: 4px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.vs-badge.crown {
-    font-size: 1rem;
-    background: linear-gradient(135deg,
-            rgba(61, 151, 0, 0.15),
-            rgba(74, 24, 131, 0.1));
-    padding: 0.5rem;
-}
-
-.team-row {
-    display: flex;
-    align-items: center;
-    padding: 0.6rem 0;
-    gap: 0.75rem;
-    transition: all 0.3s ease;
-    border-radius: 4px;
-
-    &:first-child:not(:last-child) {
-        border-bottom: 1px solid var(--border-color);
-        padding-bottom: 0.75rem;
-    }
-
-    &:hover {
-        background: rgba(61, 151, 0, 0.05);
-    }
-
-    .flag-icon {
-        width: 32px;
-        height: 22px;
-        object-fit: cover;
-        border-radius: 3px;
-        box-shadow: var(--shadow-sm);
-        flex-shrink: 0;
-        transition: transform 0.2s ease;
-        border: 1px solid var(--border-color);
-
-        &:hover {
-            transform: scale(1.1);
-        }
-    }
-
-    .flag-placeholder {
-        width: 32px;
-        height: 22px;
-        background: linear-gradient(135deg, #e0e7ff 0%, #f0e7ff 100%);
-        border-radius: 3px;
-        border: 2px dashed var(--border-color);
-        flex-shrink: 0;
-    }
-
-    .team-code {
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        flex: 1;
-        min-width: 0;
-
-        span {
-            display: block;
-        }
-    }
-}
-
-.team-row.is-highlighted {
-    background: rgba(61, 151, 0, 0.15);
-    /* 使用你的主題強調色 */
-    transform: scale(1.02);
-}
-
-// 響應式設計
 @media (max-width: 1024px) {
+
     .bracket-wrapper {
-        gap: 1.5rem;
+        gap: 2rem;
     }
 
     .bracket-column {
-        min-width: 180px;
+        width: 180px;
+    }
+
+    .match-pair::before {
+        right: -1rem;
+    }
+
+    .match-pair::after {
+        right: -2rem;
+        width: 1rem;
     }
 
     .match-node::after {
-        right: -1.5rem;
-        width: 1.5rem;
-    }
-
-    .team-row {
-        .flag-icon {
-            width: 28px;
-            height: 19px;
-        }
-
-        .flag-placeholder {
-            width: 28px;
-            height: 19px;
-        }
-
-        .team-code {
-            font-size: 0.8rem;
-        }
+        right: -1rem;
+        width: 1rem;
     }
 }
 
 @media (max-width: 768px) {
     .bracket-wrapper {
-        gap: 1rem;
-        padding: 1rem 0;
+        gap: 1.5rem;
+        padding: 0.75rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
     }
 
     .bracket-column {
-        min-width: 150px;
+        width: 172px;
+        scroll-snap-align: start;
     }
 
-    .match-node {
-        padding: 0.75rem;
-        border-left-width: 4px;
-
-        &::after {
-            width: 1rem;
-            right: -1rem;
-        }
+    .stage-label {
+        font-size: 0.82rem;
+        padding: 0.45rem;
     }
 
-    .team-row {
-        padding: 0.5rem 0;
-        gap: 0.5rem;
-
-        .flag-icon {
-            width: 26px;
-            height: 18px;
-        }
-
-        .flag-placeholder {
-            width: 26px;
-            height: 18px;
-        }
-
-        .team-code {
-            font-size: 0.75rem;
-        }
+    .match-pair::before {
+        right: -0.75rem;
     }
 
-    .match-time {
-        font-size: 0.7rem;
-        margin-bottom: 0.5rem;
-        padding-bottom: 0.5rem;
+    .match-pair::after {
+        right: -1.5rem;
+        width: 0.75rem;
     }
 
-    .vs-badge {
-        margin: 0.3rem 0;
-        padding: 0.3rem;
-        font-size: 0.65rem;
+    .match-node::after {
+        right: -0.75rem;
+        width: 0.75rem;
+    }
+
+    .column-matches {
+        min-height: 980px;
     }
 }
 
 @media (max-width: 480px) {
+    .bracket-wrapper {
+        gap: 0.75rem;
+        padding: 0.6rem;
+    }
+
     .bracket-column {
-        min-width: 120px;
+        width: 156px;
+        padding-top: 2.5rem;
     }
 
-    .match-node {
-        padding: 0.65rem;
-        border-radius: 8px;
+    .stage-label {
+        font-size: 0.76rem;
+        letter-spacing: 0.5px;
     }
 
-    .team-row {
-        gap: 0.4rem;
-
-        .flag-icon,
-        .flag-placeholder {
-            width: 22px;
-            height: 16px;
-        }
-
-        .team-code {
-            font-size: 0.7rem;
-        }
+    .match-pair::before {
+        right: -0.5rem;
     }
+
+    .match-pair::after {
+        right: -1rem;
+        width: 0.5rem;
+    }
+
+    .match-node::after {
+        right: -0.5rem;
+        width: 0.5rem;
+    }
+
+    .column-matches {
+        min-height: 860px;
+    }
+}
+
+.match-date,
+.match-time {
+    background: rgba(0, 0, 0, 0.4) !important;
 }
 </style>
