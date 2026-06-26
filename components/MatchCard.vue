@@ -273,8 +273,8 @@ const handleCardClick = () => {
   }
 
   .flag-placeholder {
-    width: 34px;
-    height: 24px;
+    width: 48px;
+    height: 32px;
   }
 }
 
@@ -286,8 +286,8 @@ const handleCardClick = () => {
   .match-teams {
     .team {
       .team-flag {
-        width: 30px;
-        height: 22px;
+        width: 48px;
+        height: 32px;
       }
 
       .team-name {

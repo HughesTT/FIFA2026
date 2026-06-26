@@ -94,7 +94,7 @@ watchEffect(() => {
 </script>
 
 <style scoped lang="scss">
-// CSS 變數定義
+/* CSS 變數定義 */
 :root {
     --primary-color: #4a1883;
     --accent-color: #3d9700;
@@ -145,7 +145,8 @@ watchEffect(() => {
     background: rgba(0, 0, 0, 0.45);
     display: flex;
     align-items: stretch;
-    gap: 3rem; // 欄位間距
+    gap: 3rem;
+    /* 欄位間距 */
     overflow-x: auto;
     overflow-y: hidden;
     padding: 2rem;
@@ -182,7 +183,8 @@ watchEffect(() => {
     flex-shrink: 0;
     width: 220px;
     position: relative;
-    padding-top: 3rem; // 留給 stage-label 空間
+    padding-top: 3rem;
+    /* 留給 stage-label 空間 */
 }
 
 .stage-label {
@@ -285,7 +287,7 @@ watchEffect(() => {
         z-index: 0;
     }
 
-    // 確保組件有背景並蓋住後面的線
+    /* 確保組件有背景並蓋住後面的線 */
     background: var(--bg-light);
     border-radius: 8px;
     box-shadow: var(--shadow-sm);
@@ -368,7 +370,7 @@ watchEffect(() => {
     }
 
     .bracket-column {
-        width: 156px;
+        width: 190px;
         padding-top: 2.5rem;
     }
 

@@ -174,6 +174,11 @@ const viewCountryGameSchedule = (teamCode) => {
   }
 }
 
+.team-flag {
+  width: 48px !important;
+  height: 24px;
+}
+
 .no-matches {
   text-align: center;
   padding: 60px 20px;
@@ -185,7 +190,7 @@ const viewCountryGameSchedule = (teamCode) => {
 
 .matches-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
 
   @media (max-width: 1024px) {
