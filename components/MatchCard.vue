@@ -9,34 +9,50 @@
       <!-- 主隊 -->
       <div class="team home" @click.stop="onTeamClick(match.homeCode)">
         <img v-if="match.homeFlag" :src="match.homeFlag" :alt="match.homeTeam" class="team-flag">
-        <div v-else class="flag-placeholder"></div>
+        <div v-else class="flag-placeholder" />
         <span class="team-name">{{ match.homeTeam }}</span>
       </div>
 
       <!-- 比分/VS 區域 -->
       <div class="score-or-vs">
-        <div v-if="hasScore" class="match-score">
-          <span class="score-num" :class="{ 'winner': match.homeScore > match.awayScore }">
-            {{ match.homeScore }}
-          </span>
-          <span class="score-divider"> - </span>
-          <span class="score-num" :class="{ 'winner': match.awayScore > match.homeScore }">
-            {{ match.awayScore }}
-          </span>
+        <!-- 正規賽比數 -->
+        <div class="regulartime">
+          <div v-if="hasScore" class="match-score">
+            <span class="score-num" :class="{ 'winner': match.homeScore > match.awayScore }">
+              {{ match.homeScore }}
+            </span>
+            <span class="score-divider"> - </span>
+            <span class="score-num" :class="{ 'winner': match.awayScore > match.homeScore }">
+              {{ match.awayScore }}
+            </span>
+          </div>
+          <div v-else class="vs">VS</div>
         </div>
-        <div v-else class="vs">VS</div>
+
+        <!-- PK戰比數 -->
+        <div class="penalty">
+          <div v-if="match.homePenaltyScore !== null && match.awayPenaltyScore !== null" class="penalty-score">
+            <span class="score-num" :class="{ 'winner': match.homePenaltyScore > match.awayPenaltyScore }">(
+              {{ match.homePenaltyScore }}
+            </span>
+            <span class="score-divider"> - </span>
+            <span class="score-num" :class="{ 'winner': match.awayPenaltyScore > match.homePenaltyScore }">
+              {{ match.awayPenaltyScore }} )
+            </span>
+          </div>
+        </div>
       </div>
 
       <!-- 客隊 -->
       <div class="team away" @click.stop="onTeamClick(match.awayCode)">
         <img v-if="match.awayFlag" :src="match.awayFlag" :alt="match.awayTeam" class="team-flag">
-        <div v-else class="flag-placeholder"></div>
+        <div v-else class="flag-placeholder" />
         <span class="team-name">{{ match.awayTeam }}</span>
       </div>
     </div>
 
     <div v-if="match.teamGroup" class="match-badge">{{ match.teamGroup }}組</div>
-    <div v-if="match.stage" class="match-stage">{{ match.stage }}</div>
+    <div v-if="match.stage" class="match-stage">{{ stageText(match.stage) }}</div>
   </div>
 </template>
 
@@ -71,8 +87,24 @@ const formattedDate = computed(() => {
   })
 })
 
+// 淘汰賽階段文字轉換函數
+const stageText = (stage) => {
+  if (stage === 'R32') {
+    return '32強賽'
+  } else if (stage === 'R16') {
+    return '16強賽'
+  } else if (stage === 'QF') {
+    return '8強賽'
+  } else if (stage === 'SF') {
+    return '4強賽'
+  } else if (stage === 'Final') {
+    return '總決賽'
+  }
+}
+
 const onTeamClick = (code) => {
   emit('team-click', code) // 移除條件判斷，確保事件總是發出
+  console.log(`點擊了球隊，代碼: ${code}`)
 }
 
 const handleCardClick = () => {
@@ -195,6 +227,20 @@ const handleCardClick = () => {
   color: #ef4444;
 }
 
+.penalty-score {
+  justify-content: center;
+  display: flex;
+
+  .winner {
+    color: #2c3e50;
+  }
+
+  .score-divider {
+    margin: 0 4px;
+    color: #7f8c8d;
+  }
+}
+
 .match-badge {
   position: absolute;
   top: 10px;
@@ -286,12 +332,12 @@ const handleCardClick = () => {
   .match-teams {
     .team {
       .team-flag {
-        width: 48px;
-        height: 32px;
+        width: 30px;
+        height: 20px;
       }
 
       .team-name {
-        font-size: 11px;
+        font-size: 12px;
       }
     }
   }
