@@ -536,8 +536,8 @@ watchEffect(() => {
 
     .bracket-viewport {
         display: flex;
-        gap: 1rem;
-        /* display: grid;
+        /*gap: 1rem;
+        display: grid;
         grid-template-columns: repeat(3, 1fr); */
     }
 
@@ -576,11 +576,11 @@ watchEffect(() => {
     }
 
     .bracket-nav.prev {
-        top: 45%;
+        top: 40%;
     }
 
     .bracket-nav.next {
-        top: 45%;
+        top: 40%;
     }
 
     .worldcup {
@@ -595,7 +595,7 @@ watchEffect(() => {
     }
 
     .bracket-column {
-        width: 170px;
+        width: 180px;
         padding-top: 2.5rem;
     }
 
