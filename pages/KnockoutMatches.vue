@@ -10,23 +10,28 @@
                     ‹
                 </button>
 
-                <div class="bracket-viewport">
-                    <div v-for="stage in visibleStages" :key="stage" :class="['bracket-column', stage.toLowerCase()]">
-                        <div class="stage-label">{{ stageText(stage) }}</div>
+                <TransitionGroup :name="direction" tag="div" mode="out-in">
+                    <div :key="windowStart" class="bracket-viewport">
+                        <div v-for="stage in visibleStages" :key="stage"
+                            :class="['bracket-column', stage.toLowerCase()]">
+                            <div class="stage-label">{{ stageText(stage) }}</div>
 
-                        <div class="column-matches">
-                            <div v-for="i in Math.ceil(matchesByStage[stage].length / 2)" :key="i" class="match-pair">
-                                <div v-if="matchesByStage[stage][(i - 1) * 2]" class="match-node">
-                                    <MatchCard :match="formatMatchForCard(matchesByStage[stage][(i - 1) * 2])" />
-                                </div>
+                            <div class="column-matches">
+                                <div v-for="i in Math.ceil(matchesByStage[stage].length / 2)" :key="i"
+                                    class="match-pair">
+                                    <div v-if="matchesByStage[stage][(i - 1) * 2]" class="match-node">
+                                        <MatchCard :match="formatMatchForCard(matchesByStage[stage][(i - 1) * 2])" />
+                                    </div>
 
-                                <div v-if="matchesByStage[stage][(i - 1) * 2 + 1]" class="match-node">
-                                    <MatchCard :match="formatMatchForCard(matchesByStage[stage][(i - 1) * 2 + 1])" />
+                                    <div v-if="matchesByStage[stage][(i - 1) * 2 + 1]" class="match-node">
+                                        <MatchCard
+                                            :match="formatMatchForCard(matchesByStage[stage][(i - 1) * 2 + 1])" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </TransitionGroup>
 
                 <button class="bracket-nav next" :disabled="!canNext" @click="nextStages">
                     ›
@@ -91,13 +96,15 @@ const visibleStages = computed(() =>
 
 const canPrev = computed(() => windowStart.value > 0)
 const canNext = computed(() => windowStart.value + visibleCount.value < stages.length)
-
+const direction = ref('next') // 用於動畫方向判斷
 const prevStages = () => {
-    if (canPrev.value) windowStart.value--
+    direction.value = 'prev'
+    windowStart.value--
 }
 
 const nextStages = () => {
-    if (canNext.value) windowStart.value++
+    direction.value = 'next'
+    windowStart.value++
 }
 
 // 格式化資料，以便傳入 MatchCard 元件
@@ -612,12 +619,59 @@ watchEffect(() => {
     }
 
     .column-matches {
-        min-height: 860px;
+        min-height: 450px;
     }
 }
 
 .match-date,
 .match-time {
     background: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* 行動裝置切換賽階動態 */
+.stage-slide-enter-active,
+.stage-slide-leave-active {
+    transition: all .35s ease;
+}
+
+.stage-slide-enter-from {
+    opacity: 0;
+    transform: translateX(60px);
+}
+
+.stage-slide-leave-to {
+    opacity: 0;
+    transform: translateX(-60px);
+}
+
+.stage-slide-move {
+    transition: transform .35s ease;
+}
+
+.next-enter-active,
+.next-leave-active,
+.prev-enter-active,
+.prev-leave-active {
+    transition: all .35s ease;
+}
+
+.next-enter-from {
+    opacity: 0;
+    transform: translateX(60px);
+}
+
+.next-leave-to {
+    opacity: 0;
+    transform: translateX(-60px);
+}
+
+.prev-enter-from {
+    opacity: 0;
+    transform: translateX(-60px);
+}
+
+.prev-leave-to {
+    opacity: 0;
+    transform: translateX(60px);
 }
 </style>
