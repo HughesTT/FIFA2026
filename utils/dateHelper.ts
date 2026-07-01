@@ -5,7 +5,7 @@
 export const TEST_DATE = ''  // 留空使用真實日期，填入日期字串來測試
 
 /**
- * 獲取目前日期（可用於測試）
+ * 取得目前日期（用於測試）
  * @returns Date 對象
  */
 export function getCurrentDate(): Date {
@@ -16,16 +16,16 @@ export function getCurrentDate(): Date {
 }
 
 /**
- * 獲取今天的日期字串（YYYY-MM-DD 格式）
+ * 取得今天的日期字串（YYYY-MM-DD 格式）
  * @returns 日期字串
  */
 export function getTodayString(): string {
   const date = getCurrentDate()
-  return date.toISOString().split('T')[0]
+  return date.toISOString().split('T')[0] // 日期轉換為 YYYY-MM-DD 格式
 }
 
 /**
- * 檢查給定日期是否是今天
+ * 檢查比賽日期是否是今天
  * @param dateStr 日期字串（YYYY-MM-DD 格式）
  * @returns 是否是今天
  */
@@ -34,7 +34,7 @@ export function isToday(dateStr: string): boolean {
 }
 
 /**
- * 檢查給定日期是否在今天之前
+ * 檢查比賽日期是否在今天之前
  * @param dateStr 日期字串（YYYY-MM-DD 格式）
  * @returns 是否在今天之前
  */
@@ -44,7 +44,7 @@ export function isPast(dateStr: string): boolean {
 }
 
 /**
- * 檢查給定日期是否在今天之後
+ * 檢查比賽日期是否在今天之後
  * @param dateStr 日期字串（YYYY-MM-DD 格式）
  * @returns 是否在今天之後
  */
