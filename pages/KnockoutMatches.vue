@@ -1,5 +1,5 @@
 <template>
-  <div class="knockout-container">
+  <<div class="knockout-container">
     <BackHome />
     <div class="knockout-header">
       <h1>淘汰賽</h1>
@@ -9,7 +9,7 @@
         <button
           class="bracket-nav prev"
           :disabled="!canPrev"
-          @click="prevStages"
+          @click="prevStage"
         >
           ‹
         </button>
@@ -61,7 +61,7 @@
         <button
           class="bracket-nav next"
           :disabled="!canNext"
-          @click="nextStages"
+          @click="nextStage"
         >
           ›
         </button>
@@ -75,16 +75,24 @@
         >
       </div>
     </div>
-  </div>
+  </div>>
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect, computed, onMounted, onUnmounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useknockoutStore } from "~/store/knockoutStore";
+import { formatMatchForCard } from "~/utils/matchFormatter";
+import { useResponsive } from "~/composable/useResponsive";
+import { useBracket } from "~/composable/useBracket";
+
+const { visibleCount } = useResponsive();
+
+const stages = ["R32", "R16", "QF", "SF", "ThirdPlace", "Final"] as const;
+const { windowStart, visibleStages, canPrev, canNext, prevStage, nextStage, direction } = useBracket(stages, visibleCount);
 
 const knockoutStore = useknockoutStore();
 const { matchesByStage: matchesByStage } = storeToRefs(knockoutStore);
+
 const stageText = (stage: string) => {
   if (stage === "R32") {
     return "32強賽";
@@ -94,107 +102,12 @@ const stageText = (stage: string) => {
     return "8強賽";
   } else if (stage === "SF") {
     return "4強賽";
+  } else if (stage === "ThirdPlace") {
+    return "季軍賽";
   } else if (stage === "Final") {
     return "總決賽";
   }
 };
-
-const stages = ["R32", "R16", "QF", "SF", "Final"] as const;
-const windowStart = ref(0); // 目前可見的階段起始索引
-const visibleCount = ref(3); // 目前可見的階段數量
-if (import.meta.client) {
-  // 確保在 Nuxt 客戶端環境下執行
-  const updateVisibleCount = () => {
-    if (window.innerWidth <= 480) {
-      visibleCount.value = 2; // 超小螢幕一次顯示 2 欄
-    } else if (window.innerWidth <= 768) {
-      visibleCount.value = 2; // 手機/平板一次顯示 2 欄
-    } else {
-      visibleCount.value = 3; // 桌機一次顯示 3 欄
-    }
-  };
-
-  // 初始化與監聽視窗改變
-  onMounted(() => {
-    updateVisibleCount();
-    window.addEventListener("resize", updateVisibleCount);
-  });
-  onUnmounted(() => {
-    window.removeEventListener("resize", updateVisibleCount);
-  });
-}
-
-const visibleStages = computed(() =>
-  stages.slice(windowStart.value, windowStart.value + visibleCount.value),
-);
-
-const canPrev = computed(() => windowStart.value > 0);
-const canNext = computed(
-  () => windowStart.value + visibleCount.value < stages.length,
-);
-const direction = ref("next"); // 用於動畫方向判斷
-const prevStages = () => {
-  direction.value = "prev";
-  windowStart.value--;
-};
-
-const nextStages = () => {
-  direction.value = "next";
-  windowStart.value++;
-};
-
-// 定義 MatchCard 的資料格式
-interface formatMatch {
-  matchTime: string;
-  matchDate: string;
-  homeTeam: string;
-  homeCode: string;
-  homeFlag: string;
-  homeScore: number | null;
-  homePenaltyScore: number | null;
-  awayTeam: string;
-  awayCode: string;
-  awayFlag: string;
-  awayScore: number | null;
-  awayPenaltyScore: number | null;
-}
-
-// 格式化資料，以便傳入 MatchCard 元件
-const formatMatchForCard = (match: formatMatch | undefined): formatMatch => {
-  if (!match)
-    return {
-      homeTeam: "待定",
-      awayTeam: "待定",
-      matchTime: "",
-      matchDate: "",
-      homeCode: "",
-      awayCode: "",
-      homeFlag: "",
-      awayFlag: "",
-      homeScore: null,
-      awayScore: null,
-      homePenaltyScore: null,
-      awayPenaltyScore: null,
-    }; // 處理空資料
-  return {
-    matchTime: match.time,
-    matchDate: match.date,
-    homeTeam: match.homeTeam?.teamCode ? match.homeTeam?.teamName : "待定",
-    homeCode: match.homeTeam?.teamCode || "",
-    homeFlag: match.homeTeam?.teamFlag || "",
-    homeScore: match.homeScore,
-    homePenaltyScore: match.homePenaltyScore,
-    awayTeam: match.awayTeam?.teamCode ? match.awayTeam?.teamName : "待定",
-    awayCode: match.awayTeam?.teamCode || "",
-    awayFlag: match.awayTeam?.teamFlag || "",
-    awayScore: match.awayScore,
-    awayPenaltyScore: match.awayPenaltyScore,
-  };
-};
-// 開發用：監控數據變化
-watchEffect(() => {
-  console.log("淘汰賽數據已更新");
-});
 </script>
 
 <style scoped lang="scss">
@@ -675,7 +588,7 @@ watchEffect(() => {
   }
 
   .column-matches {
-    min-height: 450px;
+    min-height: 600px;
   }
 }
 
