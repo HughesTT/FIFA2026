@@ -146,7 +146,7 @@ const stageText = (stage: string) => {
 
   @media (max-width: 768px) {
     min-height: auto;
-    padding: 1rem 0.5rem 0.5rem;
+    padding: 0;
   }
 }
 
