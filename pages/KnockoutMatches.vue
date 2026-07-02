@@ -79,7 +79,7 @@
 
       <div class="worldcup">
         <img
-          src="/public/img/FIFA_World_Cup_emblem.png"
+          src="/public/img/FIFA_World_Cup_2026.png"
           alt="World Cup"
           class="worldcup-image"
         >
@@ -357,7 +357,7 @@ const stageText = (stage: string) => {
   height: 100%;
 
   .worldcup-image {
-    max-width: 100%;
+    max-width: 250px;
     max-height: 100%;
     object-fit: contain;
   }
