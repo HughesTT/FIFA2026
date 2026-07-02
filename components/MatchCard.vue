@@ -102,11 +102,6 @@ const stageText = (stage) => {
   }
 }
 
-const onTeamClick = (code) => {
-  emit('team-click', code) // 移除條件判斷，確保事件總是發出
-  console.log(`點擊了球隊，代碼: ${code}`)
-}
-
 const handleCardClick = () => {
   if (props.isClickable) emit('card-click', props.match)
 }

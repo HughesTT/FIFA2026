@@ -1,5 +1,5 @@
 <template>
-  <<div class="knockout-container">
+  <div class="knockout-container">
     <BackHome />
     <div class="knockout-header">
       <h1>淘汰賽</h1>
@@ -53,6 +53,16 @@
                     />
                   </div>
                 </div>
+                <!-- 僅 Final 欄顯示季軍戰 -->
+                <div
+                  v-if="stage === 'Final' && matchesByStage.ThirdPlace?.[0]"
+                  class="third-place-block"
+                >
+                  <div class="stage-label third-place-label">季軍賽</div>
+                  <div class="match-node third-place-node">
+                    <MatchCard :match="formatMatchForCard(matchesByStage.ThirdPlace[0])" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -75,7 +85,7 @@
         >
       </div>
     </div>
-  </div>>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -87,7 +97,7 @@ import { useBracket } from "~/composable/useBracket";
 
 const { visibleCount } = useResponsive();
 
-const stages = ["R32", "R16", "QF", "SF", "ThirdPlace", "Final"] as const;
+const stages = ["R32", "R16", "QF", "SF", "Final"] as const;
 const { windowStart, visibleStages, canPrev, canNext, prevStage, nextStage, direction } = useBracket(stages, visibleCount);
 
 const knockoutStore = useknockoutStore();
@@ -102,10 +112,10 @@ const stageText = (stage: string) => {
     return "8強賽";
   } else if (stage === "SF") {
     return "4強賽";
-  } else if (stage === "ThirdPlace") {
-    return "季軍賽";
   } else if (stage === "Final") {
     return "總決賽";
+  } else if (stage === "ThirdPlace") {
+    return "季軍賽";
   }
 };
 </script>
@@ -596,6 +606,42 @@ const stageText = (stage: string) => {
 .match-time {
   background: rgba(0, 0, 0, 0.4) !important;
 }
+
+/* 季軍戰 */ 
+.bracket-column.thirdplace .match-pair::before,
+.bracket-column.thirdplace .match-pair::after,
+.bracket-column.thirdplace .match-node::after {
+  display: none !important;
+}
+
+.third-place-block {
+  width: 100%;
+  position: absolute;
+  margin-top: 500px;
+}
+
+.third-place-label {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.4rem;
+  background: var(--accent-color);
+  border-radius: 6px;
+}
+
+.third-place-label {
+  background: linear-gradient(135deg, #20b164, #2e7d32);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px;
+}
+
 
 /* 行動裝置切換賽階動態 */
 .stage-slide-enter-active,

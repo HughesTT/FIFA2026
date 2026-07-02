@@ -13,8 +13,8 @@ export function formatMatchForCard(match?: Match): MatchCardData {
       awayFlag: '',
       homeScore: null,
       awayScore: null,
-      homePaneltyScore: null,
-      awayPaneltyScore: null
+      homePenaltyScore: null,
+      awayPenaltyScore: null
     }
   }
 
@@ -29,7 +29,7 @@ export function formatMatchForCard(match?: Match): MatchCardData {
     awayFlag: match.awayTeam?.teamFlag ?? '',
     homeScore: match.homeScore,
     awayScore: match.awayScore,
-    homePaneltyScore: match.homePenaltyScore,
-    awayPaneltyScore: match.awayPenaltyScore,
+    homePenaltyScore: match.homePenaltyScore,
+    awayPenaltyScore: match.awayPenaltyScore,
   }
 }

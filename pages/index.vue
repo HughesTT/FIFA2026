@@ -15,6 +15,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { teamStore } from '~/store/teamStore'
 const router = useRouter()
 const titleA = "FIFA";
 const titleB = "World Cup 2026";
@@ -27,8 +28,9 @@ useSeoMeta({
 const goToKnockout = () => {
   router.push('/knockoutMatches')
 }
-onMounted(() => {
+onMounted(async () => {
   document.title = 'FIFA World Cup 2026'
+  await teamStore.fetchTeams()
 })
 </script>
 
