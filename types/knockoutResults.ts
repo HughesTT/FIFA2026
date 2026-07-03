@@ -21,4 +21,5 @@ export interface knockoutMatch {
     nextMatchId: string | null // 下一場比賽編號(例: 'QF-1')
     nextMatchSlot?: 'home' | 'away' // 下一場比賽是主或客場
     side: 'left' | 'right' // 比賽在圖表上的位置(左半區或右半區)
+    isWinner: string | null
 }

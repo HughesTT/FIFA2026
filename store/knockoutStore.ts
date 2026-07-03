@@ -39,7 +39,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'R16-2',
             nextMatchSlot: 'home',
-            side: 'left'
+            side: 'left',
+            isWinner: 'CA'
         },
         {
             matchId: 'R32-2',
@@ -56,7 +57,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: 3,
             nextMatchId: 'R16-2',
             nextMatchSlot: 'away',
-            side: 'left'
+            side: 'left',
+            isWinner: 'MA'
         },
         
         {
@@ -74,7 +76,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: 4,
             nextMatchId: 'R16-2',
             nextMatchSlot: 'home',
-            side: 'left'
+            side: 'left',
+            isWinner: 'PY'
         },
         {
             matchId: 'R32-4',
@@ -91,78 +94,11 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'R16-4',
             nextMatchSlot: 'away',
-            side: 'left'
+            side: 'left',
+            isWinner: 'FR'
         },
         {
             matchId: 'R32-5',
-            stage: 'R32',
-            fifaMatchId: '76',
-            stageLabel: '32強',
-            date: '2026-06-30',
-            time: '01:00',
-            homeTeam: { teamName: '1C', teamCode: 'BR', teamFlag: ''},
-            awayTeam: { teamName: '2F', teamCode: 'JP', teamFlag: ''},
-            homeScore: 2,
-            awayScore: 1,
-            homePenaltyScore: null,
-            awayPenaltyScore: null,
-            nextMatchId: 'R16-3',
-            nextMatchSlot: 'away',
-            side: 'left'
-        },
-        {
-            matchId: 'R32-6',
-            stage: 'R32',
-            fifaMatchId: '78',
-            stageLabel: '32強',
-            date: '2026-07-01',
-            time: '01:00',
-            homeTeam: { teamName: '2E', teamCode: 'CI', teamFlag: ''},
-            awayTeam: { teamName: '2I', teamCode: 'NO', teamFlag: ''},
-            homeScore: 1,
-            awayScore: 2,
-            homePenaltyScore: null,
-            awayPenaltyScore: null,
-            nextMatchId: 'R16-4',
-            nextMatchSlot: 'away',
-            side: 'left'
-        },
-        {
-            matchId: 'R32-7',
-            stage: 'R32',
-            fifaMatchId: '79',
-            stageLabel: '32強',
-            date: '2026-07-01',
-            time: '09:00',
-            homeTeam: { teamName: '1A', teamCode: 'MX', teamFlag: ''},
-            awayTeam: { teamName: '3CEFHI', teamCode: 'EC', teamFlag: ''},
-            homeScore: 2,
-            awayScore: 0,
-            homePenaltyScore: null,
-            awayPenaltyScore: null,
-            nextMatchId: 'R16-4',
-            nextMatchSlot: 'home',
-            side: 'left'
-        },
-        {
-            matchId: 'R32-8',
-            stage: 'R32',
-            fifaMatchId: '80',
-            stageLabel: '32強',
-            date: '2026-07-02',
-            time: '00:00',
-            homeTeam: { teamName: '1L', teamCode: 'GB', teamFlag: ''},
-            awayTeam: { teamName: '3EHIJK', teamCode: 'CD', teamFlag: ''},
-            homeScore: 2,
-            awayScore: 1,
-            homePenaltyScore: null,
-            awayPenaltyScore: null,
-            nextMatchId: 'R16-4',
-            nextMatchSlot: 'away',
-            side: 'left'
-        },
-        {
-            matchId: 'R32-9',
             stage: 'R32',
             fifaMatchId: '83',
             stageLabel: '32強',
@@ -170,16 +106,17 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             time: '07:00',
             homeTeam: { teamName: '2K', teamCode: 'PT', teamFlag: ''},
             awayTeam: { teamName: '2L', teamCode: 'HR', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
+            homeScore: 2,
+            awayScore: 1,
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: 'R16-4',
             nextMatchSlot: 'home',
-            side: 'right'
+            side: 'right',
+            isWinner: 'PT'
         },
         {
-            matchId: 'R32-10',
+            matchId: 'R32-6',
             stage: 'R32',
             fifaMatchId: '84',
             stageLabel: '32強',
@@ -187,16 +124,17 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             time: '03:00',
             homeTeam: { teamName: '1H', teamCode: 'ES', teamFlag: ''},
             awayTeam: { teamName: '2J', teamCode: 'AT', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
+            homeScore: 3,
+            awayScore: 0,
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: 'R16-3',
             nextMatchSlot: 'away',
-            side: 'right'
+            side: 'right',
+            isWinner: 'ES'
         },
         {
-            matchId: 'R32-11',
+            matchId: 'R32-7',
             stage: 'R32',
             fifaMatchId: '81',
             stageLabel: '32強',
@@ -210,10 +148,11 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'R16-2',
             nextMatchSlot: 'home',
-            side: 'right'
+            side: 'right',
+            isWinner: 'US'
         },
         {
-            matchId: 'R32-12',
+            matchId: 'R32-8',
             stage: 'R32',
             fifaMatchId: '82',
             stageLabel: '32強',
@@ -227,7 +166,80 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'R16-1',
             nextMatchSlot: 'away',
-            side: 'right'
+            side: 'right',
+            isWinner: 'BE'
+        },
+        {
+            matchId: 'R32-9',
+            stage: 'R32',
+            fifaMatchId: '76',
+            stageLabel: '32強',
+            date: '2026-06-30',
+            time: '01:00',
+            homeTeam: { teamName: '1C', teamCode: 'BR', teamFlag: ''},
+            awayTeam: { teamName: '2F', teamCode: 'JP', teamFlag: ''},
+            homeScore: 2,
+            awayScore: 1,
+            homePenaltyScore: null,
+            awayPenaltyScore: null,
+            nextMatchId: 'R16-3',
+            nextMatchSlot: 'away',
+            side: 'left',
+            isWinner: 'BR'
+        },
+        {
+            matchId: 'R32-10',
+            stage: 'R32',
+            fifaMatchId: '78',
+            stageLabel: '32強',
+            date: '2026-07-01',
+            time: '01:00',
+            homeTeam: { teamName: '2E', teamCode: 'CI', teamFlag: ''},
+            awayTeam: { teamName: '2I', teamCode: 'NO', teamFlag: ''},
+            homeScore: 1,
+            awayScore: 2,
+            homePenaltyScore: null,
+            awayPenaltyScore: null,
+            nextMatchId: 'R16-4',
+            nextMatchSlot: 'away',
+            side: 'left',
+            isWinner: 'NO'
+        },
+        {
+            matchId: 'R32-11',
+            stage: 'R32',
+            fifaMatchId: '79',
+            stageLabel: '32強',
+            date: '2026-07-01',
+            time: '09:00',
+            homeTeam: { teamName: '1A', teamCode: 'MX', teamFlag: ''},
+            awayTeam: { teamName: '3CEFHI', teamCode: 'EC', teamFlag: ''},
+            homeScore: 2,
+            awayScore: 0,
+            homePenaltyScore: null,
+            awayPenaltyScore: null,
+            nextMatchId: 'R16-4',
+            nextMatchSlot: 'home',
+            side: 'left',
+            isWinner: 'MX'
+        },
+        {
+            matchId: 'R32-12',
+            stage: 'R32',
+            fifaMatchId: '80',
+            stageLabel: '32強',
+            date: '2026-07-02',
+            time: '00:00',
+            homeTeam: { teamName: '1L', teamCode: 'GB', teamFlag: ''},
+            awayTeam: { teamName: '3EHIJK', teamCode: 'CD', teamFlag: ''},
+            homeScore: 2,
+            awayScore: 1,
+            homePenaltyScore: null,
+            awayPenaltyScore: null,
+            nextMatchId: 'R16-4',
+            nextMatchSlot: 'away',
+            side: 'left',
+            isWinner: 'GB'
         },
         {
             matchId: 'R32-13',
@@ -244,7 +256,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'R16-7',
             nextMatchSlot: 'home',
-            side: 'right'
+            side: 'right',
+            isWinner: ''
         },    
         {
             matchId: 'R32-14',
@@ -261,7 +274,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'R16-6',
             nextMatchSlot: 'away',
-            side: 'right'
+            side: 'right',
+            isWinner: ''
         },
         {
             matchId: 'R32-16',
@@ -272,13 +286,14 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             time: '11:00',
             homeTeam: { teamName: '1B', teamCode: 'CH', teamFlag: ''},
             awayTeam: { teamName: '3EFGIJ', teamCode: 'DZ', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
+            homeScore: 2,
+            awayScore: 0,
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: 'R16-5',
             nextMatchSlot: 'home',
-            side: 'right'
+            side: 'right',
+            isWinner: 'CH'
         },
         {
             matchId: 'R32-15',
@@ -295,7 +310,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'R16-8',
             nextMatchSlot: 'away',
-            side: 'right'
+            side: 'right',
+            isWinner: ''
         },
         // 16強對戰組合
         {
@@ -313,7 +329,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'QF-1',
             nextMatchSlot: 'home',
-            side: 'left'
+            side: 'left',
+            isWinner: ''
         },
         {
             matchId: 'R16-2',
@@ -330,61 +347,29 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'QF-1',
             nextMatchSlot: 'away',
-            side: 'left'
+            side: 'left',
+            isWinner: ''
         },
         {
             matchId: 'R16-3',
             stage: 'R16',
             fifaMatchId: '93',
             stageLabel: '16強',
-            date: '2026-07-06',
-            time: '04:00',
-            homeTeam: { teamName: 'W76', teamCode: 'BR', teamFlag: ''},
-            awayTeam: { teamName: 'W78', teamCode: 'NO', teamFlag: ''},
+            date: '2026-07-07',
+            time: '03:00',
+            homeTeam: { teamName: 'W83', teamCode: 'PT', teamFlag: ''},
+            awayTeam: { teamName: 'W84', teamCode: 'ES', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: 'QF-1',
             nextMatchSlot: 'home',
-            side: 'left'
+            side: 'right',
+            isWinner: ''
         },
         {
             matchId: 'R16-4',
-            stage: 'R16',
-            fifaMatchId: '92',
-            stageLabel: '16強',
-            date: '2026-07-06',
-            time: '08:00',
-            homeTeam: { teamName: 'W79', teamCode: 'MX', teamFlag: ''},
-            awayTeam: { teamName: 'W80', teamCode: 'GB', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
-            homePenaltyScore: null,
-            awayPenaltyScore: null,
-            nextMatchId: 'QF-1',
-            nextMatchSlot: 'away',
-            side: 'left'
-        },
-        {
-            matchId: 'R16-5',
-            stage: 'R16',
-            fifaMatchId: '93',
-            stageLabel: '16強',
-            date: '2026-07-07',
-            time: '03:00',
-            homeTeam: { teamName: 'W83', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W84', teamCode: '', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
-            homePenaltyScore: null,
-            awayPenaltyScore: null,
-            nextMatchId: 'QF-1',
-            nextMatchSlot: 'home',
-            side: 'right'
-        },
-        {
-            matchId: 'R16-6',
             stage: 'R16',
             fifaMatchId: '94',
             stageLabel: '16強',
@@ -398,7 +383,44 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'QF-1',
             nextMatchSlot: 'away',
-            side: 'right'
+            side: 'right',
+            isWinner: ''
+        },
+        {
+            matchId: 'R16-5',
+            stage: 'R16',
+            fifaMatchId: '93',
+            stageLabel: '16強',
+            date: '2026-07-06',
+            time: '04:00',
+            homeTeam: { teamName: 'W76', teamCode: 'BR', teamFlag: ''},
+            awayTeam: { teamName: 'W78', teamCode: 'NO', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            homePenaltyScore: null,
+            awayPenaltyScore: null,
+            nextMatchId: 'QF-1',
+            nextMatchSlot: 'home',
+            side: 'left',
+            isWinner: ''
+        },
+        {
+            matchId: 'R16-6',
+            stage: 'R16',
+            fifaMatchId: '92',
+            stageLabel: '16強',
+            date: '2026-07-06',
+            time: '08:00',
+            homeTeam: { teamName: 'W79', teamCode: 'MX', teamFlag: ''},
+            awayTeam: { teamName: 'W80', teamCode: 'GB', teamFlag: ''},
+            homeScore: null,
+            awayScore: null,
+            homePenaltyScore: null,
+            awayPenaltyScore: null,
+            nextMatchId: 'QF-1',
+            nextMatchSlot: 'away',
+            side: 'left',
+            isWinner: ''
         },
         {
             matchId: 'R16-7',
@@ -415,7 +437,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'QF-1',
             nextMatchSlot: 'home',
-            side: 'right'
+            side: 'right',
+            isWinner: ''
         },
         {
             matchId: 'R16-8',
@@ -424,7 +447,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             stageLabel: '16強',
             date: '2026-07-08',
             time: '04:00',
-            homeTeam: { teamName: 'W85', teamCode: '', teamFlag: ''},
+            homeTeam: { teamName: 'W85', teamCode: 'CH', teamFlag: ''},
             awayTeam: { teamName: 'W87', teamCode: '', teamFlag: ''},
             homeScore: null,
             awayScore: null,
@@ -432,7 +455,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'QF-1',
             nextMatchSlot: 'away',
-            side: 'right'
+            side: 'right',
+            isWinner: ''
         },
         // 8強對戰組合
         {
@@ -450,7 +474,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'SF-1',
             nextMatchSlot: 'home',
-            side: 'left'
+            side: 'left',
+            isWinner: ''
         },
         {
             matchId: 'QF-2',
@@ -467,7 +492,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'SF-1',
             nextMatchSlot: 'away',
-            side: 'left'
+            side: 'left',
+            isWinner: ''
         },
         {
             matchId: 'QF-3',
@@ -484,7 +510,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'SF-2',
             nextMatchSlot: 'home',
-            side: 'right'
+            side: 'right',
+            isWinner: ''
         },
         {
             matchId: 'QF-4',
@@ -501,7 +528,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'SF-2',
             nextMatchSlot: 'away',
-            side: 'right'
+            side: 'right',
+            isWinner: ''
         },
         // 4強對戰組合
         {
@@ -519,7 +547,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'Final',
             nextMatchSlot: 'home',
-            side: 'left'
+            side: 'left',
+            isWinner: ''
         },
         {
             matchId: 'SF-2',
@@ -536,7 +565,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             awayPenaltyScore: null,
             nextMatchId: 'Final',
             nextMatchSlot: 'away',
-            side: 'left'
+            side: 'left',
+            isWinner: ''
         },
         // 季軍戰
         {
@@ -553,7 +583,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: null,
-            side: 'left'
+            side: 'left',
+            isWinner: ''
         },
         // 決賽
         {
@@ -570,7 +601,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: null,
-            side: 'left'
+            side: 'left',
+            isWinner: ''
         }
     ])
 
@@ -638,7 +670,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
         return date.toLocaleDateString('zh-TW', {
         month: '2-digit', // 顯示兩位數的月份
         day: 'numeric', // 顯示數字的日期
-        weekday: 'short' // 顯示簡短的星期幾名稱
+        weekday: 'short', // 顯示簡短的星期幾名稱
+        timeZone: 'Asia/Taipei' // 強制前後端時區一致
         })
     }
     

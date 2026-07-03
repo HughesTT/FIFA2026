@@ -18,6 +18,8 @@ export interface MatchCardData {
   awayTeam: string
   awayCode: string
   awayFlag: string
-  homePaneltyScore: number | null
-  awayPaneltyScore: number | null
+  homeScore: number | null
+  awayScore: number | null
+  homePenaltyScore: number | null
+  awayPenaltyScore: number | null
 }

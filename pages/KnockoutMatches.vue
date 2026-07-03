@@ -6,61 +6,33 @@
     </div>
     <div class="knockout-content">
       <div class="bracket-shell">
-        <button
-          class="bracket-nav prev"
-          :disabled="!canPrev"
-          @click="prevStage"
-        >
+        <button class="bracket-nav prev" :disabled="!canPrev" @click="prevStage">
           ‹
         </button>
 
         <TransitionGroup :name="direction" tag="div" mode="out-in">
           <div :key="windowStart" class="bracket-viewport">
-            <div
-              v-for="stage in visibleStages"
-              :key="stage"
-              :class="['bracket-column', stage.toLowerCase()]"
-            >
+            <div v-for="stage in visibleStages" :key="stage" :class="['bracket-column', stage.toLowerCase()]">
               <div class="stage-label">{{ stageText(stage) }}</div>
 
               <div class="column-matches">
-                <div
-                  v-for="i in Math.ceil(matchesByStage[stage].length / 2)"
-                  :key="i"
-                  class="match-pair"
-                >
-                  <div
-                    v-if="matchesByStage[stage][(i - 1) * 2]"
-                    class="match-node"
-                  >
-                    <MatchCard
-                      :match="
-                        formatMatchForCard(matchesByStage[stage][(i - 1) * 2])
-                      "
-                    />
+                <div v-for="i in Math.ceil(matchesByStage[stage].length / 2)" :key="i" class="match-pair">
+                  <div v-if="matchesByStage[stage][(i - 1) * 2]" class="match-node">
+                    <MatchCard :match="formatMatchForCard(matchesByStage[stage][(i - 1) * 2])"
+                      @team-click="handleTeamClick" />
                   </div>
 
-                  <div
-                    v-if="matchesByStage[stage][(i - 1) * 2 + 1]"
-                    class="match-node"
-                  >
-                    <MatchCard
-                      :match="
-                        formatMatchForCard(
-                          matchesByStage[stage][(i - 1) * 2 + 1],
-                        )
-                      "
-                    />
+                  <div v-if="matchesByStage[stage][(i - 1) * 2 + 1]" class="match-node">
+                    <MatchCard :match="formatMatchForCard(matchesByStage[stage][(i - 1) * 2 + 1])"
+                      @team-click="handleTeamClick" />
                   </div>
                 </div>
                 <!-- 僅 Final 欄顯示季軍戰 -->
-                <div
-                  v-if="stage === 'Final' && matchesByStage.ThirdPlace?.[0]"
-                  class="third-place-block"
-                >
+                <div v-if="stage === 'Final' && matchesByStage.ThirdPlace?.[0]" class="third-place-block">
                   <div class="stage-label third-place-label">季軍賽</div>
                   <div class="match-node third-place-node">
-                    <MatchCard :match="formatMatchForCard(matchesByStage.ThirdPlace[0])" />
+                    <MatchCard :match="formatMatchForCard(matchesByStage.ThirdPlace[0])"
+                      @team-click="handleTeamClick" />
                   </div>
                 </div>
               </div>
@@ -68,21 +40,13 @@
           </div>
         </TransitionGroup>
 
-        <button
-          class="bracket-nav next"
-          :disabled="!canNext"
-          @click="nextStage"
-        >
+        <button class="bracket-nav next" :disabled="!canNext" @click="nextStage">
           ›
         </button>
       </div>
 
       <div class="worldcup">
-        <img
-          src="/public/img/FIFA_World_Cup_2026.png"
-          alt="World Cup"
-          class="worldcup-image"
-        >
+        <img src="/public/img/FIFA_World_Cup_2026.png" alt="World Cup" class="worldcup-image">
       </div>
     </div>
   </div>
@@ -94,6 +58,12 @@ import { useknockoutStore } from "~/store/knockoutStore";
 import { formatMatchForCard } from "~/utils/matchFormatter";
 import { useResponsive } from "~/composable/useResponsive";
 import { useBracket } from "~/composable/useBracket";
+import { useTeamStore } from "~/store/teamStore";
+const teamStore = useTeamStore();
+// Placeholder modal handling (replace with actual modal logic if needed)
+const showScheduleModal = (team) => {
+  console.log('Show schedule modal for team:', team);
+};
 
 const { visibleCount } = useResponsive();
 
@@ -117,6 +87,13 @@ const stageText = (stage: string) => {
   } else if (stage === "ThirdPlace") {
     return "季軍賽";
   }
+};
+
+const router = useRouter();
+
+const handleTeamClick = (teamCode: string) => {
+  // 直接導向該國家賽程頁面（保持與首頁相同的行為）
+  router.push({ path: '/CountryGameSchedule', query: { teamCode } });
 };
 </script>
 
@@ -607,7 +584,7 @@ const stageText = (stage: string) => {
   background: rgba(0, 0, 0, 0.4) !important;
 }
 
-/* 季軍戰 */ 
+/* 季軍戰 */
 .bracket-column.thirdplace .match-pair::before,
 .bracket-column.thirdplace .match-pair::after,
 .bracket-column.thirdplace .match-node::after {

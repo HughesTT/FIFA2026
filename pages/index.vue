@@ -27,9 +27,6 @@ useSeoMeta({
 const goToKnockout = () => {
   router.push('/knockoutMatches')
 }
-onMounted(() => {
-  document.title = 'FIFA World Cup 2026'
-})
 </script>
 
 <style lang="scss" scoped>

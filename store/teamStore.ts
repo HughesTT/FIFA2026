@@ -1598,7 +1598,8 @@ export const useTeamStore = defineStore('team', () => {
     return date.toLocaleDateString('zh-TW', {
       month: '2-digit', // 顯示兩位數的月份
       day: 'numeric', // 顯示數字的日期
-      weekday: 'short' // 顯示簡短的星期幾名稱
+      weekday: 'short', // 顯示簡短的星期幾名稱
+      timeZone: 'Asia/Taipei' // 強制前後端時區一致
     })
   }
 
