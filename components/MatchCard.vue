@@ -1,5 +1,5 @@
 <template>
-  <div class="match-item" :class="{ 'clickable': isClickable }" @click="handleCardClick">
+  <div v-if="match" class="match-item" :class="{ 'clickable': isClickable }" @click="handleCardClick">
     <div class="match-header">
       <span class="match-date">{{ formattedDate }}</span>
       <span class="match-time">{{ match.time || match.matchTime }}</span>
@@ -10,7 +10,7 @@
       <div class="team home" @click.stop="onTeamClick(match.homeCode)">
         <img v-if="match.homeFlag" :src="match.homeFlag" :alt="match.homeTeam" class="team-flag">
         <div v-else class="flag-placeholder" />
-        <span class="team-name" :class="{ 'notWinner': match.homeTeam === match.isWinner }">{{ homeTeamName }}</span>
+        <span class="team-name" :class="{ 'notWinner': match.homeCode === match.isWinner }">{{ homeTeamName }}</span>
       </div>
 
       <!-- 比分/VS 區域 -->
@@ -47,7 +47,7 @@
       <div class="team away" @click.stop="onTeamClick(match.awayCode)">
         <img v-if="match.awayFlag" :src="match.awayFlag" :alt="match.awayTeam" class="team-flag">
         <div v-else class="flag-placeholder" />
-        <span class="team-name" :class="{ 'notWinner': match.awayTeam === match.isWinner }"> {{ awayTeamName }}</span>
+        <span class="team-name" :class="{ 'notWinner': match.awayCode === match.isWinner }"> {{ awayTeamName }}</span>
       </div>
     </div>
     <div class="match-stage">{{ stageText(match.stage) }}</div>
@@ -55,75 +55,26 @@
 </template>
 
 <script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
+import { useMatchCard } from '~/composable/useMatchCard';
+
+// component props
 const props = defineProps({
-  match: {
-    type: Object,
-    required: true
-  },
-  isClickable: {
-    type: Boolean,
-    default: false
-  }
-})
+  match: { type: Object, required: true },
+  isClickable: { type: Boolean, default: false }
+});
+const emit = defineEmits(['team-click', 'card-click']);
 
-const emit = defineEmits(['team-click', 'card-click'])
+// expose props for template
+const { isClickable, match } = props;
 
-// 點擊國旗或隊名時觸發，僅在有有效 teamCode 時發出事件
-const onTeamClick = (teamCode: string | undefined) => {
-  if (!teamCode) return; // 待定隊伍不觸發
-  emit('team-click', teamCode);
-};
+// use composable
+const { onTeamClick, hasScore, formattedDate, homeTeamName, awayTeamName, stageText } = useMatchCard(props, emit);
 
-const hasScore = computed(() =>
-  props.match.homeScore !== undefined &&
-  props.match.homeScore !== null &&
-  props.match.awayScore !== null
-)
-
-const formattedDate = computed(() => {
-  const dateStr = props.match.date || props.match.matchDate
-  if (!dateStr) return ''
-  const date = new Date(dateStr)
-  return date.toLocaleDateString('zh-TW', {
-    month: '2-digit',
-    day: 'numeric',
-    weekday: 'short'
-  })
-})
-
-// 轉換待定隊伍名稱
-const homeTeamName = computed(() => {
-  const name = props.match.homeTeam?.teamName ?? props.match.homeTeam ?? ''
-  const code = props.match.homeTeam?.teamCode ?? ''
-  const pending = !name || /^[WL]/i.test(name) || (code && /^[WL]/i.test(code))
-  return pending ? '待定' : name
-})
-
-const awayTeamName = computed(() => {
-  const name = props.match.awayTeam?.teamName ?? props.match.awayTeam ?? ''
-  const code = props.match.awayTeam?.teamCode ?? ''
-  const pending = !name || /^[WL]/i.test(name) || (code && /^[WL]/i.test(code))
-  return pending ? '待定' : name
-})
-
-// 淘汰賽階段文字轉換函數
-const stageText = (stage) => {
-  if (stage === 'R32') {
-    return '32強賽'
-  } else if (stage === 'R16') {
-    return '16強賽'
-  } else if (stage === 'QF') {
-    return '8強賽'
-  } else if (stage === 'SF') {
-    return '4強賽'
-  } else if (stage === 'Final') {
-    return '總決賽'
-  }
-}
-
+// card click handler
 const handleCardClick = () => {
-  if (props.isClickable) emit('card-click', props.match)
-}
+  if (isClickable) emit('card-click', match);
+};
 </script>
 
 <style lang="scss" scoped>

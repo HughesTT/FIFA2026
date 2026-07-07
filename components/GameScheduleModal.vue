@@ -21,65 +21,16 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router' // 引入 useRouter
-import { useTeamStore } from '~/store/teamStore'
-import { useknockoutStore } from '~/store/knockoutStore'
-import { useGroupStandings } from '~/composable/useGroupStandings'
+import { useGameScheduleModal } from '~/composable/useGameScheduleModal';
 
-// 控制 Modal 顯示/隱藏
-const isVisible = ref(true)
-const closeModal = () => {
-  isVisible.value = false
-}
-const router = useRouter() // 初始化 useRouter
-const groupRef = ref('')
-const { enhancedMatches } = useGroupStandings(groupRef) // 呼叫小組戰績表，空字串 ref 代表不過濾分組
-const teamStore = useTeamStore()
-const knockoutStore = useknockoutStore() // 引入 knockoutStore 以取得淘汰賽比賽資料
-
-// 篩選出今天或明天的比賽，且只顯示未開始的比賽
-const upcomingMatches = computed(() => {
-  const now = new Date() // 獲取當前時間
-  const tomorrowEnd = new Date()
-  tomorrowEnd.setDate(tomorrowEnd.getDate() + 1) // 設定為明天的結束時間
-  tomorrowEnd.setHours(23, 59, 59, 999) // 設定為明天的結束時間
-
-  const knockoutMatches = knockoutStore.matches ?? [] // 確保 KnockoutMatches 是一個陣列
-
-  // 篩選今天或明天日期的比賽，若時間已過，則隱藏
-  return knockoutMatches // 如果 knockoutStore.matches 還未準備好，則使用空陣列
-    .filter(match => {
-      const matchDateTime = new Date(`${match.date}T00:00:00`) // 將比賽日期轉換為 Date 物件
-      return matchDateTime >= now && matchDateTime <= tomorrowEnd
-    })
-    .map(match => {
-      const homeTeamInfo = teamStore.teams.find(t => t.teamCode === match.homeTeam.teamCode)
-      const awayTeamInfo = teamStore.teams.find(t => t.teamCode === match.awayTeam.teamCode)
-      return {
-        ...match,
-        homeTeam: homeTeamInfo ? homeTeamInfo.teamName : match.homeTeam.teamName,
-        homeFlag: homeTeamInfo ? homeTeamInfo.teamFlag : '',
-        homeCode: homeTeamInfo ? homeTeamInfo.teamCode : match.homeTeam.teamCode,
-
-        awayTeam: awayTeamInfo ? awayTeamInfo.teamName : match.awayTeam.teamName,
-        awayFlag: awayTeamInfo ? awayTeamInfo.teamFlag : '',
-        awayCode: awayTeamInfo ? awayTeamInfo.teamCode : match.awayTeam.teamCode
-      }
-    })
-    // 將比賽依照日期與時間排序，確保即將進行的比賽在前
-    .sort((a, b) => {
-      const dateA = new Date(`${a.date}T${a.time}`)
-      const dateB = new Date(`${b.date}T${b.time}`)
-      return dateA - dateB
-    })
-})
-
-// 點擊球隊時顯示比賽日程，並關閉彈窗
-const viewCountryGameSchedule = (teamCode) => {
-  closeModal() // 關閉彈窗
-  router.push({ path: '/CountryGameSchedule', query: { teamCode } })
-}
+const {
+  isVisible,
+  closeModal,
+  groupRef,
+  enhancedMatches,
+  upcomingMatches,
+  viewCountryGameSchedule,
+} = useGameScheduleModal();
 </script>
 <style lang="scss" scoped>
 .modal-container {
