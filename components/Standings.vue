@@ -42,21 +42,20 @@
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router'
-import { useGroupStandings } from '~/composable/useGroupStandings'
 import { computed } from 'vue'
+import { useGroupStandings } from '~/composable/useGroupStandings'
+import { useGroupFromRoute } from '~/composable/useGroupFromRoute'
 
-const route = useRoute()
-const group = route.query.group || '未知分組'
+const { group } = useGroupFromRoute('A')
 
-// 引入 useGroupStandings composable，並傳入 groupRef 以獲取該分組的戰績資料
+// 傳入 group 參數，取得該分組的積分榜資料
 const { standings } = useGroupStandings(group)
 // console.log('standings:', standings) // 呼叫用，檢查 standings 是否正確
 
+// 篩選目前路由的組別資料
 const filteredStandings = computed(() => {
-  return standings.value.filter(team => team.teamGroup === group)
+  return standings.value.filter(team => team.teamGroup === group.value)
 })
-// console.log('filteredStandings:', filteredStandings.value) // 呼叫用，檢查 filteredStandings 是否正確
 
 // 取得目前分組的球隊資料(測試用)
 // const teams = teamStore.teams.filter(team => team.teamGroup === group)

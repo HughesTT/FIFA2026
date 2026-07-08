@@ -1,4 +1,5 @@
 import { computed } from 'vue';
+import { getStageLabel } from '~/utils/getStageLabel';
 
 /**
  * MatchCard 可重用邏輯
@@ -7,6 +8,7 @@ export function useMatchCard(
   props: { match: any },
   emit: (event: string, payload?: any) => void
 ) {
+  const { stageText } = getStageLabel() // 轉換階段名稱
   // 點擊國旗或隊名時觸發
   const onTeamClick = (teamCode: string | undefined) => {
     if (!teamCode) return;
@@ -43,15 +45,6 @@ export function useMatchCard(
     const pending = !name || /^[WL]/i.test(name) || (code && /^[WL]/i.test(code));
     return pending ? '待定' : name;
   });
-  //轉換階段名稱
-  const stageText = (stage: string) => {
-    if (stage === 'R32') return '32強賽';
-    if (stage === 'R16') return '16強賽';
-    if (stage === 'QF') return '8強賽';
-    if (stage === 'SF') return '4強賽';
-    if (stage === 'Final') return '總決賽';
-    return '';
-  };
 
   return {
     onTeamClick,

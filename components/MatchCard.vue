@@ -55,25 +55,25 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, toRefs } from 'vue';
 import { useMatchCard } from '~/composable/useMatchCard';
 
-// component props
+// 定義 props 與 emits
 const props = defineProps({
   match: { type: Object, required: true },
   isClickable: { type: Boolean, default: false }
 });
 const emit = defineEmits(['team-click', 'card-click']);
 
-// expose props for template
-const { isClickable, match } = props;
+// Props 解構
+const { isClickable, match } = toRefs(props);
 
-// use composable
+// 引用 useMatchCard composable
 const { onTeamClick, hasScore, formattedDate, homeTeamName, awayTeamName, stageText } = useMatchCard(props, emit);
 
-// card click handler
+// 點擊card的觸發事件
 const handleCardClick = () => {
-  if (isClickable) emit('card-click', match);
+  if (isClickable.value) emit('card-click', match.value);
 };
 </script>
 

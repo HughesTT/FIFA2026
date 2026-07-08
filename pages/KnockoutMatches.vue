@@ -18,12 +18,14 @@
               <div class="column-matches">
                 <div v-for="i in Math.ceil(matchesByStage[stage].length / 2)" :key="i" class="match-pair">
                   <div v-if="matchesByStage[stage][(i - 1) * 2]" class="match-node">
-                    <MatchCard :match="formatMatchForCard(matchesByStage[stage][(i - 1) * 2])"
+                    <MatchCard
+:match="formatMatchForCard(matchesByStage[stage][(i - 1) * 2])"
                       @team-click="handleTeamClick" />
                   </div>
 
                   <div v-if="matchesByStage[stage][(i - 1) * 2 + 1]" class="match-node">
-                    <MatchCard :match="formatMatchForCard(matchesByStage[stage][(i - 1) * 2 + 1])"
+                    <MatchCard
+:match="formatMatchForCard(matchesByStage[stage][(i - 1) * 2 + 1])"
                       @team-click="handleTeamClick" />
                   </div>
                 </div>
@@ -31,7 +33,8 @@
                 <div v-if="stage === 'Final' && matchesByStage.ThirdPlace?.[0]" class="third-place-block">
                   <div class="stage-label third-place-label">季軍賽</div>
                   <div class="match-node third-place-node">
-                    <MatchCard :match="formatMatchForCard(matchesByStage.ThirdPlace[0])"
+                    <MatchCard
+:match="formatMatchForCard(matchesByStage.ThirdPlace[0])"
                       @team-click="handleTeamClick" />
                   </div>
                 </div>
@@ -59,11 +62,10 @@ import { formatMatchForCard } from "~/utils/matchFormatter";
 import { useResponsive } from "~/composable/useResponsive";
 import { useBracket } from "~/composable/useBracket";
 import { useTeamStore } from "~/store/teamStore";
+import { getStageLabel } from "~/utils/getStageLabel";
+
 const teamStore = useTeamStore();
-// Placeholder modal handling (replace with actual modal logic if needed)
-const showScheduleModal = (team) => {
-  console.log('Show schedule modal for team:', team);
-};
+const { stageText } = getStageLabel(); // 轉換階段名稱
 
 const { visibleCount } = useResponsive();
 
@@ -72,22 +74,6 @@ const { windowStart, visibleStages, canPrev, canNext, prevStage, nextStage, dire
 
 const knockoutStore = useknockoutStore();
 const { matchesByStage: matchesByStage } = storeToRefs(knockoutStore);
-
-const stageText = (stage: string) => {
-  if (stage === "R32") {
-    return "32強賽";
-  } else if (stage === "R16") {
-    return "16強賽";
-  } else if (stage === "QF") {
-    return "8強賽";
-  } else if (stage === "SF") {
-    return "4強賽";
-  } else if (stage === "Final") {
-    return "總決賽";
-  } else if (stage === "ThirdPlace") {
-    return "季軍賽";
-  }
-};
 
 const router = useRouter();
 
