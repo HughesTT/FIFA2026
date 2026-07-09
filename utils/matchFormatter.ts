@@ -1,6 +1,7 @@
 import type { Match, MatchCardData } from "~/types/match"
+import type { knockoutMatch } from "~/types/knockoutResults"
 
-export function formatMatchForCard(match?: Match): MatchCardData {
+export function formatMatchForCard(match?: Match | knockoutMatch): MatchCardData {
   if (!match) {
     return {
       matchTime: '',
@@ -31,5 +32,7 @@ export function formatMatchForCard(match?: Match): MatchCardData {
     awayScore: match.awayScore,
     homePenaltyScore: match.homePenaltyScore,
     awayPenaltyScore: match.awayPenaltyScore,
+    isWinner: match.winnerCode ?? match.isWinner ?? null,
+    stage: match.stage,
   }
 }

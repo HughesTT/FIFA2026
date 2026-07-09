@@ -7,6 +7,11 @@ export interface Match {
 
   homeScore: number | null
   awayScore: number | null
+  homePenaltyScore?: number | null
+  awayPenaltyScore?: number | null
+  winnerCode?: string | null
+  isWinner?: string | null
+  stage?: string
 }
 
 export interface MatchCardData {
@@ -22,4 +27,6 @@ export interface MatchCardData {
   awayScore: number | null
   homePenaltyScore: number | null
   awayPenaltyScore: number | null
+  isWinner?: string | null
+  stage?: string
 }

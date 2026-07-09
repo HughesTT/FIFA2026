@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { useTeamStore } from '~/store/teamStore'
 import type { knockoutMatch } from '~/types/knockoutResults'
+import { formatDate } from '~/utils/dateHelper'
 
 export const useknockoutStore = defineStore('knockoutStore', () => {
     const teamStore = useTeamStore()
@@ -250,14 +251,14 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             time: '06:00',
             homeTeam: { teamName: '1J', teamCode: 'AR', teamFlag: ''},
             awayTeam: { teamName: '2H', teamCode: 'CV', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
+            homeScore: 3,
+            awayScore: 2,
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: 'R16-7',
             nextMatchSlot: 'home',
             side: 'right',
-            isWinner: ''
+            isWinner: 'AR'
         },    
         {
             matchId: 'R32-14',
@@ -268,14 +269,14 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             time: '02:00',
             homeTeam: { teamName: '2D', teamCode: 'AU', teamFlag: ''},
             awayTeam: { teamName: '2G', teamCode: 'EG', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
-            homePenaltyScore: null,
-            awayPenaltyScore: null,
+            homeScore: 1,
+            awayScore: 1,
+            homePenaltyScore: 2,
+            awayPenaltyScore: 4,
             nextMatchId: 'R16-6',
             nextMatchSlot: 'away',
             side: 'right',
-            isWinner: ''
+            isWinner: 'EG'
         },
         {
             matchId: 'R32-16',
@@ -304,14 +305,14 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             time: '09:30',
             homeTeam: { teamName: '1K', teamCode: 'CO', teamFlag: ''},
             awayTeam: { teamName: '3DEIJL', teamCode: 'GH', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
+            homeScore: 1,
+            awayScore: 0,
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: 'R16-8',
             nextMatchSlot: 'away',
             side: 'right',
-            isWinner: ''
+            isWinner: 'CO'
         },
         // 16強對戰組合
         {
@@ -330,7 +331,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             nextMatchId: 'QF-1',
             nextMatchSlot: 'home',
             side: 'left',
-            isWinner: ''
+            isWinner: 'MA'
         },
         {
             matchId: 'R16-2',
@@ -348,7 +349,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             nextMatchId: 'QF-1',
             nextMatchSlot: 'away',
             side: 'left',
-            isWinner: ''
+            isWinner: 'FR'
         },
         {
             matchId: 'R16-3',
@@ -366,7 +367,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             nextMatchId: 'QF-1',
             nextMatchSlot: 'home',
             side: 'right',
-            isWinner: ''
+            isWinner: 'ES'
         },
         {
             matchId: 'R16-4',
@@ -384,7 +385,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             nextMatchId: 'QF-1',
             nextMatchSlot: 'away',
             side: 'right',
-            isWinner: ''
+            isWinner: 'BE'
         },
         {
             matchId: 'R16-5',
@@ -402,7 +403,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             nextMatchId: 'QF-1',
             nextMatchSlot: 'home',
             side: 'left',
-            isWinner: ''
+            isWinner: 'NO'
         },
         {
             matchId: 'R16-6',
@@ -420,7 +421,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             nextMatchId: 'QF-1',
             nextMatchSlot: 'away',
             side: 'left',
-            isWinner: ''
+            isWinner: 'GB'
         },
         {
             matchId: 'R16-7',
@@ -438,7 +439,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             nextMatchId: 'QF-1',
             nextMatchSlot: 'home',
             side: 'right',
-            isWinner: ''
+            isWinner: 'AR'
         },
         {
             matchId: 'R16-8',
@@ -456,7 +457,7 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             nextMatchId: 'QF-1',
             nextMatchSlot: 'away',
             side: 'right',
-            isWinner: ''
+            isWinner: 'CH'
         },
         // 8強對戰組合
         {
@@ -662,17 +663,6 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
                 }
             }
         }
-    }
-
-    // 日期格式化
-    const formatDate = (dateStr) => {
-        const date = new Date(dateStr) // 將日期字串轉換
-        return date.toLocaleDateString('zh-TW', {
-        month: '2-digit', // 顯示兩位數的月份
-        day: 'numeric', // 顯示數字的日期
-        weekday: 'short', // 顯示簡短的星期幾名稱
-        timeZone: 'Asia/Taipei' // 強制前後端時區一致
-        })
     }
     
     return {

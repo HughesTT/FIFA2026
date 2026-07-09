@@ -1,139 +1,28 @@
 <template>
-  <div class="game-container">
-    <BackHome />
-    <Standings />
-    <div class="game-card">
+  <GameScheduleLayout>
+    <template #header>
       <GoBack />
-
       <div class="game-title">{{ group }} 組賽程</div>
+    </template>
 
-      <div class="matches-list">
-        <MatchCard v-for="match in (countryCode ? countryGameSchedule : uniqueMatches)" :key="match.matchId"
-          :match="match" @team-click="viewCountryGameSchedule" />
-      </div>
+    <div class="matches-list">
+      <MatchCard v-for="match in (countryCode ? countryGameSchedule : uniqueMatches)" :key="match.matchId"
+        :match="match" @team-click="viewCountryGameSchedule" />
     </div>
-  </div>
+  </GameScheduleLayout>
 </template>
 
 <script setup>
+// 處理分組賽程的邏輯
 import { useGroupGameSchedule } from '~/composable/useGroupGameSchedule';
+// 處理導向賽程頁面的邏輯
+import { useGotoSchedule } from '~/composable/useGotoSchedule';
 
-const { uniqueMatches, countryGameSchedule, viewCountryGameSchedule, group, countryCode } = useGroupGameSchedule();
-
+const { uniqueMatches, countryGameSchedule, group, countryCode } = useGroupGameSchedule();
+const { viewCountryGameSchedule } = useGotoSchedule();
 </script>
 
-<style lang="scss">
-.game-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 20px;
-  min-height: 100vh;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.game-card {
-  max-width: 850px;
-  width: 100%;
-  background-color: rgba(255, 255, 255, 0.95);
-  border-radius: 16px;
-  padding: 30px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  position: relative;
-
-  /* 平板以下改成一列一個 */
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
-    padding: 20px;
-  }
-
-  @media (max-width: 768px) {
-    gap: 15px;
-  }
-}
-
-.back-home-btn {
-  position: absolute;
-  z-index: 10;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 10px;
-  background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
-  z-index: 10;
-
-  .arrow {
-    font-size: 20px;
-    transition: transform 0.3s ease;
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.5);
-
-    .arrow {
-      transform: translateX(-4px);
-    }
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-
-  @media (max-width: 768px) {
-    top: 15px;
-    right: 15px;
-    padding: 8px 16px;
-    font-size: 14px;
-  }
-
-  @media (max-width: 480px) {
-    padding: 6px 12px;
-    font-size: 13px;
-    gap: 6px;
-
-    .arrow {
-      font-size: 16px;
-    }
-
-    span:last-child {
-      display: none;
-    }
-  }
-}
-
-.matches-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-
-  @media (max-width: 480px) {
-    gap: 12px;
-  }
-}
-
+<style lang="scss" scoped>
 .game-title {
   text-align: left;
   color: #2c3e50;

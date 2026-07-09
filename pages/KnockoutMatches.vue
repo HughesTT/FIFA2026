@@ -6,46 +6,18 @@
     </div>
     <div class="knockout-content">
       <div class="bracket-shell">
-        <button class="bracket-nav prev" :disabled="!canPrev" @click="prevStage">
-          ‹
-        </button>
+        <BracketNav direction="prev" :disabled="!canPrev" @click="prevStage" />
 
         <TransitionGroup :name="direction" tag="div" mode="out-in">
           <div :key="windowStart" class="bracket-viewport">
-            <div v-for="stage in visibleStages" :key="stage" :class="['bracket-column', stage.toLowerCase()]">
-              <div class="stage-label">{{ stageText(stage) }}</div>
-
-              <div class="column-matches">
-                <div v-for="i in Math.ceil(matchesByStage[stage].length / 2)" :key="i" class="match-pair">
-                  <div v-if="matchesByStage[stage][(i - 1) * 2]" class="match-node">
-                    <MatchCard
-:match="formatMatchForCard(matchesByStage[stage][(i - 1) * 2])"
-                      @team-click="handleTeamClick" />
-                  </div>
-
-                  <div v-if="matchesByStage[stage][(i - 1) * 2 + 1]" class="match-node">
-                    <MatchCard
-:match="formatMatchForCard(matchesByStage[stage][(i - 1) * 2 + 1])"
-                      @team-click="handleTeamClick" />
-                  </div>
-                </div>
-                <!-- 僅 Final 欄顯示季軍戰 -->
-                <div v-if="stage === 'Final' && matchesByStage.ThirdPlace?.[0]" class="third-place-block">
-                  <div class="stage-label third-place-label">季軍賽</div>
-                  <div class="match-node third-place-node">
-                    <MatchCard
-:match="formatMatchForCard(matchesByStage.ThirdPlace[0])"
-                      @team-click="handleTeamClick" />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <BracketColumn v-for="stage in visibleStages" :key="stage" :stage="stage"
+              :matches="matchesByStage[stage] ?? []" :team-code="teamStore.teamCode"
+              :third-place-match="stage === 'Final' ? matchesByStage.ThirdPlace?.[0] : undefined"
+              @team-click="handleTeamClick" />
           </div>
         </TransitionGroup>
 
-        <button class="bracket-nav next" :disabled="!canNext" @click="nextStage">
-          ›
-        </button>
+        <BracketNav direction="next" :disabled="!canNext" @click="nextStage" />
       </div>
 
       <div class="worldcup">
@@ -58,27 +30,24 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useknockoutStore } from "~/store/knockoutStore";
-import { formatMatchForCard } from "~/utils/matchFormatter";
 import { useResponsive } from "~/composable/useResponsive";
 import { useBracket } from "~/composable/useBracket";
 import { useTeamStore } from "~/store/teamStore";
-import { getStageLabel } from "~/utils/getStageLabel";
+import BracketColumn from "~/components/BracketColumn.vue";
+import BracketNav from "~/components/BracketNav.vue";
 
 const teamStore = useTeamStore();
-const { stageText } = getStageLabel(); // 轉換階段名稱
-
 const { visibleCount } = useResponsive();
 
 const stages = ["R32", "R16", "QF", "SF", "Final"] as const;
 const { windowStart, visibleStages, canPrev, canNext, prevStage, nextStage, direction } = useBracket(stages, visibleCount);
 
 const knockoutStore = useknockoutStore();
-const { matchesByStage: matchesByStage } = storeToRefs(knockoutStore);
+const { matchesByStage } = storeToRefs(knockoutStore);
 
 const router = useRouter();
 
 const handleTeamClick = (teamCode: string) => {
-  // 直接導向該國家賽程頁面（保持與首頁相同的行為）
   router.push({ path: '/CountryGameSchedule', query: { teamCode } });
 };
 </script>
@@ -146,169 +115,15 @@ const handleTeamClick = (teamCode: string) => {
   }
 }
 
-.bracket-wrapper {
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  align-items: stretch;
-  gap: 3rem;
-  /* 欄位間距 */
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  scroll-behavior: smooth;
-  cursor: grab;
-  border-radius: 14px;
-
-  &::-webkit-scrollbar {
-    height: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--accent-color);
-    border-radius: 5px;
-  }
-
-  &.is-dragging {
-    cursor: grabbing;
-    user-select: none;
-  }
-}
-
-.bracket-wrapper.is-hovering .team-row:not(.is-highlighted) {
-  opacity: 0.3;
-  filter: grayscale(100%);
-}
-
-/* 各階段賽程區塊 */
-.bracket-column {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  width: 270px;
-  position: relative;
-  padding-top: 3rem;
-  /* 留給 stage-label 空間 */
-}
-
-.stage-label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: white;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 0.6rem;
-  background: var(--primary-color);
-  border-radius: 6px;
-  box-shadow: var(--shadow-sm);
-  z-index: 10;
-}
-
-.stage-label.final-label {
-  background: linear-gradient(135deg, #d4af37, #b8860b);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  letter-spacing: 2px;
-}
-
-/* 2. 負責樹狀對齊的魔法容器 */
-.column-matches {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  height: 100%;
-  /* 固定最小高度，確保不會被擠壓導致重疊 */
-  position: relative;
-}
-
-.match-pair {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  flex: 1;
-  /* 平分垂直空間 */
-
-  /* 垂直連接線 */
-  &::before {
-    content: "";
-    position: absolute;
-    top: 25%;
-    bottom: 25%;
-    right: -2.3rem;
-    /* 連接線畫在與下一列的中間 */
-    width: 2px;
-    background: #94a3b8;
-    z-index: 0;
-  }
-
-  /* 從垂直線中央連向下一階段的水平線 */
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: -4.7rem;
-    width: 2.5rem;
-    height: 2px;
-    background: #94a3b8;
-    z-index: 0;
-  }
-}
-
-/* 針對最後一階 (決賽)，隱藏所有向右的連接線 */
-.bracket-column.final .match-pair::before,
-.bracket-column.final .match-pair::after,
-.bracket-column.final .match-node::after {
-  display: none !important;
-}
-
-/* 當 match-pair 只有一個節點時 (如決賽)，調整連接線位置或隱藏 */
-.bracket-column.final .match-pair {
-  justify-content: center;
-}
-
-.match-node {
-  margin: 5px 0;
-  position: relative;
-  width: 100%;
-  z-index: 1;
-
-  /* 單一比賽節點的水平短連線，連接到垂直線 */
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: -2.2rem;
-    width: 2.2rem;
-    height: 2px;
-    background: #94a3b8;
-    z-index: 0;
-  }
-
-  /* 確保組件有背景並蓋住後面的線 */
-  background: var(--bg-light);
-  border-radius: 8px;
-  box-shadow: var(--shadow-sm);
-}
-
-.match-node .match-item {
-  /* width: 100% !important; */
-  display: flex;
-  flex-direction: column;
-  padding: 10px 0;
-}
-
 .bracket-shell {
   flex: 1;
   position: relative;
   width: 70%;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 }
 
 .worldcup {
@@ -324,6 +139,10 @@ const handleTeamClick = (teamCode: string) => {
     max-height: 100%;
     object-fit: contain;
   }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .bracket-viewport {
@@ -333,299 +152,18 @@ const handleTeamClick = (teamCode: string) => {
   column-gap: 24px;
   align-items: stretch;
   padding: 12px 20px 24px;
-}
 
-.bracket-column {
-  position: relative;
-  min-width: 0;
-  padding-top: 44px;
-}
-
-.match-node {
-  width: 100%;
-  background: #f1f3f5;
-  border: 1px solid #d6d9de;
-  border-radius: 14px;
-  box-shadow: none;
-}
-
-.match-pair {
-  min-height: 180px;
-}
-
-.bracket-nav {
-  position: relative;
-  /* top: 12px; */
-  z-index: 20;
-  width: 38px;
-  height: 38px;
-  border-radius: 999px;
-  border: 1px solid #d1d5db;
-  background: #fff;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.bracket-nav.prev {
-  position: fixed;
-  top: 60%;
-  transform: translateY(-50%);
-  left: 4px;
-}
-
-.bracket-nav.next {
-  position: fixed;
-  top: 60%;
-  transform: translateY(-50%);
-  right: 4px;
-}
-
-.bracket-nav:disabled {
-  opacity: 0.35;
-  cursor: default;
-}
-
-@media (max-width: 768px) {
-  .bracket-viewport {
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 18px;
-    padding-inline: 14px;
-  }
-}
-
-@media (max-width: 520px) {
-  /* .bracket-viewport {
-        grid-template-columns: minmax(220px, 1fr);
-    } */
-}
-
-@media (max-width: 1366px) {
-  .bracket-wrapper {
-    gap: 2rem;
-  }
-
-  .bracket-column {
-    width: 240px;
-  }
-
-  .match-pair::before {
-    right: -2.1rem;
-  }
-
-  .match-pair::after {
-    right: -4.8rem;
-    width: 2.8rem;
-  }
-
-  .match-node::after {
-    right: -2rem;
-    width: 2rem;
-  }
-}
-
-@media (max-width: 1280px) {
-  .bracket-wrapper {
-    gap: 2rem;
-  }
-
-  .match-pair::before {
-    right: -1.8rem;
-  }
-
-  .match-pair::after {
-    right: -3.7rem;
-    width: 2rem;
-  }
-
-  .match-node::after {
-    right: -1.6rem;
-    width: 1.5rem;
-  }
-}
-
-@media (max-width: 1024px) {
-  .bracket-wrapper {
-    gap: 2rem;
-  }
-
-  .bracket-column {
-    width: 200px;
-  }
-
-  .match-pair::before {
-    right: -1.8rem;
-  }
-
-  .match-pair::after {
-    right: -3.7rem;
-    width: 2rem;
-  }
-
-  .match-node::after {
-    right: -1.6rem;
-    width: 1.5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .bracket-wrapper {
-    gap: 1.5rem;
-    padding: 0.75rem;
+  @media (max-width: 768px) {
+    display: flex;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x proximity;
-  }
-
-  .bracket-viewport {
-    display: flex;
-    /*gap: 1rem;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); */
-  }
-
-  .bracket-column {
-    width: 172px;
-    scroll-snap-align: start;
-    flex-shrink: 0;
-  }
-
-  .stage-label {
-    font-size: 0.82rem;
-    padding: 0.45rem;
-  }
-
-  .match-pair::before {
-    right: -0.75rem;
-  }
-
-  .match-pair::after {
-    right: -1.5rem;
-    width: 0.75rem;
-  }
-
-  .match-node::after {
-    right: -0.75rem;
-    width: 0.75rem;
-  }
-
-  .column-matches {
-    min-height: 980px;
-  }
-
-  .bracket-shell {
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .bracket-nav.prev {
-    top: 40%;
-  }
-
-  .bracket-nav.next {
-    top: 40%;
-  }
-
-  .worldcup {
-    display: none;
+    gap: 1.5rem;
+    padding: 0.75rem;
   }
 }
-
-@media (max-width: 480px) {
-  .bracket-wrapper {
-    gap: 0.75rem;
-    padding: 0.6rem;
-  }
-
-  .bracket-column {
-    width: 180px;
-    padding-top: 2.5rem;
-  }
-
-  .stage-label {
-    font-size: 0.76rem;
-    letter-spacing: 0.5px;
-  }
-
-  .match-pair::before {
-    right: -0.8rem;
-  }
-
-  .match-pair::after {
-    right: -1.7rem;
-    width: 1rem;
-  }
-
-  .match-node::after {
-    right: -0.7rem;
-    width: 0.6rem;
-  }
-
-  .column-matches {
-    min-height: 600px;
-  }
-}
-
-.match-date,
-.match-time {
-  background: rgba(0, 0, 0, 0.4) !important;
-}
-
-/* 季軍戰 */
-.bracket-column.thirdplace .match-pair::before,
-.bracket-column.thirdplace .match-pair::after,
-.bracket-column.thirdplace .match-node::after {
-  display: none !important;
-}
-
-.third-place-block {
-  width: 100%;
-  position: absolute;
-  margin-top: 500px;
-}
-
-.third-place-label {
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: white;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 0.4rem;
-  background: var(--accent-color);
-  border-radius: 6px;
-}
-
-.third-place-label {
-  background: linear-gradient(135deg, #20b164, #2e7d32);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  letter-spacing: 1px;
-}
-
 
 /* 行動裝置切換賽階動態 */
-.stage-slide-enter-active,
-.stage-slide-leave-active {
-  transition: all 0.35s ease;
-}
-
-.stage-slide-enter-from {
-  opacity: 0;
-  transform: translateX(60px);
-}
-
-.stage-slide-leave-to {
-  opacity: 0;
-  transform: translateX(-60px);
-}
-
-.stage-slide-move {
-  transition: transform 0.35s ease;
-}
-
 .next-enter-active,
 .next-leave-active,
 .prev-enter-active,

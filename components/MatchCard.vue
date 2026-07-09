@@ -6,11 +6,13 @@
     </div>
 
     <div class="match-teams">
-      <!-- 主隊 -->
+      <!-- 主場 -->
       <div class="team home" @click.stop="onTeamClick(match.homeCode)">
-        <img v-if="match.homeFlag" :src="match.homeFlag" :alt="match.homeTeam" class="team-flag">
+        <img v-if="match.homeFlag" :src="match.homeFlag" :alt="match.homeTeam" class="team-flag"
+          :class="{ loser: match.isWinner && match.homeCode !== match.isWinner }">
         <div v-else class="flag-placeholder" />
-        <span class="team-name" :class="{ 'notWinner': match.homeCode === match.isWinner }">{{ homeTeamName }}</span>
+        <span class="team-name" :class="{ loser: match.isWinner && match.homeCode !== match.isWinner }">{{ homeTeamName
+          }}</span>
       </div>
 
       <!-- 比分/VS 區域 -->
@@ -45,9 +47,11 @@
 
       <!-- 客隊 -->
       <div class="team away" @click.stop="onTeamClick(match.awayCode)">
-        <img v-if="match.awayFlag" :src="match.awayFlag" :alt="match.awayTeam" class="team-flag">
+        <img v-if="match.awayFlag" :src="match.awayFlag" :alt="match.awayTeam" class="team-flag"
+          :class="{ loser: match.isWinner && match.awayCode !== match.isWinner }">
         <div v-else class="flag-placeholder" />
-        <span class="team-name" :class="{ 'notWinner': match.awayCode === match.isWinner }"> {{ awayTeamName }}</span>
+        <span class="team-name" :class="{ loser: match.isWinner && match.awayCode !== match.isWinner }"> {{ awayTeamName
+          }}</span>
       </div>
     </div>
     <div class="match-stage">{{ stageText(match.stage) }}</div>
@@ -140,6 +144,10 @@ const handleCardClick = () => {
       transform: scale(1.05);
     }
 
+    &.loser {
+      opacity: .35;
+    }
+
     .team-flag {
       width: 48px;
       height: 32px;
@@ -149,6 +157,10 @@ const handleCardClick = () => {
 
     .team-name {
       font-weight: 600;
+    }
+
+    .loser {
+      opacity: 0.35;
     }
   }
 }
@@ -223,10 +235,6 @@ const handleCardClick = () => {
   font-size: 13px;
   font-weight: 500;
   margin-top: 10px;
-}
-
-.notWinner {
-  opacity: 0.3;
 }
 
 @media (max-width: 768px) {

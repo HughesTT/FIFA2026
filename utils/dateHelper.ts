@@ -52,3 +52,18 @@ export function isFuture(dateStr: string): boolean {
   const today = getTodayString()
   return dateStr > today
 }
+
+/**
+ * 格式化日期
+ * @param dateStr 日期字串（YYYY-MM-DD 格式）
+ * @returns 格式化後的日期字串（例如：06/11 週三）
+ */
+export function formatDate(dateStr: string): string {
+  const date = new Date(dateStr) // 將日期字串轉換
+  return date.toLocaleDateString('zh-TW', {
+    month: '2-digit', // 顯示兩位數的月份
+    day: 'numeric', // 顯示數字的日期
+    weekday: 'short', // 顯示簡短的星期幾名稱
+    timeZone: 'Asia/Taipei' // 強制前後端時區一致
+  })
+}
