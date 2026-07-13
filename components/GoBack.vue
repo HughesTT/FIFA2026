@@ -6,13 +6,8 @@
 </template>
 
 <script setup>
-const route = useRoute()
 const goback = () => {
-  if (route.query.group) {
-    navigateTo({ path: '/' })
-  } else {
-    history.back()
-  }
+  history.back()
 }
 </script>
 <style lang="scss">

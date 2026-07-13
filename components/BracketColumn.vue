@@ -5,10 +5,8 @@
     <div class="column-matches">
       <!-- 每隊比賽 -->
       <div v-for="i in Math.ceil(matches.length / 2)" :key="i" class="match-pair">
-        <BracketMatchNode :match="matches[(i - 1) * 2]"
-          @team-click="$emit('team-click', $event)" />
-        <BracketMatchNode :match="matches[(i - 1) * 2 + 1]"
-          @team-click="$emit('team-click', $event)" />
+        <BracketMatchNode :match="matches[(i - 1) * 2]" @team-click="$emit('team-click', $event)" />
+        <BracketMatchNode :match="matches[(i - 1) * 2 + 1]" @team-click="$emit('team-click', $event)" />
       </div>
 
       <!-- 僅 Final 欄顯示季軍戰 -->
@@ -121,11 +119,13 @@ const { stageText } = getStageLabel()
 .bracket-column.final {
   .match-pair {
     justify-content: center;
+
     &::before,
     &::after {
       display: none !important;
     }
   }
+
   :deep(.match-node::after) {
     display: none !important;
   }
@@ -174,9 +174,11 @@ const { stageText } = getStageLabel()
   .bracket-column {
     width: 240px;
   }
+
   .match-pair::before {
     right: -2.1rem;
   }
+
   .match-pair::after {
     right: -4.8rem;
     width: 2.8rem;
@@ -187,6 +189,7 @@ const { stageText } = getStageLabel()
   .match-pair::before {
     right: -1.8rem;
   }
+
   .match-pair::after {
     right: -3.7rem;
     width: 2rem;
@@ -197,9 +200,11 @@ const { stageText } = getStageLabel()
   .bracket-column {
     width: 200px;
   }
+
   .match-pair::before {
     right: -1.8rem;
   }
+
   .match-pair::after {
     right: -3.7rem;
     width: 2rem;
@@ -212,17 +217,21 @@ const { stageText } = getStageLabel()
     scroll-snap-align: start;
     flex-shrink: 0;
   }
+
   .stage-label {
     font-size: 0.82rem;
     padding: 0.45rem;
   }
+
   .match-pair::before {
     right: -0.75rem;
   }
+
   .match-pair::after {
     right: -1.5rem;
     width: 0.75rem;
   }
+
   .column-matches {
     min-height: 980px;
   }
@@ -233,17 +242,21 @@ const { stageText } = getStageLabel()
     width: 180px;
     padding-top: 2.5rem;
   }
+
   .stage-label {
     font-size: 0.76rem;
     letter-spacing: 0.5px;
   }
+
   .match-pair::before {
     right: -0.8rem;
   }
+
   .match-pair::after {
     right: -1.7rem;
     width: 1rem;
   }
+
   .column-matches {
     min-height: 600px;
   }

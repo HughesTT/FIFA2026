@@ -8,7 +8,8 @@
     <div class="match-teams">
       <!-- 主場 -->
       <div class="team home" @click.stop="onTeamClick(match.homeCode)">
-        <img v-if="match.homeFlag" :src="match.homeFlag" :alt="match.homeTeam" class="team-flag"
+        <img
+v-if="match.homeFlag" :src="match.homeFlag" :alt="match.homeTeam" class="team-flag"
           :class="{ loser: match.isWinner && match.homeCode !== match.isWinner }">
         <div v-else class="flag-placeholder" />
         <span class="team-name" :class="{ loser: match.isWinner && match.homeCode !== match.isWinner }">{{ homeTeamName
@@ -47,7 +48,8 @@
 
       <!-- 客隊 -->
       <div class="team away" @click.stop="onTeamClick(match.awayCode)">
-        <img v-if="match.awayFlag" :src="match.awayFlag" :alt="match.awayTeam" class="team-flag"
+        <img
+v-if="match.awayFlag" :src="match.awayFlag" :alt="match.awayTeam" class="team-flag"
           :class="{ loser: match.isWinner && match.awayCode !== match.isWinner }">
         <div v-else class="flag-placeholder" />
         <span class="team-name" :class="{ loser: match.isWinner && match.awayCode !== match.isWinner }"> {{ awayTeamName

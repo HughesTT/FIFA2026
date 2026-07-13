@@ -1,9 +1,6 @@
 <template>
   <div v-if="match" class="match-node">
-    <MatchCard
-      :match="formatMatchForCard(match)"
-      @team-click="$emit('team-click', $event)"
-    />
+    <MatchCard :match="formatMatchForCard(match)" @team-click="$emit('team-click', $event)" />
   </div>
 </template>
 
@@ -57,22 +54,37 @@ defineEmits<{ 'team-click': [teamCode: string] }>()
 
 /* RWD 連接線微調 */
 @media (max-width: 1366px) {
-  .match-node::after { right: -2rem; width: 2rem; }
+  .match-node::after {
+    right: -2rem;
+    width: 2rem;
+  }
 }
 
 @media (max-width: 1280px) {
-  .match-node::after { right: -1.6rem; width: 1.5rem; }
+  .match-node::after {
+    right: -1.6rem;
+    width: 1.5rem;
+  }
 }
 
 @media (max-width: 1024px) {
-  .match-node::after { right: -1.6rem; width: 1.5rem; }
+  .match-node::after {
+    right: -1.6rem;
+    width: 1.5rem;
+  }
 }
 
 @media (max-width: 768px) {
-  .match-node::after { right: -0.75rem; width: 0.75rem; }
+  .match-node::after {
+    right: -0.75rem;
+    width: 0.75rem;
+  }
 }
 
 @media (max-width: 480px) {
-  .match-node::after { right: -0.7rem; width: 0.6rem; }
+  .match-node::after {
+    right: -0.7rem;
+    width: 0.6rem;
+  }
 }
 </style>

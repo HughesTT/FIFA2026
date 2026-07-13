@@ -21,7 +21,7 @@ export function useGameScheduleModal() {
   const upcomingMatches = computed(() => {
     const now = new Date();
     const tomorrowEnd = new Date();
-    tomorrowEnd.setDate(tomorrowEnd.getDate() + 1); // 設定為明天的結束時間
+    tomorrowEnd.setDate(tomorrowEnd.getDate() + 3); // 設定為明天的結束時間
     tomorrowEnd.setHours(23, 59, 59, 999); // 確保涵蓋到明天一整天
 
     const knockoutMatches = knockoutStore.matches ?? [];

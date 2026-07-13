@@ -18,7 +18,8 @@
       目前沒有賽程資料
     </div>
     <div v-else class="matches-list">
-      <MatchCard v-for="match in uniqueMatches" :key="match.matchId" :match="match"
+      <MatchCard
+v-for="match in uniqueMatches" :key="match.matchId" :match="match"
         @team-click="viewCountryGameSchedule" />
     </div>
   </GameScheduleLayout>

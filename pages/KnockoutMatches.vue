@@ -1,6 +1,7 @@
 <template>
   <div class="knockout-container">
     <BackHome />
+    <BtnGotoAllGroup />
     <div class="knockout-header">
       <h1>淘汰賽</h1>
     </div>
@@ -10,7 +11,8 @@
 
         <TransitionGroup :name="direction" tag="div" mode="out-in">
           <div :key="windowStart" class="bracket-viewport">
-            <BracketColumn v-for="stage in visibleStages" :key="stage" :stage="stage"
+            <BracketColumn
+v-for="stage in visibleStages" :key="stage" :stage="stage"
               :matches="matchesByStage[stage] ?? []"
               :third-place-match="stage === 'Final' ? matchesByStage.ThirdPlace?.[0] : undefined"
               @team-click="handleTeamClick" />
@@ -32,11 +34,9 @@ import { storeToRefs } from "pinia";
 import { useknockoutStore } from "~/store/knockoutStore";
 import { useResponsive } from "~/composable/useResponsive";
 import { useBracket } from "~/composable/useBracket";
-import { useTeamStore } from "~/store/teamStore";
 import BracketColumn from "~/components/BracketColumn.vue";
 import BracketNav from "~/components/BracketNav.vue";
 
-const teamStore = useTeamStore();
 const { visibleCount } = useResponsive();
 
 const stages = ["R32", "R16", "QF", "SF", "Final"] as const;
@@ -75,6 +75,7 @@ const handleTeamClick = (teamCode: string) => {
   margin: 0 auto;
   padding: 2rem 1rem;
   overflow-x: hidden;
+  animation: fadeIn 0.5s ease-in-out;
 
   @media (max-width: 768px) {
     min-height: auto;
@@ -189,5 +190,15 @@ const handleTeamClick = (teamCode: string) => {
 .prev-leave-to {
   opacity: 0;
   transform: translateX(60px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+  
 }
 </style>

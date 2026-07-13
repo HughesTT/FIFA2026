@@ -12,7 +12,7 @@
 
 body {
   font-family: 'Noto Sans TC', sans-serif;
-  background: url('/img/FIFA-unveils-Official-FIFA-World-Cup-2026-Album-squad.jpg') no-repeat fixed top center;
+  background: url('/img/FIFA-unveils-Official-FIFA-World-Cup-2026-Album-squad.jpg') no-repeat top center;
   background-size: cover;
   margin: 0;
   padding: 50px 10px;

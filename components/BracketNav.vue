@@ -49,6 +49,7 @@ defineEmits<{ click: [] }>()
   .bracket-nav.prev {
     top: 40%;
   }
+
   .bracket-nav.next {
     top: 40%;
   }
