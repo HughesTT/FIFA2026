@@ -11,7 +11,7 @@
         <TransitionGroup :name="direction" tag="div" mode="out-in">
           <div :key="windowStart" class="bracket-viewport">
             <BracketColumn v-for="stage in visibleStages" :key="stage" :stage="stage"
-              :matches="matchesByStage[stage] ?? []" :team-code="teamStore.teamCode"
+              :matches="matchesByStage[stage] ?? []"
               :third-place-match="stage === 'Final' ? matchesByStage.ThirdPlace?.[0] : undefined"
               @team-click="handleTeamClick" />
           </div>

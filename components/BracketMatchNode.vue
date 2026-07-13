@@ -2,7 +2,6 @@
   <div v-if="match" class="match-node">
     <MatchCard
       :match="formatMatchForCard(match)"
-      :class="isWinner(match, teamCode) ? '' : 'loser'"
       @team-click="$emit('team-click', $event)"
     />
   </div>
@@ -12,12 +11,10 @@
 import type { PropType } from 'vue'
 import MatchCard from '~/components/MatchCard.vue'
 import { formatMatchForCard } from '~/utils/matchFormatter'
-import { isWinner } from '~/composable/useIsWinner'
 import type { knockoutMatch } from '~/types/knockoutResults'
 
 defineProps({
-  match: { type: Object as PropType<knockoutMatch | undefined>, default: undefined },
-  teamCode: { type: String, required: true }
+  match: { type: Object as PropType<knockoutMatch | undefined>, default: undefined }
 })
 
 defineEmits<{ 'team-click': [teamCode: string] }>()

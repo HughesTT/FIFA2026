@@ -469,14 +469,14 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             time: '04:00',
             homeTeam: { teamName: 'W89', teamCode: 'FR', teamFlag: ''},
             awayTeam: { teamName: 'W90', teamCode: 'MA', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
+            homeScore: 2,
+            awayScore: 0,
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: 'SF-1',
             nextMatchSlot: 'home',
             side: 'left',
-            isWinner: ''
+            isWinner: 'FR'
         },
         {
             matchId: 'QF-2',
@@ -487,14 +487,14 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             time: '03:00',
             homeTeam: { teamName: 'W93', teamCode: 'ES', teamFlag: ''},
             awayTeam: { teamName: 'W94', teamCode: 'BE', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
+            homeScore: 2,
+            awayScore: 1,
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: 'SF-1',
             nextMatchSlot: 'away',
             side: 'left',
-            isWinner: ''
+            isWinner: 'ES'
         },
         {
             matchId: 'QF-3',
@@ -505,14 +505,14 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             time: '05:00',
             homeTeam: { teamName: 'W91', teamCode: 'NO', teamFlag: ''},
             awayTeam: { teamName: 'W92', teamCode: 'GB', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
+            homeScore: 1,
+            awayScore: 2,
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: 'SF-2',
             nextMatchSlot: 'home',
             side: 'right',
-            isWinner: ''
+            isWinner: 'GB'
         },
         {
             matchId: 'QF-4',
@@ -523,14 +523,14 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             time: '09:00',
             homeTeam: { teamName: 'W95', teamCode: 'AR', teamFlag: ''},
             awayTeam: { teamName: 'W96', teamCode: 'CH', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
+            homeScore: 3,
+            awayScore: 1,
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: 'SF-2',
             nextMatchSlot: 'away',
             side: 'right',
-            isWinner: ''
+            isWinner: 'AR'
         },
         // 4強對戰組合
         {
@@ -540,8 +540,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             stageLabel: '4強',
             date: '2026-07-15',
             time: '03:00',
-            homeTeam: { teamName: 'W97', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W98', teamCode: '', teamFlag: ''},
+            homeTeam: { teamName: 'W97', teamCode: 'FR', teamFlag: ''},
+            awayTeam: { teamName: 'W98', teamCode: 'ES', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             homePenaltyScore: null,
@@ -558,8 +558,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             stageLabel: '4強',
             date: '2026-07-16',
             time: '03:00',
-            homeTeam: { teamName: 'W99', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W100', teamCode: '', teamFlag: ''},
+            homeTeam: { teamName: 'W99', teamCode: 'GB', teamFlag: ''},
+            awayTeam: { teamName: 'W100', teamCode: 'AR', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             homePenaltyScore: null,

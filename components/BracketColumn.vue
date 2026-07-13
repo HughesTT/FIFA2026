@@ -5,9 +5,9 @@
     <div class="column-matches">
       <!-- 每隊比賽 -->
       <div v-for="i in Math.ceil(matches.length / 2)" :key="i" class="match-pair">
-        <BracketMatchNode :match="matches[(i - 1) * 2]" :team-code="teamCode"
+        <BracketMatchNode :match="matches[(i - 1) * 2]"
           @team-click="$emit('team-click', $event)" />
-        <BracketMatchNode :match="matches[(i - 1) * 2 + 1]" :team-code="teamCode"
+        <BracketMatchNode :match="matches[(i - 1) * 2 + 1]"
           @team-click="$emit('team-click', $event)" />
       </div>
 
@@ -33,7 +33,6 @@ import type { knockoutMatch } from '~/types/knockoutResults'
 defineProps({
   stage: { type: String, required: true },
   matches: { type: Array as PropType<knockoutMatch[]>, required: true },
-  teamCode: { type: String, required: true },
   thirdPlaceMatch: { type: Object as PropType<knockoutMatch | undefined>, default: undefined }
 })
 
