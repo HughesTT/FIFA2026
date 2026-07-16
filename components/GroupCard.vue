@@ -3,7 +3,8 @@
     <div class="group-card">
       <div v-for="group in teamGroups" :key="group" class="group-card-container">
         <div class="group-title">{{ group }}組</div>
-        <div v-for="team in getTeamsByGroup(group)" :key="team.teamName" class="team-card"
+        <div
+v-for="team in getTeamsByGroup(group)" :key="team.teamName" class="team-card"
           @click="viewCountryGameSchedule(team.teamCode)">
           <h3>{{ team.teamName }}</h3>
           <img :src="team.teamFlag" :alt="team.teamName">
@@ -368,11 +369,5 @@ const viewCountryGameSchedule = (teamCode) => {
 
 .group-card-container {
   animation: fadeInUp 0.5s ease-out backwards;
-
-  @for $i from 1 through 12 {
-    &:nth-child(#{$i}) {
-      animation-delay: #{$i * 0.05}s;
-    }
-  }
 }
 </style>

@@ -6,7 +6,8 @@
     </template>
 
     <div class="matches-list">
-      <MatchCard v-for="match in (countryCode ? countryGameSchedule : uniqueMatches)" :key="match.matchId"
+      <MatchCard
+v-for="match in (countryCode ? countryGameSchedule : uniqueMatches)" :key="match.matchId"
         :match="match" @team-click="viewCountryGameSchedule" />
     </div>
   </GameScheduleLayout>

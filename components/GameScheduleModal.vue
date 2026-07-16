@@ -3,7 +3,8 @@
     <div class="modal-header">
       <h3>即將進行的比賽</h3>
       <button class="close-btn" title="關閉" @click="closeModal">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        <svg
+xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18" />
           <line x1="6" y1="6" x2="18" y2="18" />
@@ -13,7 +14,8 @@
     <div class="modal-content">
       <div v-if="upcomingMatches.length === 0" class="no-matches">沒有即將進行的比賽</div>
       <div v-else class="matches-list">
-        <MatchCard v-for="match in upcomingMatches" :key="match.matchId" :match="match"
+        <MatchCard
+v-for="match in upcomingMatches" :key="match.matchId" :match="match"
           @team-click="viewCountryGameSchedule" />
       </div>
     </div>
@@ -155,7 +157,7 @@ const {
 
 .matches-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: 20px;
 
   @media (max-width: 1024px) {

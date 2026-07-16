@@ -542,14 +542,14 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             time: '03:00',
             homeTeam: { teamName: 'W97', teamCode: 'FR', teamFlag: ''},
             awayTeam: { teamName: 'W98', teamCode: 'ES', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
+            homeScore: 0,
+            awayScore: 2,
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: 'Final',
             nextMatchSlot: 'home',
             side: 'left',
-            isWinner: ''
+            isWinner: 'ES'
         },
         {
             matchId: 'SF-2',
@@ -560,14 +560,14 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             time: '03:00',
             homeTeam: { teamName: 'W99', teamCode: 'GB', teamFlag: ''},
             awayTeam: { teamName: 'W100', teamCode: 'AR', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
+            homeScore: 1,
+            awayScore: 2,
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: 'Final',
             nextMatchSlot: 'away',
             side: 'left',
-            isWinner: ''
+            isWinner: 'AR'
         },
         // 季軍戰
         {
@@ -577,8 +577,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             stageLabel: '季軍戰',
             date: '2026-07-19',
             time: '05:00',
-            homeTeam: { teamName: 'L101', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'L102', teamCode: '', teamFlag: ''},
+            homeTeam: { teamName: 'L101', teamCode: 'FR', teamFlag: ''},
+            awayTeam: { teamName: 'L102', teamCode: 'GB', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             homePenaltyScore: null,
@@ -595,8 +595,8 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             stageLabel: '決賽',
             date: '2026-07-20',
             time: '03:00',
-            homeTeam: { teamName: 'W101', teamCode: '', teamFlag: ''},
-            awayTeam: { teamName: 'W102', teamCode: '', teamFlag: ''},
+            homeTeam: { teamName: 'W101', teamCode: 'ES', teamFlag: ''},
+            awayTeam: { teamName: 'W102', teamCode: 'AR', teamFlag: ''},
             homeScore: null,
             awayScore: null,
             homePenaltyScore: null,
