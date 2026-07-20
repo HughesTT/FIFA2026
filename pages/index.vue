@@ -53,7 +53,7 @@ const goToGroup = () => {
   width: 100%;
   justify-content: center;
   align-items: center;
-  padding-top: 1rem;
+  padding-top: 2.5rem;
   animation: slideDown 0.4s ease-out;
 
   @keyframes slideDown {
