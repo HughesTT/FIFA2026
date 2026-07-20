@@ -579,13 +579,13 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             time: '05:00',
             homeTeam: { teamName: 'L101', teamCode: 'FR', teamFlag: ''},
             awayTeam: { teamName: 'L102', teamCode: 'GB', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
+            homeScore: 4,
+            awayScore: 6,
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: null,
             side: 'left',
-            isWinner: ''
+            isWinner: 'GB'
         },
         // 決賽
         {
@@ -597,13 +597,13 @@ export const useknockoutStore = defineStore('knockoutStore', () => {
             time: '03:00',
             homeTeam: { teamName: 'W101', teamCode: 'ES', teamFlag: ''},
             awayTeam: { teamName: 'W102', teamCode: 'AR', teamFlag: ''},
-            homeScore: null,
-            awayScore: null,
+            homeScore: 1,
+            awayScore: 0,
             homePenaltyScore: null,
             awayPenaltyScore: null,
             nextMatchId: null,
             side: 'left',
-            isWinner: ''
+            isWinner: 'ES'
         }
     ])
 

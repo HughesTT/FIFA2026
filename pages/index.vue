@@ -4,12 +4,12 @@
       <h1>{{ titleA }}</h1>
       <h1>{{ titleB }}</h1>
     </div>
+    <div class="champion">
+      <img src="/public/img/FIFA2026.png" alt="Champion" class="champion-image" >
+    </div>
     <div class="left-container">
       <div class="knockoutmatches" @click="goToKnockout">淘汰賽</div>
       <div class="allgroup" @click="goToGroup">小組賽</div>
-    </div>
-    <div class="right-container">
-      <GameScheduleModal />
     </div>
   </div>
 </template>
@@ -40,13 +40,20 @@ const goToGroup = () => {
   margin: 0;
 }
 
+.champion-image {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
 .left-container {
-  float: left;
   display: flex;
-  width: 40%;
-  justify-content: right;
+  width: 100%;
+  justify-content: center;
   align-items: center;
-  padding-top: 10%;
+  padding-top: 1rem;
   animation: slideDown 0.4s ease-out;
 
   @keyframes slideDown {

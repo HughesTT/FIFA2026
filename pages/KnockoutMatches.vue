@@ -23,7 +23,7 @@ v-for="stage in visibleStages" :key="stage" :stage="stage"
       </div>
 
       <div class="worldcup">
-        <img src="/public/img/FIFA_World_Cup_2026.png" alt="World Cup" class="worldcup-image">
+        <img src="/public/img/champion.jpg" alt="World Cup" class="worldcup-image">
       </div>
     </div>
   </div>
