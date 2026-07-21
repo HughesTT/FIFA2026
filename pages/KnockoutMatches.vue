@@ -2,9 +2,7 @@
   <div class="knockout-container">
     <BackHome />
     <BtnGotoAllGroup />
-    <div class="knockout-header">
-      <h1>淘汰賽</h1>
-    </div>
+    <PageTitle />
     <div class="knockout-content">
       <div class="bracket-shell">
         <BracketNav direction="prev" :disabled="!canPrev" @click="prevStage" />
@@ -73,7 +71,7 @@ const handleTeamClick = (teamCode: string) => {
   max-width: 100vw;
   min-height: 100vh;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  /* padding: 2rem 1rem; */
   overflow-x: hidden;
   animation: fadeIn 0.5s ease-in-out;
 

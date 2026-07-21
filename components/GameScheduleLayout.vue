@@ -1,6 +1,7 @@
 <template>
   <div class="game-container">
     <BackHome />
+    <PageTitle />
     <Standings />
 
     <div class="game-card">
