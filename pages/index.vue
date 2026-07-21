@@ -2,7 +2,6 @@
   <div class="home-page">
     <section class="hero-card">
       <div class="hero-copy">
-        <p class="hero-eyebrow">48 Nations • 3 Hosts • 1 Cup</p>
         <h1 class="hero-title">
           <span>{{ titleA }}</span>
           <span>{{ titleB }}</span>
@@ -45,12 +44,12 @@
 
     <section class="quick-entry">
       <button type="button" class="entry-card" @click="goToKnockout">
-        <h2>淘汰賽對戰樹</h2>
-        <p>從 16 強到決賽，快速追蹤每一輪戰況。</p>
+        <h2>淘汰賽對戰圖表</h2>
+        <p>從 32 強到決賽，追蹤每一輪戰況。</p>
       </button>
       <button type="button" class="entry-card" @click="goToGroup">
         <h2>小組賽總覽</h2>
-        <p>一次查看分組排名與各組賽程結果。</p>
+        <p>查看分組排名與各組賽程結果。</p>
       </button>
     </section>
   </div>
