@@ -10,12 +10,48 @@
   font-style: normal;
 }
 
+:root {
+  --brand-blue-900: #07142f;
+  --brand-blue-700: #0d1f4c;
+  --brand-gold-400: #ffd268;
+  --brand-red-500: #e31d1a;
+  --text-primary: #ffffff;
+}
+
 body {
   font-family: 'Noto Sans TC', sans-serif;
-  background: url('/img/FIFA-unveils-Official-FIFA-World-Cup-2026-Album-squad.jpg') no-repeat top center;
-  background-size: cover;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  color: var(--text-primary);
   margin: 0;
-  padding: 50px 10px;
+  min-height: 100vh;
+  padding: 50px 12px;
+  position: relative;
+  background: linear-gradient(150deg, #04112b 0%, #0c1d48 52%, #1f1129 100%);
+  overflow-x: hidden;
+
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: linear-gradient(rgba(2, 10, 28, 0.66), rgba(11, 20, 53, 0.72)), url('/img/FIFA-unveils-Official-FIFA-World-Cup-2026-Album-squad.avif');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    z-index: -2;
+  }
+
+  &::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 14% 12%, rgba(255, 210, 104, 0.26), rgba(255, 210, 104, 0) 44%),
+      radial-gradient(circle at 88% 80%, rgba(227, 29, 26, 0.2), rgba(227, 29, 26, 0) 42%);
+    pointer-events: none;
+  }
 
   .title-container {
     margin-bottom: 30px;
@@ -48,7 +84,7 @@ body {
 
   @media(max-width: 768px) {
     background-attachment: scroll;
-    padding: 64px 8px 18px;
+    padding: 64px 8px 20px;
 
     .title-container h1 {
       font-size: 46px;
@@ -79,5 +115,10 @@ body {
       }
     }
   }
+}
+
+::selection {
+  background: rgba(255, 210, 104, 0.35);
+  color: #ffffff;
 }
 </style>

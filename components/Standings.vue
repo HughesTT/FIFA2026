@@ -63,7 +63,7 @@ const filteredStandings = computed(() => {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .standings-container {
   max-width: 850px;
   margin: 0 auto;
@@ -80,6 +80,18 @@ const filteredStandings = computed(() => {
   width: 100%;
   box-sizing: border-box;
   overflow: hidden;
+
+  .standings-header {
+    text-align: center;
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 1.8rem;
+      color: #2c3e50;
+      font-weight: bold;
+      margin: 0;
+    }
+  }
 }
 
 .table-responsive {
@@ -88,12 +100,7 @@ const filteredStandings = computed(() => {
   -webkit-overflow-scrolling: touch; // 讓手機板滑動更順暢
   font-family: 'Noto Sans TC', sans-serif !important;
 
-  @media (max-width: 576px) {
-    font-size: 14px;
-  }
-}
-
-.standings-table {
+  .standings-table {
   width: 100%;
   border-collapse: collapse;
   min-width: 500px;
@@ -103,6 +110,7 @@ const filteredStandings = computed(() => {
     padding: 12px 8px;
     text-align: center;
     border-bottom: 1px solid #ccc;
+    color: #2c3e50;
   }
 
   th {
@@ -147,6 +155,11 @@ const filteredStandings = computed(() => {
       width: 24px;
       margin-right: 8px;
     }
+  }
+}
+
+  @media (max-width: 576px) {
+    font-size: 14px;
   }
 }
 </style>
