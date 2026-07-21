@@ -25,7 +25,7 @@ body {
   text-rendering: optimizeLegibility;
   color: var(--text-primary);
   margin: 0;
-  min-height: 100vh;
+  min-height: 90vh;
   padding: 50px 12px;
   position: relative;
   background: linear-gradient(150deg, #04112b 0%, #0c1d48 52%, #1f1129 100%);

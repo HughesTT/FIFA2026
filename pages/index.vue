@@ -28,10 +28,6 @@
             <span class="metric-value">48</span>
             <span class="metric-label">參賽隊伍</span>
           </article>
-          <article class="metric-card">
-            <span class="metric-value">16</span>
-            <span class="metric-label">淘汰賽隊伍</span>
-          </article>
         </div>
       </div>
 
