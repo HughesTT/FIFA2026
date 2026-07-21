@@ -92,7 +92,7 @@ const handleCardClick = () => {
 .match-item {
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.96) 0%, rgba(244, 248, 255, 0.94) 100%);
   border-radius: 14px;
-  padding: 20px;
+  padding: 10px 0;
   position: relative;
   border: 1px solid rgba(108, 131, 176, 0.2);
   box-shadow: 0 10px 30px rgba(23, 37, 84, 0.08);
@@ -145,7 +145,6 @@ const handleCardClick = () => {
       flex-direction: column;
       align-items: center;
       gap: 8px;
-      padding: 8px;
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -162,8 +161,8 @@ const handleCardClick = () => {
       }
 
       .team-flag {
-        width: 48px;
-        height: 32px;
+        width: 40px;
+        height: 28px;
         border-radius: 4px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
         border: 1px solid rgba(15, 23, 42, 0.08);
@@ -172,11 +171,16 @@ const handleCardClick = () => {
       .team-name {
         color: #1f2f43;
         font-weight: 600;
-        font-size: 0.95rem;
+        font-size: 0.8rem;
       }
 
       .loser {
         opacity: 0.35;
+        max-width: 43px;
+        /* 過長直接省略 */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
     .flag-placeholder {
@@ -288,12 +292,12 @@ const handleCardClick = () => {
           padding: 6px;
 
           .team-flag {
-            width: 34px;
-            height: 24px;
+            width: 30px;
+            height: 20px;
           }
 
           .team-name {
-            font-size: 12px;
+            font-size: 11px;
             line-height: 1.2;
             text-align: center;
             word-break: break-word;
@@ -302,11 +306,15 @@ const handleCardClick = () => {
       }
 
       .match-score {
-        font-size: 18px;
+        font-size: 16px;
       }
 
       .vs {
-        font-size: 14px;
+        font-size: 12px;
+      }
+
+      .penalty-score {
+        font-size: 12px;
       }
 
       .match-badge {
@@ -322,8 +330,12 @@ const handleCardClick = () => {
       }
 
       .flag-placeholder {
-        width: 48px;
-        height: 32px;
+        width: 30px;
+        height: 20px;
+
+        &::after {
+          font-size: 11px;
+        }
       }
     }
 
@@ -335,22 +347,35 @@ const handleCardClick = () => {
       .match-teams {
         .team {
           .team-flag {
-            width: 30px;
-            height: 20px;
+            width: 26px;
+            height: 17px;
           }
 
           .team-name {
-            font-size: 12px;
+            font-size: 10px;
           }
         }
       }
 
       .match-score {
-        font-size: 16px;
+        font-size: 14px;
       }
 
       .vs {
-        font-size: 13px;
+        font-size: 11px;
+      }
+
+      .penalty-score {
+        font-size: 11px;
+      }
+
+      .flag-placeholder {
+        width: 26px;
+        height: 17px;
+
+        &::after {
+          font-size: 10px;
+        }
       }
     }
   }
