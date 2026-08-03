@@ -2,8 +2,6 @@
 
 > 2026 FIFA 世界盃足球賽賽程、小組積分、淘汰賽對戰一覽，支援響應式設計，部署於 GitHub Pages。
 
-[![Deploy to GitHub Pages](https://github.com/HughesTT/FIFA2026/actions/workflows/deploy.yml/badge.svg)](https://github.com/HughesTT/FIFA2026/actions/workflows/deploy.yml)
-
 ---
 
 ## 🌐 線上預覽
@@ -25,15 +23,15 @@
 
 ---
 
-## 🛠️ 技術棧
+## 🛠️ 技術使用
 
 | 分類 | 技術 |
 |------|------|
-| **框架** | [Nuxt 4](https://nuxt.com/) + [Vue 3](https://vuejs.org/) (Composition API) |
+| **框架** | Nuxt 4 + Vue 3 (Composition API) |
 | **語言** | TypeScript |
-| **狀態管理** | [Pinia](https://pinia.vuejs.org/) (`@pinia/nuxt`) |
-| **UI 元件庫** | [@nuxt/ui](https://ui.nuxt.com/) |
-| **CSS 框架** | [Tailwind CSS v4](https://tailwindcss.com/) + SCSS |
+| **狀態管理** | Pinia(`@pinia/nuxt`) |
+| **UI 元件庫** | @nuxt/ui |
+| **CSS 框架** | Tailwind CSS v4 + SCSS |
 | **路由** | Vue Router（Nuxt File-based Routing）|
 | **Linting** | ESLint (`@nuxt/eslint`) |
 | **部署** | GitHub Pages（靜態匯出） |
