@@ -141,29 +141,29 @@ const goToGroup = () => {
   font-size: 1rem;
 }
 
-.hero-copy > * {
+.hero-copy>* {
   opacity: 0;
   transform: translateY(10px);
   animation: riseIn 0.45s ease-out forwards;
 }
 
-.hero-copy > *:nth-child(1) {
+.hero-copy>*:nth-child(1) {
   animation-delay: 0.05s;
 }
 
-.hero-copy > *:nth-child(2) {
+.hero-copy>*:nth-child(2) {
   animation-delay: 0.1s;
 }
 
-.hero-copy > *:nth-child(3) {
+.hero-copy>*:nth-child(3) {
   animation-delay: 0.16s;
 }
 
-.hero-copy > *:nth-child(4) {
+.hero-copy>*:nth-child(4) {
   animation-delay: 0.22s;
 }
 
-.hero-copy > *:nth-child(5) {
+.hero-copy>*:nth-child(5) {
   animation-delay: 0.28s;
 }
 
@@ -305,6 +305,7 @@ const goToGroup = () => {
 }
 
 @keyframes floatCup {
+
   0%,
   100% {
     transform: translateY(0);
@@ -340,9 +341,10 @@ const goToGroup = () => {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .home-page,
   .champion-image,
-  .hero-copy > * {
+  .hero-copy>* {
     animation: none !important;
   }
 
