@@ -31,7 +31,7 @@
 | **語言** | TypeScript |
 | **狀態管理** | Pinia(`@pinia/nuxt`) |
 | **UI 元件庫** | @nuxt/ui |
-| **CSS 框架** | Tailwind CSS v4 + SCSS |
+| **CSS 框架** | bootstrap + SCSS |
 | **路由** | Vue Router（Nuxt File-based Routing）|
 | **Linting** | ESLint (`@nuxt/eslint`) |
 | **部署** | GitHub Pages（靜態匯出） |
