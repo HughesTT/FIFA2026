@@ -113,12 +113,85 @@
           <small>專案結構</small>
         </div>
         <ul class="directory-list">
-          <li><code><span>pages/</span></code><p>頁面與路由</p></li>
-          <li><code><span>components/</span></code><p>共用介面元件</p></li>
-          <li><code><span>composable/</span></code><p>可重用的 Vue 邏輯</p></li>
-          <li><code><span>store/</span></code><p>Pinia 狀態管理</p></li>
-          <li><code><span>types/</span></code><p>TypeScript 型別定義</p></li>
-          <li><code><span>assets/</span></code><p>樣式與靜態資源</p></li>
+          <li class="directory-row"><code><span>pages/</span></code><p>頁面與路由</p></li>
+          <li class="directory-entry">
+            <button
+              class="directory-toggle"
+              type="button"
+              aria-controls="components-children"
+              :aria-expanded="expandedDirectories.components"
+              @click="toggleDirectory('components')"
+            >
+              <span class="directory-label"><code><span>components/</span></code><p>共用介面元件</p></span>
+              <span class="directory-chevron" aria-hidden="true"/>
+            </button>
+            <Transition name="directory-tree">
+              <ul v-show="expandedDirectories.components" id="components-children" class="directory-children">
+                <li><code><span>├── MatchCard.vue</span></code><p>比賽資訊卡片</p></li>
+                <li><code><span>├── GroupCard.vue</span></code><p>小組資訊卡片（含積分與排名）</p></li>
+                <li><code><span>├── BracketColumn.vue</span></code><p>淘汰賽樹狀圖欄位</p></li>
+                <li><code><span>├── BracketMatchNode.vue</span></code><p>淘汰賽比賽節點</p></li>
+                <li><code><span>└── Standings.vue</span></code><p>積分榜元件</p></li>
+              </ul>
+            </Transition>
+          </li>
+          <li class="directory-entry">
+            <button
+              class="directory-toggle"
+              type="button"
+              aria-controls="composables-children"
+              :aria-expanded="expandedDirectories.composables"
+              @click="toggleDirectory('composables')"
+            >
+              <span class="directory-label"><code><span>composable/</span></code><p>可重用的 Vue 邏輯</p></span>
+              <span class="directory-chevron" aria-hidden="true"/>
+            </button>
+            <Transition name="directory-tree">
+              <ul v-show="expandedDirectories.composables" id="composables-children" class="directory-children">
+                <li><code><span>├── useMatches.ts</span></code><p>比賽資料邏輯</p></li>
+                <li><code><span>├── useBracket.ts</span></code><p>淘汰賽階段切換邏輯</p></li>
+                <li><code><span>├── useGameScheduleModal.ts</span></code><p>賽程互動視窗邏輯</p></li>
+                <li><code><span>└── useGroupStandings.ts</span></code><p>積分排名計算</p></li>
+              </ul>
+            </Transition>
+          </li>
+          <li class="directory-entry">
+            <button
+              class="directory-toggle"
+              type="button"
+              aria-controls="store-children"
+              :aria-expanded="expandedDirectories.store"
+              @click="toggleDirectory('store')"
+            >
+              <span class="directory-label"><code><span>store/</span></code><p>Pinia 狀態管理</p></span>
+              <span class="directory-chevron" aria-hidden="true"/>
+            </button>
+            <Transition name="directory-tree">
+              <ul v-show="expandedDirectories.store" id="store-children" class="directory-children">
+                <li><code><span>├── teamStore.ts</span></code><p>隊伍 & 小組賽資料</p></li>
+                <li><code><span>└── knockoutStore.ts</span></code><p>淘汰賽資料</p></li>
+              </ul>
+            </Transition>
+          </li>
+          <li class="directory-entry">
+            <button
+              class="directory-toggle"
+              type="button"
+              aria-controls="types-children"
+              :aria-expanded="expandedDirectories.types"
+              @click="toggleDirectory('types')"
+            >
+              <span class="directory-label"><code><span>types/</span></code><p>TypeScript 型別定義</p></span>
+              <span class="directory-chevron" aria-hidden="true"/>
+            </button>
+            <Transition name="directory-tree">
+              <ul v-show="expandedDirectories.types" id="types-children" class="directory-children">
+                <li><code><span>├── match.ts</span></code><p>賽事資料型別</p></li>
+                <li><code><span>└── knockoutResults.ts</span></code><p>淘汰賽資料型別</p></li>
+              </ul>
+            </Transition>
+          </li>
+          <li class="directory-row"><code><span>assets/</span></code><p>樣式與靜態資源</p></li>
         </ul>
       </div>
     </section>
@@ -128,12 +201,11 @@
         <p class="eyebrow">04 / 開發筆記</p>
       </div>
       <div class="reflection-copy">
-        <p>
-          開發過程中，主要挑戰是整理各國賽程資料，以及設計容易理解的淘汰賽對戰圖。透過拆分資料與介面邏輯，我對 Vue 3、TypeScript 和大型資料結構的應用有了更深入的理解。
-        </p>
-        <p>
-          下一步希望持續優化使用者介面，並加入更多互動功能，讓查找賽事與追蹤比賽更順手。
-        </p>
+        <p>開發過程中曾經碰到賽程顯示的國旗圖示與國家名稱對應錯誤的問題</p>
+        <p>因為當時不是直接把Pinia的球隊資料拿來當成比賽清單，而是先取得戰績表的比賽清單，再對應球隊資料，導致國旗圖示與國家名稱出現錯誤。</p>
+        <p>後來我調整了資料對應的邏輯，確保比賽清單中的球隊名稱能正確對應到 Pinia 中的球隊資料，解決了國旗圖示與國家名稱錯誤的問題。</p>
+        <b>感想：</b>
+        <p>這個過程讓我了解到，比賽資料與球隊資料之間的對應關係很重要。如果不同資料來源的球隊名稱不一致，就可能造成代碼對應失敗，進而影響賽程篩選。因此在規劃資料結構時，應該盡量使用一致且穩定的識別碼來建立關聯，降低後續維護的成本。</p>
       </div>
       <span class="reflection-star" aria-hidden="true">✳</span>
     </section>
@@ -143,13 +215,28 @@
     </footer>
   </main>
 </template>
-<script setup>
-const scrollToSection = (id) => {
+<script setup lang="ts">
+import { ref } from 'vue'
+
+type DirectoryKey = 'components' | 'composables' | 'store' | 'types'
+
+const expandedDirectories = ref<Record<DirectoryKey, boolean>>({
+  components: false,
+  composables: false,
+  store: false,
+  types: false,
+})
+
+const scrollToSection = (id: string) => {
   const section = document.getElementById(id);
   if (section) {
     section.scrollIntoView({ behavior: 'smooth' });
   }
-};
+}
+
+const toggleDirectory = (directory: DirectoryKey) => {
+  expandedDirectories.value[directory] = !expandedDirectories.value[directory]
+}
 </script>
 <style scoped lang="scss">
 .showcase {
@@ -158,7 +245,7 @@ const scrollToSection = (id) => {
   --showcase-gold: #ffd268;
   --showcase-line: rgba(255, 255, 255, 0.16);
 
-  width: min(1120px, 100%);
+  width: min(1200px, 100%);
   margin: 0 auto;
   padding: clamp(24px, 5vw, 72px) clamp(16px, 4vw, 48px) 28px;
   color: var(--showcase-ink);
@@ -559,17 +646,98 @@ p {
   margin: 0;
   list-style: none;
 
-  li {
+  > li {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 18px;
-    padding: 13px 0;
+    padding: 10px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 
     &:last-child {
       border-bottom: 0;
     }
+  }
+
+  .directory-entry {
+    display: block;
+    padding: 0;
+  }
+
+  .directory-toggle {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 10px 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover .directory-label code span,
+    &:focus-visible .directory-label code span {
+      color: #fff;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--showcase-gold);
+      outline-offset: 3px;
+    }
+  }
+
+  .directory-label {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+  }
+
+  .directory-chevron {
+    width: 8px;
+    height: 8px;
+    flex: 0 0 auto;
+    margin-right: 4px;
+    border-right: 1px solid var(--showcase-muted);
+    border-bottom: 1px solid var(--showcase-muted);
+    transform: rotate(45deg);
+    transition: transform 180ms ease;
+  }
+
+  .directory-toggle[aria-expanded='true'] .directory-chevron {
+    transform: rotate(225deg);
+  }
+
+  .directory-children {
+    overflow: hidden;
+    padding: 0 0 10px 20px;
+    margin: 0;
+    list-style: none;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 7px 0;
+    }
+  }
+
+  .directory-tree-enter-active,
+  .directory-tree-leave-active {
+    max-height: 400px;
+    overflow: hidden;
+    transition: max-height 240ms ease, opacity 180ms ease;
+  }
+
+  .directory-tree-enter-from,
+  .directory-tree-leave-to {
+    max-height: 0;
+    opacity: 0;
   }
 
   code {
@@ -586,6 +754,17 @@ p {
     color: var(--showcase-muted);
     font-size: 0.8rem;
     text-align: right;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .directory-list .directory-chevron {
+    transition: none;
+  }
+
+  .directory-list .directory-tree-enter-active,
+  .directory-list .directory-tree-leave-active {
+    transition: none;
   }
 }
 
