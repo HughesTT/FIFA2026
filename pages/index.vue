@@ -47,9 +47,9 @@
         <h2>小組賽總覽</h2>
         <p>查看分組排名與各組賽程結果。</p>
       </button>
-      <button type="button" class="entry-card" @click="goToProjectShowcase">
-        <h2>專案展示</h2>
-        <p>查看我們的 FIFA 2026 專案展示。</p>
+      
+      <button type="button" class="readme-card" @click="goToProjectShowcase">
+        <p>→ README</p>
       </button>
     </section>
   </div>
@@ -298,6 +298,33 @@ const goToGroup = () => {
     color: rgba(255, 255, 255, 0.84);
     line-height: 1.5;
     font-size: 0.95rem;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 210, 104, 0.75);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  }
+
+  &:focus-visible {
+    outline: 3px solid rgba(255, 210, 104, 0.75);
+    outline-offset: 2px;
+  }
+}
+
+.readme-card {
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(9, 25, 60, 0.74) 0%, rgba(31, 18, 48, 0.68) 100%);
+  color: #ffffff;
+  padding: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+
+  p {
+    margin: 0;
+    font-size: 1rem;
   }
 
   &:hover {

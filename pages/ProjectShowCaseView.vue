@@ -440,36 +440,67 @@ p {
     padding: 10px 16px;
     color: var(--showcase-ink);
     font-size: 0.86rem;
+    cursor: pointer;
 
     &.skill-primary {
       background: rgba(0, 123, 255, 0.4);
       border-color: rgba(0, 123, 255, 0.8);
       color: #fff;
+
+      &:hover {
+        background: rgba(0, 123, 255, 0.6);
+        border-color: rgba(0, 123, 255, 1);
+      }
     }
     &.skill-green {
       background: rgba(40, 167, 69, 0.4);
       border-color: rgba(40, 167, 69, 0.8);
       color: #fff;
+
+      &:hover {
+        background: rgba(40, 167, 69, 0.6);
+        border-color: rgba(40, 167, 69, 1);
+      }
     }
     &.skill-purple {
       background: rgba(111, 66, 193, 0.4);
       border-color: rgba(111, 66, 193, 0.8);
       color: #fff;
+      
+      &:hover {
+        background: rgba(111, 66, 193, 0.6);
+        border-color: rgba(111, 66, 193, 1);
+      }
     }
     &.skill-blue {
       background: rgba(0, 123, 255, 0.4);
       border-color: rgba(0, 123, 255, 0.8);
       color: #fff;
+
+      &:hover {
+        background: rgba(0, 123, 255, 0.6);
+        border-color: rgba(0, 123, 255, 1);
+      }
     }
     &.skill-indigo {
       background: rgba(75, 0, 130, 0.5);
       border-color: rgba(75, 0, 130, 0.8);
       color: #fff;
+
+      &:hover {
+        background: rgba(75, 0, 130, 0.6);
+        border-color: rgba(75, 0, 130, 1);
+      }
     }
     &.skill-pink {
       background: rgba(255, 192, 203, 0.4);
       border-color: rgba(255, 192, 203, 0.8);
       color: #fff;
+
+      &:hover {
+        background: rgba(255, 192, 203, 0.6);
+        border-color: rgba(255, 192, 203, 1);
+      }
     }
   }
 }
