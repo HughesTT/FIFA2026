@@ -47,6 +47,10 @@
         <h2>小組賽總覽</h2>
         <p>查看分組排名與各組賽程結果。</p>
       </button>
+      <button type="button" class="entry-card" @click="goToProjectShowcase">
+        <h2>專案展示</h2>
+        <p>查看我們的 FIFA 2026 專案展示。</p>
+      </button>
     </section>
   </div>
 </template>
@@ -55,6 +59,10 @@
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+
+const goToProjectShowcase = () => {
+  router.push('/ProjectShowCaseView')
+}
 
 const titleA = 'FIFA'
 const titleB = 'World Cup 2026'

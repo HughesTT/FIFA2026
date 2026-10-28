@@ -9,7 +9,7 @@ export function isWinner(match: { isWinner: string }, teamCode: string): boolean
 }
 
 /**
- * 可選：產生自訂透明度的 CSS 變數（如果想在模板上直接寫 style）
+ * 產生自訂透明度的 CSS 變數（如果想在模板上直接寫 style）
  * @param opacity 0 ~ 1 之間的透明度，預設 0.5
  * @returns CSS 文字，例如 `opacity: 0.5`
  */
